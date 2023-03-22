@@ -8,6 +8,18 @@ module.exports = {
       sans: ['Inter', 'sans-serif']
     },
     extend: {},
+    textColor: {
+      'purple-purs': '#7C5EB1',
+      'blue-purs': '#3E79A5',
+      'grey-purs': "#999999"
+    },
+    borderColor: {
+      'green-purs': '#14e1b0',
+      'blue-purs': '#3E79A5',
+    },
+    backgroundColor: {
+      'purple-purs': '#7C5EB1',
+    }
   },
   plugins: [],
 }
