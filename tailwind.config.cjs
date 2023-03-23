@@ -7,7 +7,11 @@ module.exports = {
     fontFamily: {
       sans: ['Inter', 'sans-serif']
     },
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'gradient-purs': "url('/background-gradient.png')",
+      },
+    },
     textColor: {
       'purple-purs': '#7C5EB1',
       'blue-purs': '#3E79A5',
