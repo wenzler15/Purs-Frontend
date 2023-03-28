@@ -4,6 +4,7 @@ import Ellipse2 from "../../../assets/Ellipse2.png";
 import Ellipse3 from "../../../assets/Ellipse3.png";
 import Ellipse5 from "../../../assets/Ellipse5.png";
 import Ellipse8 from "../../../assets/Ellipse8.png";
+//@ts-ignore
 import api from "../../../services/api";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
@@ -35,7 +36,7 @@ const RegisterCompany: React.FC = () => {
                 toast.success("Empresa cadastrada com sucesso!");
 
                 navigate("/");
-            } catch (err) {
+            } catch (err: any) {
                 toast.error(err.response.data.message)
             }
         }
