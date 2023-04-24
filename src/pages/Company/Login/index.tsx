@@ -35,7 +35,7 @@ const Login: React.FC = () => {
     }
 
     return (
-        <div className='w-full flex flex-col items-center bg-gradient-purs bg-cover bg-no-repeat h-[100vh] pt-[10%]'>
+        <div className='w-full flex flex-col items-center bg-gradient-purs bg-cover bg-no-repeat h-[100vh] pt-[5%]'>
             <img src={Logo} className='w-1/5' />
             <img src={Ellipse2} className='absolute mr-[45%] mt-[10%] z-1' />
             <img src={Ellipse3} className='absolute mr-[40%] mt-[20%] z-10' />
