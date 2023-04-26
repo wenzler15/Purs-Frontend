@@ -24,7 +24,7 @@ const Form1: React.FC = () => {
                 <div className='flex justify-center'>
                     <div className='mt-6 mr-6 items-end flex flex-col'>
                         <p className='text-2xl'>Crie seu organograma gratuito</p>
-                        <img src={Lines} className='w-[130px]'/>
+                        <img src={Lines} className='w-26'/>
                     </div>
                     <div>
                         <img src={Smile} />
