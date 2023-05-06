@@ -48,9 +48,16 @@ const Form1: React.FC = () => {
                                 <p className='mt-6'>Área de atuação*</p>
                                 <select className='border-blue-purs border w-11/12 rounded-lg mt-1.5 pl-2 text-blue-purs h-10 text-sm'>
                                     <option value='0' className='text-xs'>Selecione...</option>
-                                    <option value='A' className='text-xs'>A</option>
-                                    <option value='B' className='text-xs'>B</option>
-                                    <option value='C' className='text-xs'>C</option>
+                                    <option value='A' className='text-xs'>Recursos humanos</option>
+                                    <option value='B' className='text-xs'>Comercial</option>
+                                    <option value='C' className='text-xs'>Marketing</option>
+                                    <option value='A' className='text-xs'>Tecnologia</option>
+                                    <option value='B' className='text-xs'>Logística</option>
+                                    <option value='C' className='text-xs'>Administrativo</option>
+                                    <option value='A' className='text-xs'>Financeiro</option>
+                                    <option value='B' className='text-xs'>Operações</option>
+                                    <option value='C' className='text-xs'>Atendimento ao cliente</option>
+                                    <option value='C' className='text-xs'>Outros</option>
                                 </select>
                             </div>
                             <div className='mt-8 w-2/4 flex flex-col justify-start text-start'>
@@ -59,9 +66,12 @@ const Form1: React.FC = () => {
                                 <p className='mt-6'>Segmento da empresa*</p>
                                 <select className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs h-10 text-sm'>
                                     <option value='0' className='text-xs'>Selecione...</option>
-                                    <option value='A' className='text-xs'>A</option>
-                                    <option value='B' className='text-xs'>B</option>
-                                    <option value='C' className='text-xs'>C</option>
+                                    <option value='A' className='text-xs'>Indústria</option>
+                                    <option value='B' className='text-xs'>Comércio</option>
+                                    <option value='C' className='text-xs'>Prestação de serviço</option>
+                                    <option value='C' className='text-xs'>Setor público</option>
+                                    <option value='C' className='text-xs'>Organização sem fins lucrativos</option>
+                                    <option value='C' className='text-xs'>Outros</option>
                                 </select>
                             </div>
                         </div>
