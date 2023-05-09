@@ -16,13 +16,13 @@ import { useNavigate } from "react-router-dom";
 const fileTypes = ["CSV", "XLS", "XLSX"]
 
 const UploadFile: React.FC = () => {
-    const [file, setFile] = useState<File>();
+    const [fileSelected, setFileSelected] = useState<File>();
 
     const navigate = useNavigate();
 
     const handleChange = (file: File) => {
         console.log("file", file);
-        setFile(file)
+        setFileSelected(file)
     };
 
     return (
@@ -67,7 +67,7 @@ const UploadFile: React.FC = () => {
                                 <BsArrowLeftShort size={25} />
                                 <p className='text-sm mt-1 ml-[-5px]'>Voltar</p>
                             </div>
-                            <div className='rounded-lg bg-purple-purs mt-4 p-2 w-36 text-center cursor-pointer' onClick={() => handleLogin()}>
+                            <div className='rounded-lg bg-purple-purs mt-4 p-2 w-36 text-center cursor-pointer' onClick={() => navigate('/chart')}>
                                 <p className='text-[#fff] text-sm mt-1'>Importar arquivo</p>
                             </div>
                         </div>

@@ -7,6 +7,7 @@ import ResetCompanyPassword from "./Company/ResetPassword";
 import Form1 from "./Lead/Register/Form1";
 import Form2 from "./Lead/Register/Form2";
 import UploadFile from "./Lead/UploadFile";
+import ChartPage from "./ChartPage";
 
 export function AppRoutes() {
     return (
@@ -19,6 +20,7 @@ export function AppRoutes() {
                 <Route path='/lead/register' element={<Form1 />} />
                 <Route path='/lead/register2' element={<Form2 />} />
                 <Route path='/lead/uploadFile' element={<UploadFile />} />
+                <Route path='/chart' element={<ChartPage />} />
             </Routes>
         </Router>
     )
