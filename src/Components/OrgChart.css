@@ -1,0 +1,123 @@
+.orgchart-container {
+  height: 100%;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.chart-content {
+  background: transparent !important;
+  transition: all 1s ease 0s;
+  transform: scale(0.6);
+}
+
+.zoom-50 {
+  transform: scale(0.5);
+}
+.zoom-75 {
+  transform: scale(0.7);
+}
+.zoom-100 {
+  transform: scale(0.9);
+}
+.zoom-125 {
+  transform: scale(1.1);
+}
+.zoom-150 {
+  transform: scale(1.3);
+}
+
+.orgchart ul li .oc-node {
+  margin-bottom: 40px;
+}
+
+.oc-node:hover {
+  background-color: transparent !important;
+  border-radius: 8px;
+}
+
+.oc-node.selected {
+  background-color: transparent !important;
+}
+
+.oc-node.selected .node-card {
+  background-color: #E9D8FA;
+}
+
+.node-container {
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+}
+
+.node-card {
+  width: 100%;
+  background: #E9D8FA;
+  border-radius: 8px;
+  padding: 30px;
+  padding: 30px 6px 15px;
+  cursor: pointer;
+}
+
+.card-tag {
+  width: 58px;
+  height: 58px;
+  background: #5B359E;
+  border: 2px solid #331A71;
+  border-radius: 50%;
+  position: relative;
+  top: 29px;
+  color: white;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 18px;
+  color: #5B359E;
+}
+
+.card-subtitle {
+  font-size: 16px;
+  color: #2B3241;
+}
+
+.node-card:hover {
+  background: #c6b7d5;
+}
+
+.orgchart ul li {
+  padding-inline: 15px;
+}
+
+.orgchart li::before {
+  border-top: 2px solid #9DADC5 !important;
+}
+
+.oc-node:not(:only-child)::after {
+  background-color: #9DADC5 !important;
+  height: 33px !important;
+  bottom: -30px !important;
+}
+
+.oc-node::before {
+  background-color: #9DADC5 !important;
+  height: 45px !important;
+}
+
+.zoom-panel {
+  position: absolute;
+  height: 50px;
+  bottom: 60px;
+  left: 54%;
+  display: flex;
+  align-items: center;
+  background: #CCD9EB;
+  border-radius: 6px;
+}
+
+.zoom-button {
+  padding: 6px;
+}
