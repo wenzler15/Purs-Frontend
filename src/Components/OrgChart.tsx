@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   AiOutlineMinus,
-  AiOutlineMinusSquare,
   AiOutlinePlus,
 } from "react-icons/ai";
 
@@ -62,12 +61,17 @@ type PropsInterface = {
   };
 */
 
-const structureDataList = async (datalist: RowInterface[]): Promise<RowInterface | null> => {
+const structureDataList = async (
+  datalist: RowInterface[],
+  collapsedNodes?: RowInterface[]
+): Promise<RowInterface | null> => {
   // clone array
   let auxList: RowInterface[] = JSON.parse(JSON.stringify(datalist));
 
   // find fathers and structure
   await auxList.map((row) => {
+    if (collapsedNodes?.find((collapseRow) => collapseRow.email === row.father))
+      return;
     if (row.father) {
       const father = auxList.find(
         (fatherRow) => fatherRow.email === row.father
@@ -81,6 +85,10 @@ const structureDataList = async (datalist: RowInterface[]): Promise<RowInterface
   return structure || null;
 };
 
+/* 
+  param = name (Henrique Dias)
+  return = acronym (HD)
+*/
 const getAcronym = (name: string) => {
   const arrName = name.toString().split(" ");
   return (
@@ -89,19 +97,43 @@ const getAcronym = (name: string) => {
   );
 };
 
+const zoomOut = (zoom: number): number => {
+  if (zoom > 50) return(zoom - 25);
+  else return zoom;
+};
+
+const zoomIn = (zoom: number): number => {
+  if (zoom < 150) return(zoom + 25);
+  else return zoom;
+};
+
+/* 
+  Count how many people are hierarchically below another node
+*/
+const countChildren = (datalist: RowInterface[], email: string) => {
+  let howMany = 0;
+
+  const findChildren = (fatherEmail: string) => {
+    datalist.map((row) => {
+      if (row.father === fatherEmail) {
+        howMany += 1;
+        findChildren(row.email)
+      }
+    })
+  }
+
+  findChildren(email);
+  return howMany;
+}
+
 const OrgChart: React.FC<PropsInterface> = (props) => {
-  const {datalist} = props;
+  const { datalist } = props;
 
   const [zoom, setZoom] = useState(75);
+
   const [datasource, setDatasource] = useState<RowInterface>();
 
-  const zoomOut = () => {
-    if (zoom > 50) setZoom(zoom - 25);
-  };
-
-  const zoomIn = () => {
-    if (zoom < 150) setZoom(zoom + 25);
-  };
+  const [collapsedNodes, setCollapsedNodes] = useState<RowInterface[]>([]);
 
   useEffect(() => {
     const startStructure = async () => {
@@ -111,13 +143,24 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
     startStructure();
   }, []);
 
+  // collapse or expand data source
+  useEffect(() => {
+    if (!collapsedNodes) return;
+    console.log({ collapsedNodes });
+    const updateStructure = async () => {
+      const ds = await structureDataList(datalist, collapsedNodes);
+      if (ds) setDatasource(ds);
+    };
+    updateStructure();
+  }, [collapsedNodes.length]);
+
   if (!datasource) return null;
   return (
     <>
       <OrganizationChart
         datasource={datasource}
         chartClass={`chart-content zoom-${zoom}`}
-        NodeTemplate={({ nodeData }: any) => (
+        NodeTemplate={({ nodeData }: { nodeData: RowInterface }) => (
           <div className="items-center gap-x-6 node-container">
             <div className="card-tag">
               <span>{getAcronym(nodeData.name)}</span>
@@ -126,8 +169,31 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
               <h3 className="card-title">{nodeData.name}</h3>
               <p className="card-subtitle">{nodeData.title}</p>
               {nodeData.children && (
-                <button type="button" onClick={() => console.log("collapse")}>
-                  <AiOutlineMinusSquare size={20} color="black" />
+                <button
+                  type="button"
+                  className="collapse-button"
+                  onClick={() => {
+                    setCollapsedNodes([...collapsedNodes, nodeData]);
+                  }}
+                >
+                  <span>{countChildren(datalist, nodeData.email)}</span>
+                  <AiOutlineMinus size={14} color="#444D61" />
+                </button>
+              )}
+              {collapsedNodes?.find((row) => row.email === nodeData.email) && (
+                <button
+                  type="button"
+                  className="collapse-button"
+                  onClick={() => {
+                    setCollapsedNodes([
+                      ...collapsedNodes.filter(
+                        (row) => row.email !== nodeData.email
+                      ),
+                    ]);
+                  }}
+                >
+                  <span>{countChildren(datalist, nodeData.email)}</span>
+                  <AiOutlinePlus size={14} color="#444D61" />
                 </button>
               )}
             </div>
@@ -138,7 +204,7 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
       <div className="zoom-panel">
         <button
           className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
-          onClick={zoomOut}
+          onClick={() => setZoom(zoomOut(zoom))}
           disabled={zoom <= 50}
         >
           <AiOutlineMinus size={20} color={zoom <= 50 ? "gray" : "black"} />
@@ -146,7 +212,7 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
         <span>{`${zoom}%`}</span>
         <button
           className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
-          onClick={zoomIn}
+          onClick={() => setZoom(zoomIn(zoom))}
           disabled={zoom >= 150}
         >
           <AiOutlinePlus size={20} color={zoom >= 150 ? "gray" : "black"} />

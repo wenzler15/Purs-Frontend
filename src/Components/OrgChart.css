@@ -98,7 +98,7 @@
 
 .oc-node:not(:only-child)::after {
   background-color: #9DADC5 !important;
-  height: 33px !important;
+  height: 20px !important;
   bottom: -30px !important;
 }
 
@@ -120,4 +120,30 @@
 
 .zoom-button {
   padding: 6px;
+}
+
+.collapse-button {
+  background: #CCD9EB;
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  width: 55px;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  left: 35%;
+  font-size: 16px;
+  color: #444D61;
+}
+
+.collapse-button > span {
+  height: 21px;
+}
+
+.collapse-button > svg {
+  background: #9DADC5;
+  border-radius: 10px;
+  padding: 4px;
+  height: 20px;
+  width: 20px;
 }
