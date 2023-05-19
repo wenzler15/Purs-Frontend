@@ -40,6 +40,30 @@ const dataList = [
     father: "ana.clara@purs",
   },
   {
+    name: "Viviane Lucas",
+    title: "Estagiária",
+    email: "viviane.lucas@purs",
+    father: "ana.clara@purs",
+  },
+  {
+    name: "Aline Silva",
+    title: "Estagiária",
+    email: "aline.silva@purs",
+    father: "patricia.silva@purs",
+  },
+  {
+    name: "Luciana Duarte",
+    title: "Estagiária",
+    email: "luciana.duarte@purs",
+    father: "aline.silva@purs",
+  },
+  {
+    name: "Paulo Gustavo",
+    title: "Estagiária",
+    email: "pauo.gustavo@purs",
+    father: "luciana.duarte@purs",
+  },
+  {
     name: "Maria Soares",
     title: "UI Designer",
     email: "maria.soares@purs",
