@@ -7,15 +7,57 @@ import Facebook from '../../../../assets/facebook.svg';
 import Instagram from '../../../../assets/instagram.svg';
 import Smile from '../../../../assets/smile.svg';
 import Lines from '../../../../assets/lines.svg';
+import { toast } from 'react-toastify';
+import api from "../../../../services/api";
 
 import { FaEye } from 'react-icons/fa';
 import { BsArrowLeftShort } from 'react-icons/bs';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Form2: React.FC = () => {
     const [passwordType, setPasswordType] = useState(false);
     const [confirmPasswordType, setConfirmPasswordType] = useState(false);
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    const location = useLocation();
     const navigate = useNavigate();
+
+    const handleCreate = async () => {
+        try {
+            if (name === "" || email === "" || password === "" || confirmPassword === "") {
+                toast.error("Favor preencher todos os dados");
+            } else if (password !== confirmPassword) {
+                toast.error("As senhas são diferentes");
+            } else {
+                const { companyName, companyArea, companySegment, companyPhone } = location.state
+
+                const body = {
+                    companyName,
+                    companyPhone,
+                    companySegment,
+                    occupation: companyArea,
+                    fullName: name,
+                    email,
+                    password
+                }
+
+                await api.post('/lead', body);
+
+                toast.success("Usuário criado com sucesso!");
+
+                navigate('/lead/uploadFile')
+            }
+        } catch (err: any) {
+            if (err.response.status === 400) {
+                toast.error("Já existe um usuário com esse e-mail, favor tente um novo");
+            } else {
+                toast.error("Tivemos um problema no nosso servidor, tente mais tarde!");
+            }
+        }
+    };
 
     return (
         <div className='w-full h-[100vh] pt-8'>
@@ -45,10 +87,10 @@ const Form2: React.FC = () => {
                         <div className='flex justify-between'>
                             <div className='mt-8 w-2/4 flex flex-col justify-start text-start mr-4'>
                                 <p>Nome e sobrenome*</p>
-                                <input className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs placeholder:text-xs h-10' placeholder='Digite seu nome e sobrenome' />
+                                <input className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs placeholder:text-xs h-10' placeholder='Digite seu nome e sobrenome' value={name} onChange={(e) => setName(e.target.value)} />
                                 <p className='mt-6'>Senha*</p>
                                 <div className='relative'>
-                                    <input type={passwordType ? 'text' : 'password'} className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs placeholder:text-xs h-10' placeholder='Crie uma senha de 8 caracteres' />
+                                    <input type={passwordType ? 'text' : 'password'} className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs placeholder:text-xs h-10' placeholder='Crie uma senha de 8 caracteres' value={password} onChange={(e) => setPassword(e.target.value)} />
                                     <span className='cursor-pointer absolute top-[51%] right-[10px] translate-y-[-50%]' onClick={() => setPasswordType(!passwordType)}>
                                         <FaEye />
                                     </span>
@@ -56,10 +98,10 @@ const Form2: React.FC = () => {
                             </div>
                             <div className='mt-8 w-2/4 flex flex-col justify-start text-start'>
                                 <p>E-mail profissional*</p>
-                                <input className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs placeholder:text-xs h-10' placeholder='Digite seu e-mail profissional' />
+                                <input className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs placeholder:text-xs h-10' placeholder='Digite seu e-mail profissional' value={email} onChange={(e) => setEmail(e.target.value)} />
                                 <p className='mt-6'>Confirme a senha*</p>
                                 <div className='relative'>
-                                    <input type={confirmPasswordType ? 'text' : 'password'} className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs placeholder:text-xs h-10' placeholder='Confirme sua senha' />
+                                    <input type={confirmPasswordType ? 'text' : 'password'} className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs placeholder:text-xs h-10' placeholder='Confirme sua senha' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                                     <span className='cursor-pointer absolute top-[51%] right-[10px] translate-y-[-50%]' onClick={() => setConfirmPasswordType(!confirmPasswordType)}>
                                         <FaEye />
                                     </span>
@@ -71,7 +113,7 @@ const Form2: React.FC = () => {
                                 <BsArrowLeftShort size={25} />
                                 <p className='text-sm mt-1 ml-[-5px]'>Voltar</p>
                             </div>
-                            <div className='rounded-lg bg-purple-purs mt-4 p-2 w-36 text-center cursor-pointer' onClick={() => navigate('/lead/uploadFile')}>
+                            <div className='rounded-lg bg-purple-purs mt-4 p-2 w-36 text-center cursor-pointer' onClick={() => handleCreate()}>
                                 <p className='text-[#fff] text-sm mt-1'>Criar organograma</p>
                             </div>
                         </div>

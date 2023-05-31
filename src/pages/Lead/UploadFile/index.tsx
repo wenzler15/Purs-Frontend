@@ -8,6 +8,8 @@ import Instagram from '../../../assets/instagram.svg';
 import Smile from '../../../assets/smile.svg';
 import Lines from '../../../assets/lines.svg';
 import { FileUploader } from 'react-drag-drop-files';
+import Modelo from '../../../assets/files/modelo.xlsx';
+import { toast } from 'react-toastify';
 
 import { BsArrowLeftShort } from 'react-icons/bs';
 import { AiOutlineDownload } from 'react-icons/ai';
@@ -21,9 +23,16 @@ const UploadFile: React.FC = () => {
     const navigate = useNavigate();
 
     const handleChange = (file: File) => {
-        console.log("file", file);
         setFileSelected(file)
     };
+
+    const handleChart = async () => {
+        if (fileSelected) {
+            navigate('/chart', { state: { fileSelected } });
+        } else {
+            toast.error("Favor adicione um arquivo!")
+        }
+    }
 
     return (
         <div className='w-full h-[100vh] pt-8'>
@@ -54,10 +63,12 @@ const UploadFile: React.FC = () => {
                             <p className='text-[#5E718D] text-sm'>Faça download do modelo do arquivo e preencha as informações dos seus funcionários, em seguida carregue o arquivo aqui.</p>
                         </div>
                         <div className='flex justify-center'>
-                            <div className='cursor-pointer border w-[270] mt-8 border-[#D7DFE9] rounded-md p-2 flex'>
-                                <AiOutlineDownload size={20} color={'#455468'} />
-                                <p className='text-sm ml-2'>Baixar modelo</p>
-                            </div>
+                            <a href={Modelo} download>
+                                <div className='cursor-pointer border w-[270] mt-8 border-[#D7DFE9] rounded-md p-2 flex'>
+                                    <AiOutlineDownload size={20} color={'#455468'} />
+                                    <p className='text-sm ml-2'>Baixar modelo</p>
+                                </div>
+                            </a>
                         </div>
                         <div className='mt-4 w-full flex justify-center'>
                             <FileUploader label='Arraste e solte seu arquivo aqui' handleChange={handleChange} name="file" types={fileTypes} />
@@ -67,7 +78,7 @@ const UploadFile: React.FC = () => {
                                 <BsArrowLeftShort size={25} />
                                 <p className='text-sm mt-1 ml-[-5px]'>Voltar</p>
                             </div>
-                            <div className='rounded-lg bg-purple-purs mt-4 p-2 w-36 text-center cursor-pointer' onClick={() => navigate('/chart')}>
+                            <div className='rounded-lg bg-purple-purs mt-4 p-2 w-36 text-center cursor-pointer' onClick={() => handleChart()}>
                                 <p className='text-[#fff] text-sm mt-1'>Importar arquivo</p>
                             </div>
                         </div>

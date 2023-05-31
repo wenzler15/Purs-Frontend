@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../Components/Header";
 import {
   AiOutlineDownload,
 } from "react-icons/ai";
 import NavBar from "../../Components/NavBar";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import OrgChart from "../../Components/OrgChart";
 
@@ -84,6 +85,13 @@ const dataList = [
 ] as RowInterface[];
 
 const ChartPage: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log('ger', location.state.fileSelected)
+  }, []);
+
   return (
     <div className="flex h-screen overflow-hidden">
       <div className="w-1/6">

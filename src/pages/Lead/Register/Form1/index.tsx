@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../../../../assets/logo.png';
 import RectanglePurs from '../../../../assets/rectanglePurs.png';
 import Twitter from '../../../../assets/twitter.svg';
@@ -7,13 +7,33 @@ import Facebook from '../../../../assets/facebook.svg';
 import Instagram from '../../../../assets/instagram.svg';
 import Smile from '../../../../assets/smile.svg';
 import Lines from '../../../../assets/lines.svg';
+import { toast } from 'react-toastify';
+
 import { useNavigate } from "react-router-dom";
 
 const Form1: React.FC = () => {
+    const [companyName, setCompanyName] = useState("");
+    const [companyPhone, setCompanyPhone] = useState("");
+    const [companyArea, setCompanyArea] = useState("0");
+    const [companySegment, setCompanySegment] = useState("0");
+
     const navigate = useNavigate();
 
     const nextStep = async () => {
-        navigate('/lead/register2')
+        if (companyName !== "" && companyPhone !== "" && companyArea !== "" && companySegment !== "") {
+            navigate('/lead/register2', { state: { companyName, companyPhone, companyArea, companySegment } })
+        } else {
+            toast.error("Favor preencher todos os campos");
+        }
+    }
+
+    const formatNumber = async (value: string) => {
+        if (!value) return ""
+        value = value.replace(/\D/g, '');
+        value = value.replace(/(\d{2})(\d)/, "($1) $2");
+        value = value.replace(/(\d)(\d{4})$/, "$1-$2");
+
+        setCompanyPhone(value)
     }
 
     return (
@@ -44,34 +64,34 @@ const Form1: React.FC = () => {
                         <div className='flex justify-between'>
                             <div className='mt-8 w-2/4 flex flex-col justify-start text-start'>
                                 <p>Nome da empresa*</p>
-                                <input className='border-blue-purs border w-11/12 rounded-lg mt-1.5 pl-2 text-blue-purs placeholder:text-xs h-10' placeholder='Digite o nome da sua empresa' />
+                                <input className='border-blue-purs border w-11/12 rounded-lg mt-1.5 pl-2 text-blue-purs placeholder:text-xs h-10' placeholder='Digite o nome da sua empresa' value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
                                 <p className='mt-6'>Área de atuação*</p>
-                                <select className='border-blue-purs border w-11/12 rounded-lg mt-1.5 pl-2 text-blue-purs h-10 text-sm'>
+                                <select className='border-blue-purs border w-11/12 rounded-lg mt-1.5 pl-2 text-blue-purs h-10 text-sm' value={companyArea} onChange={(e) => setCompanyArea(e.target.value)}>
                                     <option value='0' className='text-xs'>Selecione...</option>
-                                    <option value='A' className='text-xs'>Recursos humanos</option>
-                                    <option value='B' className='text-xs'>Comercial</option>
-                                    <option value='C' className='text-xs'>Marketing</option>
-                                    <option value='A' className='text-xs'>Tecnologia</option>
-                                    <option value='B' className='text-xs'>Logística</option>
-                                    <option value='C' className='text-xs'>Administrativo</option>
-                                    <option value='A' className='text-xs'>Financeiro</option>
-                                    <option value='B' className='text-xs'>Operações</option>
-                                    <option value='C' className='text-xs'>Atendimento ao cliente</option>
-                                    <option value='C' className='text-xs'>Outros</option>
+                                    <option value='Recursos humanos' className='text-xs'>Recursos humanos</option>
+                                    <option value='Comercial' className='text-xs'>Comercial</option>
+                                    <option value='Marketing' className='text-xs'>Marketing</option>
+                                    <option value='Tecnologia' className='text-xs'>Tecnologia</option>
+                                    <option value='Logística' className='text-xs'>Logística</option>
+                                    <option value='Administrativo' className='text-xs'>Administrativo</option>
+                                    <option value='Financeiro' className='text-xs'>Financeiro</option>
+                                    <option value='Operações' className='text-xs'>Operações</option>
+                                    <option value='Atendimento ao cliente' className='text-xs'>Atendimento ao cliente</option>
+                                    <option value='Outros' className='text-xs'>Outros</option>
                                 </select>
                             </div>
                             <div className='mt-8 w-2/4 flex flex-col justify-start text-start'>
                                 <p>Telefone da empresa*</p>
-                                <input className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs placeholder:text-xs h-10' placeholder='Digite seu telefone' />
+                                <input className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs placeholder:text-xs h-10' placeholder='Digite seu telefone' value={companyPhone} onChange={(e) => formatNumber(e.target.value)} />
                                 <p className='mt-6'>Segmento da empresa*</p>
-                                <select className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs h-10 text-sm'>
+                                <select className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs h-10 text-sm' value={companySegment} onChange={(e) => setCompanySegment(e.target.value)}>
                                     <option value='0' className='text-xs'>Selecione...</option>
-                                    <option value='A' className='text-xs'>Indústria</option>
-                                    <option value='B' className='text-xs'>Comércio</option>
-                                    <option value='C' className='text-xs'>Prestação de serviço</option>
-                                    <option value='C' className='text-xs'>Setor público</option>
-                                    <option value='C' className='text-xs'>Organização sem fins lucrativos</option>
-                                    <option value='C' className='text-xs'>Outros</option>
+                                    <option value='Indústria' className='text-xs'>Indústria</option>
+                                    <option value='Comércio' className='text-xs'>Comércio</option>
+                                    <option value='Prestação de serviço' className='text-xs'>Prestação de serviço</option>
+                                    <option value='Setor público' className='text-xs'>Setor público</option>
+                                    <option value='Organização sem fins lucrativos' className='text-xs'>Organização sem fins lucrativos</option>
+                                    <option value='Outros' className='text-xs'>Outros</option>
                                 </select>
                             </div>
                         </div>
