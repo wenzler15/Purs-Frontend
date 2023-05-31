@@ -15,7 +15,7 @@ import { BsArrowLeftShort } from 'react-icons/bs';
 import { AiOutlineDownload } from 'react-icons/ai';
 import { useNavigate } from "react-router-dom";
 
-const fileTypes = ["CSV", "XLS", "XLSX"]
+const fileTypes = ["CSV", "XLSX"]
 
 const UploadFile: React.FC = () => {
     const [fileSelected, setFileSelected] = useState<File>();

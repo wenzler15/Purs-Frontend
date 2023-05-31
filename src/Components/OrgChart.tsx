@@ -26,38 +26,8 @@ type PropsInterface = {
 /*
   This is the resulting excel data structure
 
-  const dataList = [
-    { name: "Tamara Santos", title: "Designer", email: "tamara.santos@purs" },
-    { name: "João Alves", title: "UI Designer", email: "joao.alvez@purs", father: "tamara.santos@purs" },
-    { name: "Ana Clara", title: "Estagiária", email: "ana.clara@purs", father: "joao.alvez@purs" },
-    { name: "Patricia Silva", title: "Estagiária", email: "patricia.silva@purs", father: "ana.clara@purs" },
-    { name: "Maria Soares", title: "UI Designer", email: "maria.soares@purs", father: "tamara.santos@purs" },
-    { name: "Rebecka Nunes", title: "UI Designer", email: "rebecka.nunes@purs", father: "tamara.santos@purs" },
-  ];
-
   This is the data structure expected by the lib
 
-  const ds = {
-    name: "Tamara Santos",
-    title: "Designer",
-    children: [
-      { name: "João Alves", title: "UI Designer" },
-      {
-        name: "João Alves",
-        title: "UI Designer",
-        children: [
-          {
-            name: "Ana Clara",
-            title: "Estagiária",
-            children: [
-              { name: "Ana Clara", title: "Estagiária" },
-            ],
-          },
-          { name: "Ana Clara", title: "Estagiária" },
-        ],
-      },
-      { name: "Maria Soares", title: "UI Designer" },
-    ],
   };
 */
 
@@ -98,12 +68,12 @@ const getAcronym = (name: string) => {
 };
 
 const zoomOut = (zoom: number): number => {
-  if (zoom > 50) return(zoom - 25);
+  if (zoom > 50) return (zoom - 25);
   else return zoom;
 };
 
 const zoomIn = (zoom: number): number => {
-  if (zoom < 150) return(zoom + 25);
+  if (zoom < 150) return (zoom + 25);
   else return zoom;
 };
 
@@ -146,7 +116,6 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
   // collapse or expand data source
   useEffect(() => {
     if (!collapsedNodes) return;
-    console.log({ collapsedNodes });
     const updateStructure = async () => {
       const ds = await structureDataList(datalist, collapsedNodes);
       if (ds) setDatasource(ds);
