@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import Logo from '../../../../assets/logo.png';
+import Logo from '../../../../assets/logo-white.png';
 import RectanglePurs from '../../../../assets/rectanglePurs.png';
 import Twitter from '../../../../assets/twitter.svg';
 import Email from '../../../../assets/email.svg';
 import Facebook from '../../../../assets/facebook.svg';
 import Instagram from '../../../../assets/instagram.svg';
-import Smile from '../../../../assets/smile.svg';
-import Lines from '../../../../assets/lines.svg';
+import Smile from '../../../../assets/smile-white.svg';
 import { toast } from 'react-toastify';
 
 import { useNavigate } from "react-router-dom";
@@ -35,22 +34,21 @@ const Form1: React.FC = () => {
 
         setCompanyPhone(value)
     }
-
+    
     return (
-        <div className='w-full h-[100vh] pt-8'>
-            <div className='w-full h-[7%] p-2 flex items-end justify-end'>
-                <div className='w-7/12 flex items-end justify-between'>
+        <div className='w-full h-[100vh] pt-8 bg-gradient-to-b from-[#7144C0] to-[#A0D5DA]'>
+            <div className='w-full h-[7%] p-2 flex items-end pl-8'>
+                <div className='w-full flex items-end justify-between'>
                     <img src={Logo} className='w-28' />
-                    <div className='bg-purple-purs p-2 w-20 rounded-md cursor-pointer h-10 mb-[15px] mr-16'>
+                    <div className='bg-purple-purs p-2 w-20 rounded-md cursor-pointer h-10 mb-[15px] mr-16 text-center'>
                         <p className='text-[#fff]'>Contato</p>
                     </div>
                 </div>
             </div>
-            <div className='w-full bg-gradient-to-b from-[#B8E6F6] to-[#D2B4F5] h-[80%] text-center pt-4'>
+            <div className='w-full h-[80%] text-center pt-4'>
                 <div className='flex justify-center'>
                     <div className='mt-6 mr-6 items-end flex flex-col'>
-                        <p className='text-2xl'>Crie seu organograma gratuito</p>
-                        <img src={Lines} className='w-26' />
+                        <p className='text-2xl text-[#fff]'>Crie seu organograma gratuito</p>
                     </div>
                     <div>
                         <img src={Smile} />

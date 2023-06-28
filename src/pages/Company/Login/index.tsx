@@ -53,7 +53,7 @@ const Login: React.FC = () => {
                 <div className='rounded-2xl bg-purple-purs mt-4 p-2 w-2/5 text-center cursor-pointer' onClick={() => handleLogin()}>
                     <p className='text-[#fff] text-sm'>Avançar</p>
                 </div>
-                <p className='text-blue-purs text-sm mt-5 cursor-pointer' onClick={() => navigate('/company/register')}>Não tem uma conta? Cadastre-se!</p>
+                <p className='text-blue-purs text-sm mt-5 cursor-pointer' onClick={() => navigate('/lead/register')}>Não tem uma conta? Cadastre-se!</p>
             </div>
         </div>
     );

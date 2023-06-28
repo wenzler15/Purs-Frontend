@@ -5,7 +5,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 
 const Header: React.FC = () => {
     return (
-        <div className='w-full flex justify-between pl-5 pr-10 pt-5 bg-[#F9FAFB] h-[80px] border-b border-gray-500 pb-5'>
+        <div className='w-full flex justify-between pl-5 pr-10 pt-5 bg-[#7144C0] h-[80px] border-b border-gray-500 pb-5'>
             <div className='flex'>
                 <img src={RectanglePurs} className='w-12 mr-10' />
                 <HiOutlineMagnifyingGlass size={20} className='mt-2 mr-3 cursor-pointer' />
@@ -17,7 +17,7 @@ const Header: React.FC = () => {
                 <IoIosArrowDown size={20} className='' />
             </div>
         </div>
-    );
+    )
 }
 
 export default Header;

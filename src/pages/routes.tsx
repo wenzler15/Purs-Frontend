@@ -14,9 +14,9 @@ export function AppRoutes() {
         <Router>
             <Routes>
                 <Route path='/' element={< Login />} />
-                <Route path='/company/register' element={< RegisterCompany />} />
+                {/* <Route path='/company/register' element={< RegisterCompany />} />
                 <Route path='/company/forgetPassword' element={< ForgetPasswordCompany />} />
-                <Route path='/company/resetPassword' element={< ResetCompanyPassword />} />
+                <Route path='/company/resetPassword' element={< ResetCompanyPassword />} /> */}
                 <Route path='/lead/register' element={<Form1 />} />
                 <Route path='/lead/register2' element={<Form2 />} />
                 <Route path='/lead/uploadFile' element={<UploadFile />} />
