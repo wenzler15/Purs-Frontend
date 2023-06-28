@@ -7,6 +7,7 @@ import NavBar from "../../Components/NavBar";
 import { useNavigate, useLocation } from "react-router-dom";
 import * as XLSX from 'xlsx';
 import * as csvtojson from 'csvtojson';
+import html2canvas from "html2canvas";
 
 import OrgChart from "../../Components/OrgChart";
 
@@ -93,6 +94,26 @@ const ChartPage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const handleComponentDownload = () => {
+    const componentId = 'org';
+    const filename = 'organograma.png';
+
+    const component = document.getElementById(componentId);
+
+    if (component) {
+      html2canvas(component)
+        .then(canvas => {
+          const url = canvas.toDataURL('image/png');
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        })
+    }
+  }
+
   const formatTeamArray = async () => {
     const finalArray: RowInterface[] = [];
     teamJson.map((item: any) => {
@@ -159,13 +180,13 @@ const ChartPage: React.FC = () => {
         <Header />
         <div className="w-full bg-[#E4ECF5] h-full pt-10 pl-4 pr-4 box-border">
           <div className="flex">
-            <div className="flex w-[200] bg-purple-purs p-2 rounded-md cursor-pointer">
+            <div className="flex w-[200] bg-purple-purs p-2 rounded-md cursor-pointer" onClick={() => handleComponentDownload()}>
               <AiOutlineDownload size={20} color={"#fff"} />
               <p className="text-[#fff] ml-2 text-sm"> Exportar</p>
             </div>
           </div>
           <div className="w-full h-full mt-10">
-            <div className="bg-[#fff] w-full h-4/5 rounded-md">
+            <div className="bg-[#fff] w-full h-4/5 rounded-md" id="org">
 
               {dataList?.length > 0 && dataList !== undefined ? (
                 <OrgChart datalist={dataList} />
