@@ -25,9 +25,10 @@ const Login: React.FC = () => {
                     password
                 }
 
-                const response = await api.post("/companiesAuth", body);
+                const response = await api.post("/leadAuth", body);
 
                 localStorage.setItem('pursToken', response.data.token);
+                navigate("/lead/uploadFile")
             } catch (err: any) {
                 toast.error(err.response.data.message)
             }

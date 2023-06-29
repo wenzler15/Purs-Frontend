@@ -157,8 +157,6 @@ const ChartPage: React.FC = () => {
     reader.readAsText(file);
   };
 
-
-
   const formatFile = async () => {
     if (location.state.fileSelected.name.split('.')[1] === 'xlsx') {
       convertXLSXtoJson(location.state.fileSelected);
@@ -178,7 +176,7 @@ const ChartPage: React.FC = () => {
       </div>
       <div className="w-full">
         <Header />
-        <div className="w-full bg-[#E4ECF5] h-full pt-10 pl-4 pr-4 box-border">
+        <div className="w-full bg-gradient-to-b from-[#8B95CE] to-[#DBF4FA] h-full pt-10 pl-4 pr-4 box-border">
           <div className="flex">
             <div className="flex w-[200] bg-purple-purs p-2 rounded-md cursor-pointer" onClick={() => handleComponentDownload()}>
               <AiOutlineDownload size={20} color={"#fff"} />
@@ -186,8 +184,9 @@ const ChartPage: React.FC = () => {
             </div>
           </div>
           <div className="w-full h-full mt-10">
+            <p>Total: {dataList?.length}</p>
             <div className="bg-[#fff] w-full h-4/5 rounded-md" id="org">
-
+            
               {dataList?.length > 0 && dataList !== undefined ? (
                 <OrgChart datalist={dataList} />
               ) : (

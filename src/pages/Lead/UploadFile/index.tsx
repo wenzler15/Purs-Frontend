@@ -39,7 +39,9 @@ const UploadFile: React.FC = () => {
                 <div className='w-full flex items-end justify-between'>
                     <img src={Logo} className='w-28' />
                     <div className='bg-purple-purs p-2 w-20 rounded-md cursor-pointer h-10 mb-[15px] mr-16 text-center'>
-                        <p className='text-[#fff]'>Contato</p>
+                        <a target='_blank' href='https://wa.me//11971713199'>
+                            <p className='text-[#fff]'>Contato</p>
+                        </a>
                     </div>
                 </div>
             </div>

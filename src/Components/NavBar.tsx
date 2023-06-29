@@ -31,7 +31,9 @@ const NavBar: React.FC = () => {
                         <p className='text-xs text-grey-purs mt-2'>Obtenha respostas rapidamente sobre recursos do produto, preços e muito mais.</p>
                     </div>
                     <div className='bg-purple-purs w-2/3 rounded-md text-center mt-3 mb-3 cursor-pointer'>
-                        <p className='text-xs text-[#fff] p-1'>Enviar mensagem</p>
+                        <a target='_blank' href='https://wa.me//11971713199'>
+                            <p className='text-xs text-[#fff] p-1'>Enviar mensagem</p>
+                        </a>
                     </div>
                 </div>
             </div>
