@@ -49,7 +49,7 @@ const Login: React.FC = () => {
                     <input className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs' onChange={(e) => setEmail(e.target.value)} />
                     <p className='text-blue-purs text-sm mt-4'>Senha</p>
                     <input className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs' type='password' onChange={(e) => setPassword(e.target.value)} />
-                    <p className='text-xs mt-1.5 text-grey-purs cursor-pointer' onClick={() => navigate('/company/forgetPassword')}>Esqueceu sua senha?</p>
+                    {/* <p className='text-xs mt-1.5 text-grey-purs cursor-pointer' onClick={() => navigate('/company/forgetPassword')}>Esqueceu sua senha?</p> */}
                 </div>
                 <div className='rounded-2xl bg-purple-purs mt-4 p-2 w-2/5 text-center cursor-pointer' onClick={() => handleLogin()}>
                     <p className='text-[#fff] text-sm'>Avançar</p>
