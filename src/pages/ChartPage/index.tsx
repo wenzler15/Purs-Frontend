@@ -101,6 +101,7 @@ const ChartPage: React.FC = () => {
     const component = document.getElementById(componentId);
 
     if (component) {
+      component.style.display = 'block';
       html2canvas(component)
         .then(canvas => {
           const url = canvas.toDataURL('image/png');
@@ -111,6 +112,7 @@ const ChartPage: React.FC = () => {
           a.click();
           document.body.removeChild(a);
         })
+      component.style.display = 'none';
     }
   }
 
@@ -184,11 +186,17 @@ const ChartPage: React.FC = () => {
             </div>
           </div>
           <div className="w-full h-full mt-10">
-            <p>Total: {dataList?.length}</p>
-            <div className="bg-[#fff] w-full h-4/5 rounded-md" id="org">
-            
+            <div className="bg-[#fff] w-full h-4/5 rounded-md hidden" id="org">
               {dataList?.length > 0 && dataList !== undefined ? (
                 <OrgChart datalist={dataList} />
+              ) : (
+                <div> </div>
+              )}
+            </div>
+            <p>Total: {dataList?.length}</p>
+            <div className="bg-[#fff] w-[91%] h-4/5 rounded-md">
+              {dataList?.length > 0 && dataList !== undefined ? (
+                <OrgChart datalist={dataList} showCollapse />
               ) : (
                 <div> </div>
               )}

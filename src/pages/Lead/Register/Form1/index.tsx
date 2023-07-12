@@ -34,14 +34,14 @@ const Form1: React.FC = () => {
 
         setCompanyPhone(value)
     }
-    
+
     return (
         <div className='w-full h-[100vh] pt-8 bg-gradient-to-b from-[#7144C0] to-[#A0D5DA]'>
             <div className='w-full h-[7%] p-2 flex items-end pl-8'>
                 <div className='w-full flex items-end justify-between'>
                     <img src={Logo} className='w-28' />
                     <div className='bg-purple-purs p-2 w-20 rounded-md cursor-pointer h-10 mb-[15px] mr-16 text-center'>
-                        <a target='_blank' href='https://wa.me//11971713199'>
+                        <a target='_blank' href='https://wa.me/11952866259'>
                             <p className='text-[#fff]'>Contato</p>
                         </a>
                     </div>
@@ -110,9 +110,9 @@ const Form1: React.FC = () => {
                 </div>
                 <div className='flex w-[150px] justify-between'>
                     <img src={Email} className='cursor-pointer' />
-                    <img src={Twitter} className='cursor-pointer' />
+                    {/* <img src={Twitter} className='cursor-pointer' />
                     <img src={Facebook} className='cursor-pointer' />
-                    <img src={Instagram} className='cursor-pointer' />
+                    <img src={Instagram} className='cursor-pointer' /> */}
                 </div>
             </div>
         </div>
