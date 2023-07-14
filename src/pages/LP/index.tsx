@@ -4,6 +4,7 @@ import Rectangle from '../../assets/rectangle.png';
 import RectangleComplete from '../../assets/rectangleComplete.png';
 import Woman from '../../assets/woman2.png';
 import Macbook from '../../assets/macbook.png';
+import OrgChartImage from '../../assets/orgchart.png';
 
 const LP: React.FC = () => {
     return (
@@ -25,21 +26,23 @@ const LP: React.FC = () => {
                     </div>
                     <div className='w-[25%] bg-[#fff] rounded-md p-5 text-center shadow-lg'>
                         <p className='text-[#3E79A5] text-2xl'>Fale com um Especialista</p>
-                        <div className='w-full text-left'>
-                            <p>Nome *</p>
-                            <input placeholder='Digite seu nome' className='mt-3 mb-4 border rounded-md p-2 w-[80%]' />
-                            <p>E-mail *</p>
-                            <input placeholder='Digite seu nome' className='mt-3 mb-4 border rounded-md p-2 w-[80%]' />
-                            <p>Empresa *</p>
-                            <input placeholder='Digite seu nome' className='mt-3 mb-4 border rounded-md p-2 w-[80%]' />
-                            <p>Telefone *</p>
-                            <input placeholder='Digite seu nome' className='mt-3 mb-4 border rounded-md p-2 w-[80%]' />
+                        <div className='w-full flex flex-col items-center text-left'>
+                            <div className='w-[90%] mt-4'>
+                                <p className='text-[#3E79A5]'>Nome *</p>
+                                <input placeholder='Digite seu nome' className='mt-3 mb-4 border rounded-md p-2 w-full' />
+                                <p className='text-[#3E79A5]'>E-mail *</p>
+                                <input placeholder='Digite seu nome' className='mt-3 mb-4 border rounded-md p-2 w-full' />
+                                <p className='text-[#3E79A5]'>Empresa *</p>
+                                <input placeholder='Digite seu nome' className='mt-3 mb-4 border rounded-md p-2 w-full' />
+                                <p className='text-[#3E79A5]'>Telefone *</p>
+                                <input placeholder='Digite seu nome' className='mt-3 mb-4 border rounded-md p-2 w-full' />
+                            </div>
                         </div>
                         <button className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-2'>Falar com um especialista</button>
                     </div>
                 </div>
             </div>
-            <div className='w-full h-[35vh] bg-gradient-to-r from-[#5B359E] to-[#14E1B0] text-center pt-6'>
+            <div className='w-full h-[30vh] bg-gradient-to-r from-[#5B359E] to-[#14E1B0] text-center pt-6'>
                 <p className='text-[#fff] text-3xl'>A Purs chega em...</p>
                 <div className='flex w-full justify-center mt-6'>
                     <div className='mr-10'>
@@ -77,7 +80,7 @@ const LP: React.FC = () => {
                     <button className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-6'>Falar com um especialista</button>
                 </div>
             </div>
-            <div className='w-full pt-10 bg-[#5B359E] flex justify-between'>
+            <div className='w-full pt-10 bg-[#5B359E] flex justify-between pb-10'>
                 <div className='w-[70%] text-center mt-[5%] pl-10'>
                     <div className='w-[90%] text-left'>
                         <p className='text-[#B8E6F6] text-2xl'>Por que escolher a Purs?</p>
@@ -104,6 +107,33 @@ const LP: React.FC = () => {
                     <img src={Macbook} className='absolute top-[20%] ml-[-20px] z-10 w-[70%] max-w-[400px] sm:w-[98%]' />
                     <img src={RectangleComplete} className='top-[14%] relative w-[70%] max-w-[400px] sm:w-[90%]' />
                 </div>
+            </div>
+            <div className='w-full h-[25vh] bg-gradient-to-r from-[#5B359E] to-[#14E1B0] flex flex-col items-center pt-6'>
+                <div className='w-[70%] mt-6'>
+                    <p className='text-[#B8E6F6] text-3xl text-center'>"Colaboradores que se sentem valorizados e têm a oportunidade de desenvolver suas habilidades são 21% mais produtivos"</p>
+                    <p className='text-[#fff] mt-5 text-lg text-center'>Publicado em 2019, com o título "Reimagining the Employee Experience: A Capabilities- Driven Approach"</p>
+                </div>
+                <button className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-10'>Falar com um especialista</button>
+            </div>
+            <div className='w-full pt-10 bg-[#5B359E] pb-10 flex flex-col items-center'>
+                <p className='text-[#B8E6F6] text-4xl'>Conheça Nossos Produtos</p>
+                <div className='w-full flex justify-between'>
+                    <img src={OrgChartImage} className='w-1/2' />
+                    <div className='w-1/2 p-10 mt-36'>
+                        <p className='text-[#B8E6F6] text-3xl'>Organograma</p>
+                        <p className='text-[#fff] mt-10 font-bold text-2xl'>Simplifique a visualização e estrutura organizacional com nosso organograma automático!</p>
+                        <p className='text-[#fff] mt-10 text-xl'>De maneira rápida, nosso organograma gera automaticamente a estrutura da sua empresa através de um modelo de planilha disponibilizado na plataforma</p>
+                        <p className='text-[#fff] mt-10 font-bold text-2xl'>Teste agora o organograma gratuito!</p>
+                        <div className='flex'>
+                            <button className='bg-[#fff] mr-10 text-[##5B359E] p-3 rounded-lg mt-10'>Fazer Organograma gratuito</button>
+                            <button className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-10'>Falar com um especialista</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className='w-full flex flex-col items-center pt-10 pb-5'>
+                <p className='text-[#3E79A5] text-lg'>Termos de política e privacidade</p>
+                <p className='text-[#3E79A5] text-lg mt-5'>Purs Sistema SAAS | Copyright 2023</p>
             </div>
         </div>
     );
