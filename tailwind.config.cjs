@@ -10,6 +10,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         'gradient-purs': "url('/background-gradient.png')",
+        'woman': "url('/woman.png')"
       },
     },
     textColor: {
