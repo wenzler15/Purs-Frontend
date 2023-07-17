@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -85,17 +85,6 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
 
   const [collapsedNodes, setCollapsedNodes] = useState<RowInterface[]>([]);
 
-  const itemRef = useRef(null);
-
-  useEffect(() => {
-    if (itemRef.current) {
-      itemRef.current.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center' // ou 'start' para alinhar no início do contêiner
-      });
-    }
-  });
-
   useEffect(() => {
     const startStructure = async () => {
       const ds = await structureDataList(datalist);
@@ -113,96 +102,65 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
     updateStructure();
   }, [collapsedNodes.length]);
 
-  const orgchart = useRef();
+  useEffect(() => {
+    funcao()
+  }, [collapsedNodes.length]);
 
-  const exportTo = () => {
-    orgchart.current.exportTo("organization_chart", "png");
-  };
+  const funcao = async () => {
+    const buttonCollapse = document.getElementById('teste');
 
+    if (buttonCollapse) {
+      buttonCollapse.click();
+    }
+  }
 
   if (!datasource) return null;
   return (
     <>
       <OrganizationChart
         datasource={datasource}
-        ref={orgchart}
         chartClass={`chart-content zoom-${zoom}`}
         NodeTemplate={({ nodeData }: { nodeData: RowInterface }) => (
-          <div className="items-center gap-x-6 w-full node-container overflow-x-scroll">
+          <div className="items-center gap-x-6 w-full node-container">
             <div className="card-tag">
               <span>{getAcronym(nodeData.name)}</span>
             </div>
-            {nodeData.name === 'GABRIEL VINICIUS CARVALHO GRANJEIRO' ? (
-              <div className="node-card" ref={itemRef}>
-                <h3 className="card-title">{nodeData.name}</h3>
-                <p className="card-subtitle">{nodeData.title}</p>
-                {nodeData.children && showCollapse ? (
-                  <button
-                    type="button"
-                    className="collapse-button"
-                    onClick={() => {
-                      setCollapsedNodes([...collapsedNodes, nodeData]);
-                    }}
-                  >
-                    <span>{countChildren(datalist, nodeData.email)}</span>
-                    <AiOutlineMinus size={14} color="#444D61" />
-                  </button>
-                ) : (
-                  <></>
-                )}
-                {collapsedNodes?.find((row) => row.email === nodeData.email) && (
-                  <button
-                    type="button"
-                    className="collapse-button"
-                    onClick={() => {
-                      setCollapsedNodes([
-                        ...collapsedNodes.filter(
-                          (row) => row.email !== nodeData.email
-                        ),
-                      ]);
-                    }}
-                  >
-                    <span>{countChildren(datalist, nodeData.email)}</span>
-                    <AiOutlinePlus size={14} color="#444D61" />
-                  </button>
-                )}
-              </div>
-            ) : (
-              <div className="node-card">
-                <h3 className="card-title">{nodeData.name}</h3>
-                <p className="card-subtitle">{nodeData.title}</p>
-                {nodeData.children && showCollapse ? (
-                  <button
-                    type="button"
-                    className="collapse-button"
-                    onClick={() => {
-                      setCollapsedNodes([...collapsedNodes, nodeData]);
-                    }}
-                  >
-                    <span>{countChildren(datalist, nodeData.email)}</span>
-                    <AiOutlineMinus size={14} color="#444D61" />
-                  </button>
-                ) : (
-                  <></>
-                )}
-                {collapsedNodes?.find((row) => row.email === nodeData.email) && (
-                  <button
-                    type="button"
-                    className="collapse-button"
-                    onClick={() => {
-                      setCollapsedNodes([
-                        ...collapsedNodes.filter(
-                          (row) => row.email !== nodeData.email
-                        ),
-                      ]);
-                    }}
-                  >
-                    <span>{countChildren(datalist, nodeData.email)}</span>
-                    <AiOutlinePlus size={14} color="#444D61" />
-                  </button>
-                )}
-              </div>
-            )}
+            <div className="node-card">
+              <h3 className="card-title">{nodeData.name}</h3>
+              <p className="card-subtitle">{nodeData.title}</p>
+              {nodeData.children && showCollapse ? (
+                <button
+                  type="button"
+                  className="collapse-button"
+                  onClick={() => {
+                    setCollapsedNodes([...collapsedNodes, nodeData]);
+                  }}
+                  id="teste"
+                >
+                  <span>{countChildren(datalist, nodeData.email)}</span>
+                  <AiOutlineMinus size={14} color="#444D61" />
+                </button>
+              ) : (
+                <></>
+              )}
+              {collapsedNodes?.find((row) => row.email === nodeData.email) && (
+                <button
+                  type="button"
+                  className="collapse-button"
+                  onClick={() => {
+                    setCollapsedNodes([
+                      ...collapsedNodes.filter(
+                        (row) => row.email !== nodeData.email
+                      ),
+                    ]);
+                  }}
+                >
+                  <span>{countChildren(datalist, nodeData.email)}</span>
+                  <AiOutlinePlus size={14} color="#444D61" />
+                </button>
+              )}
+            </div>
+
           </div>
         )}
         collapsible={false}
@@ -228,12 +186,6 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
       ) : (
         <> </>
       )}
-      <button
-        onClick={exportTo}
-        style={{ marginLeft: "2rem" }}
-      >
-        Export
-      </button>
     </>
   );
 };

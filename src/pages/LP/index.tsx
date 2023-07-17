@@ -31,11 +31,11 @@ const LP: React.FC = () => {
                                 <p className='text-[#3E79A5]'>Nome *</p>
                                 <input placeholder='Digite seu nome' className='mt-3 mb-4 border rounded-md p-2 w-full' />
                                 <p className='text-[#3E79A5]'>E-mail *</p>
-                                <input placeholder='Digite seu nome' className='mt-3 mb-4 border rounded-md p-2 w-full' />
+                                <input placeholder='Digite ser e-mail' className='mt-3 mb-4 border rounded-md p-2 w-full' />
                                 <p className='text-[#3E79A5]'>Empresa *</p>
-                                <input placeholder='Digite seu nome' className='mt-3 mb-4 border rounded-md p-2 w-full' />
+                                <input placeholder='Digite o nome da sua empresa' className='mt-3 mb-4 border rounded-md p-2 w-full' />
                                 <p className='text-[#3E79A5]'>Telefone *</p>
-                                <input placeholder='Digite seu nome' className='mt-3 mb-4 border rounded-md p-2 w-full' />
+                                <input placeholder='(00) 0000-0000' className='mt-3 mb-4 border rounded-md p-2 w-full' />
                             </div>
                         </div>
                         <button className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-2'>Falar com um especialista</button>
