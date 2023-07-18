@@ -85,6 +85,8 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
 
   const [collapsedNodes, setCollapsedNodes] = useState<RowInterface[]>([]);
 
+  const [initial, setInitial] = useState(0);
+
   useEffect(() => {
     const startStructure = async () => {
       const ds = await structureDataList(datalist);
@@ -102,17 +104,19 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
     updateStructure();
   }, [collapsedNodes.length]);
 
-  useEffect(() => {
-    funcao()
-  }, [collapsedNodes.length]);
-
   const funcao = async () => {
     const buttonCollapse = document.getElementById('teste');
-
-    if (buttonCollapse) {
-      buttonCollapse.click();
-    }
+    console.log("p")
+      if (buttonCollapse) {
+        buttonCollapse.click();
+      }
   }
+
+  useEffect(() => {
+    if(initial === 0) {
+      funcao()
+    }
+  }, [datasource]);
 
   if (!datasource) return null;
   return (
@@ -148,6 +152,7 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
                   type="button"
                   className="collapse-button"
                   onClick={() => {
+                    setInitial(1)
                     setCollapsedNodes([
                       ...collapsedNodes.filter(
                         (row) => row.email !== nodeData.email
