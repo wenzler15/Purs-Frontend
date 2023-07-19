@@ -106,14 +106,13 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
 
   const funcao = async () => {
     const buttonCollapse = document.getElementById('teste');
-    console.log("p")
-      if (buttonCollapse) {
-        buttonCollapse.click();
-      }
+    if (buttonCollapse) {
+      buttonCollapse.click();
+    }
   }
 
   useEffect(() => {
-    if(initial === 0) {
+    if (initial === 0) {
       funcao()
     }
   }, [datasource]);

@@ -9,6 +9,7 @@ import Form2 from "./Lead/Register/Form2";
 import UploadFile from "./Lead/UploadFile";
 import ChartPage from "./ChartPage";
 import LP from "./LP";
+import ExportLink from "./ExportedUrl";
 
 export function AppRoutes() {
     return (
@@ -23,6 +24,7 @@ export function AppRoutes() {
                 <Route path='/lead/register2' element={<Form2 />} />
                 <Route path='/lead/uploadFile' element={<UploadFile />} />
                 <Route path='/chart' element={<ChartPage />} />
+                <Route path='/chartExport' element={<ExportLink />} />
             </Routes>
         </Router>
     )

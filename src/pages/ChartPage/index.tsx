@@ -8,8 +8,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import * as XLSX from 'xlsx';
 import * as csvtojson from 'csvtojson';
 import html2canvas from "html2canvas";
-
+import api from '../../services/api';
 import OrgChart from "../../Components/OrgChart";
+import { toast } from 'react-toastify';
 
 type RowInterface = {
   name: string;
@@ -171,6 +172,27 @@ const ChartPage: React.FC = () => {
     formatFile();
   }, []);
 
+  const handleUrl = async () => {
+    try {
+      let formData = new FormData();
+      formData.append('orgfile', location.state.fileSelected);
+
+      const token = localStorage.getItem("pursToken")
+
+      const resp = await api.post('/usersCreateURLOrg', formData, {
+        headers: {
+          'Authorization': token,
+          'Content-Type': 'multipart/form-data',
+        }
+      });
+
+      navigator.clipboard.writeText(`${window.location.href}Export?file=${resp.data.link}`)
+      toast.success("Link de compartilhamento copiado para clipboard");
+    } catch (err) {
+      toast.error("Não foi possível gerar um link");
+    }
+  };
+
   return (
     <div className="flex h-screen overflow-hidden">
       <div className="w-1/6">
@@ -180,7 +202,7 @@ const ChartPage: React.FC = () => {
         <Header />
         <div className="w-full bg-gradient-to-b from-[#8B95CE] to-[#DBF4FA] h-full pt-10 pl-4 pr-4 box-border">
           <div className="flex">
-            <div className="flex w-[200] bg-purple-purs p-2 rounded-md cursor-pointer" onClick={() => handleComponentDownload()}>
+            <div className="flex w-[200] bg-purple-purs p-2 rounded-md cursor-pointer" onClick={() => handleUrl()}>
               <AiOutlineDownload size={20} color={"#fff"} />
               <p className="text-[#fff] ml-2 text-sm"> Exportar</p>
             </div>
