@@ -31,7 +31,7 @@ const NavBar: React.FC = () => {
                         <p className='text-xs text-grey-purs mt-2'>Obtenha respostas rapidamente sobre recursos do produto, preços e muito mais.</p>
                     </div>
                     <div className='bg-purple-purs w-2/3 rounded-md text-center mt-3 mb-3 cursor-pointer'>
-                        <a target='_blank' href='https://wa.me//11952866259'>
+                        <a target='_blank' href={`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}`}>
                             <p className='text-xs text-[#fff] p-1'>Enviar mensagem</p>
                         </a>
                     </div>

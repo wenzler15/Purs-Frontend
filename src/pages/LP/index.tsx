@@ -1,15 +1,90 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../../assets/logo-white.png';
 import Rectangle from '../../assets/rectangle.png';
 import RectangleComplete from '../../assets/rectangleComplete.png';
 import Woman from '../../assets/woman2.png';
 import Macbook from '../../assets/macbook.png';
 import OrgChartImage from '../../assets/orgchart.png';
+import { useNavigate } from "react-router-dom";
+import api from '../../services/api';
+import { toast } from 'react-toastify';
 
 const LP: React.FC = () => {
+    const [name, setName] = useState("");
+    const [nameError, setNameError] = useState(false);
+    const [email, setEmail] = useState("");
+    const [emailError, setEmailError] = useState(false);
+    const [company, setCompany]= useState("");
+    const [companyError, setCompanyError] = useState(false);
+    const [phone, setPhone] = useState("");
+    const [phoneError, setPhoneError] = useState(false);
+
+    const navigate = useNavigate();
+
+    const sendEmail = async () => {
+     const validateEmail =  /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email);
+     const validateEmail2 = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i.test(email);
+
+     if (!validateEmail && !validateEmail2) {
+        setEmailError(true)
+     } else {
+        setEmailError(false)
+     }
+
+     if (name === '') {
+        setNameError(true)
+     } else {
+        setNameError(false)
+     }
+
+     if (company === '') {
+        setCompanyError(true)
+     } else {
+        setCompanyError(false)
+     }
+
+     if (phone === '') {
+        setPhoneError(true)
+     } else {
+        setPhoneError(false)
+     }
+
+     if (!emailError && !nameError && !companyError && !phoneError && validateEmail) {
+        try {
+            const toSend = {
+                name,
+                email,
+                cellphone: phone,
+                company
+            }
+
+            await api.post("/leadEmail", toSend);
+            toast.success("Seu e-mail foi enviado ao nosso consultor")
+            window.open(`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}`, '_blank')
+        } catch (err) {
+            console.log(err)
+            toast.error("Não foi possível enviar e-mail, favor tente mais tarde");
+        }
+     }
+    }
+
+    const handlePhone = (event) => {
+        let input = event.target
+        input.value = phoneMask(input.value)
+        setPhone(input.value)
+      }
+      
+      const phoneMask = (value) => {
+        if (!value) return ""
+        value = value.replace(/\D/g,'')
+        value = value.replace(/(\d{2})(\d)/,"($1) $2")
+        value = value.replace(/(\d)(\d{4})$/,"$1-$2")
+        return value
+      }
+
     return (
         <div className='w-full'>
-            <div className='h-[80vh] w-full bg-woman bg-cover'>
+            <div className='h-[80vh] w-full bg-woman bg-cover min-h-[760px]' id="principal">
                 <div className='flex flex-row justify-between p-10'>
                     <img src={Logo} className='w-[50] ' />
                     <div className='flex flex-row justify-between w-[40%]'>
@@ -29,20 +104,36 @@ const LP: React.FC = () => {
                         <div className='w-full flex flex-col items-center text-left'>
                             <div className='w-[90%] mt-4'>
                                 <p className='text-[#3E79A5]'>Nome *</p>
-                                <input placeholder='Digite seu nome' className='mt-3 mb-4 border rounded-md p-2 w-full' />
-                                <p className='text-[#3E79A5]'>E-mail *</p>
-                                <input placeholder='Digite ser e-mail' className='mt-3 mb-4 border rounded-md p-2 w-full' />
-                                <p className='text-[#3E79A5]'>Empresa *</p>
-                                <input placeholder='Digite o nome da sua empresa' className='mt-3 mb-4 border rounded-md p-2 w-full' />
-                                <p className='text-[#3E79A5]'>Telefone *</p>
-                                <input placeholder='(00) 0000-0000' className='mt-3 mb-4 border rounded-md p-2 w-full' />
+                                <input placeholder='Digite seu nome' onChange={(e) => setName(e.target.value)} className='mt-3 border rounded-md p-2 w-full' />
+                                {nameError && (
+                                    <p className='text-[#f00] text-sm'>*Favor preencher o nome</p>
+                                )}
+
+                                <p className='text-[#3E79A5] mt-4 '>E-mail *</p>
+                                <input placeholder='Digite ser e-mail' onChange={(e) => setEmail(e.target.value)} className='mt-3  border rounded-md p-2 w-full' />
+                                {emailError && (
+                                    <p className='text-[#f00] text-sm'>*Favor preencher com um e-mail valido</p>
+                                )}
+
+                                <p className='text-[#3E79A5] mt-4'>Empresa *</p>
+                                <input placeholder='Digite o nome da sua empresa' onChange={(e) => setCompany(e.target.value)} className='mt-3 border rounded-md p-2 w-full' />
+                                {companyError && (
+                                    <p className='text-[#f00] text-sm'>*Favor preencher o nome da empresa</p>
+                                )}
+
+                                <p className='text-[#3E79A5] mt-4'>Telefone *</p>
+                                <input maxLength={15} onChange={(event) => handlePhone(event)} placeholder='(00) 0000-0000' className='mt-3 border rounded-md p-2 w-full' />
+                                {phoneError && (
+                                    <p className='text-[#f00] text-sm'>*Favor preencher o telefone</p>
+                                )}
+
                             </div>
                         </div>
-                        <button className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-2'>Falar com um especialista</button>
+                        <button onClick={() => sendEmail()} className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-4'>Falar com um especialista</button>
                     </div>
                 </div>
             </div>
-            <div className='w-full h-[30vh] bg-gradient-to-r from-[#5B359E] to-[#14E1B0] text-center pt-6'>
+            <div className='w-full h-[30vh] min-h-[310px] bg-gradient-to-r from-[#5B359E] to-[#14E1B0] text-center pt-6'>
                 <p className='text-[#fff] text-3xl'>A Purs chega em...</p>
                 <div className='flex w-full justify-center mt-6'>
                     <div className='mr-10'>
@@ -64,7 +155,9 @@ const LP: React.FC = () => {
                         <p className='text-2xl text-[#fff]'>Minutos</p>
                     </div>
                 </div>
-                <button className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-10'>Falar com um especialista</button>
+                <a href='#principal'>
+                    <button onClick={() => sendEmail()} className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-10'>Falar com um especialista</button>
+                </a>
             </div>
             <div className='w-full pt-10 bg-[#5B359E] flex justify-between'>
                 <div className='relative w-[50%]'>
@@ -77,7 +170,9 @@ const LP: React.FC = () => {
                         <p className='text-[#fff] mt-10'>Somos uma empresa de tecnologia focada em descomplicar a gestão de pessoas e torná-la estratégica e simples, fortalecendo líderes para focar no que realmente importa: pessoas!</p>
                         <p className='text-[#fff] mt-6'>Acreditamos que uma gestão estratégica de pessoas, humanizada e baseada em dados, é fundamental para alcançar resultados positivos.</p>
                     </div>
-                    <button className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-6'>Falar com um especialista</button>
+                    <a href='#principal'>
+                        <button onClick={() => sendEmail()} className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-6'>Falar com um especialista</button>
+                    </a>
                 </div>
             </div>
             <div className='w-full pt-10 bg-[#5B359E] flex justify-between pb-10'>
@@ -101,19 +196,23 @@ const LP: React.FC = () => {
                             <p className='text-[#fff] text-base'> <span className='underline font-bold'> Oficinas de estratégia e conceitos:</span> Oferecemos treinamentos que exploram as metodologias por trás de cada funcionalidade, capacitando você e sua equipe a compreender e aplicar os conceitos de forma efetiva para maximizar resultados.</p>
                         </div>
                     </div>
-                    <button className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-6'>Falar com um especialista</button>
+                    <a href='#principal'>
+                        <button onClick={() => sendEmail()} className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-6'>Falar com um especialista</button>
+                    </a>
                 </div>
                 <div className='relative w-[50%]'>
                     <img src={Macbook} className='absolute top-[20%] ml-[-20px] z-10 w-[70%] max-w-[400px] sm:w-[98%]' />
                     <img src={RectangleComplete} className='top-[14%] relative w-[70%] max-w-[400px] sm:w-[90%]' />
                 </div>
             </div>
-            <div className='w-full h-[25vh] bg-gradient-to-r from-[#5B359E] to-[#14E1B0] flex flex-col items-center pt-6'>
+            <div className='w-full h-[25vh] min-h-[300px] bg-gradient-to-r from-[#5B359E] to-[#14E1B0] flex flex-col items-center pt-6'>
                 <div className='w-[70%] mt-6'>
                     <p className='text-[#B8E6F6] text-3xl text-center'>"Colaboradores que se sentem valorizados e têm a oportunidade de desenvolver suas habilidades são 21% mais produtivos"</p>
                     <p className='text-[#fff] mt-5 text-lg text-center'>Publicado em 2019, com o título "Reimagining the Employee Experience: A Capabilities- Driven Approach"</p>
                 </div>
-                <button className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-10'>Falar com um especialista</button>
+                <a href='#principal'>
+                    <button onClick={() => sendEmail()} className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-10'>Falar com um especialista</button>
+                </a>
             </div>
             <div className='w-full pt-10 bg-[#5B359E] pb-10 flex flex-col items-center'>
                 <p className='text-[#B8E6F6] text-4xl'>Conheça Nossos Produtos</p>
@@ -125,8 +224,10 @@ const LP: React.FC = () => {
                         <p className='text-[#fff] mt-10 text-xl'>De maneira rápida, nosso organograma gera automaticamente a estrutura da sua empresa através de um modelo de planilha disponibilizado na plataforma</p>
                         <p className='text-[#fff] mt-10 font-bold text-2xl'>Teste agora o organograma gratuito!</p>
                         <div className='flex'>
-                            <button className='bg-[#fff] mr-10 text-[##5B359E] p-3 rounded-lg mt-10'>Fazer Organograma gratuito</button>
-                            <button className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-10'>Falar com um especialista</button>
+                            <button className='bg-[#fff] mr-10 text-[##5B359E] p-3 rounded-lg mt-10' onClick={() => navigate("/login")}>Fazer Organograma gratuito</button>
+                            <a href='#principal'>
+                                <button onClick={() => sendEmail()} className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-10'>Falar com um especialista</button>
+                            </a>
                         </div>
                     </div>
                 </div>
