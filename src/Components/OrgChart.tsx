@@ -3,10 +3,11 @@ import {
   AiOutlineMinus,
   AiOutlinePlus,
 } from "react-icons/ai";
+import { MdOutlineCloseFullscreen } from 'react-icons/md'
+import { BsFullscreen } from "react-icons/bs"
 import OrganizationChart from "@dabeng/react-orgchart";
 
 import "./OrgChart.css";
-import { Console } from "console";
 
 type RowInterface = {
   name: string;
@@ -103,18 +104,18 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
 
   const assignIdsAndLevelsToNestedArrays = (arrays) => {
     let idCounter = 1;
-  
+
     const assignIdsAndLevelsRecursively = (nestedArray, level) => {
       for (const element of nestedArray) {
         element.id = idCounter++;
         element.level = level;
-  
+
         if (Array.isArray(element.children)) {
           assignIdsAndLevelsRecursively(element.children, level + 1);
         }
       }
     };
-  
+
     assignIdsAndLevelsRecursively(arrays, 0);
   };
 
@@ -141,8 +142,8 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
     updateStructure();
   }, [collapsedNodes.length]);
 
-  const funcao = async () => {
-    const buttonCollapse = document.getElementById('teste');
+  const minChart = () => {
+    const buttonCollapse = document.getElementById('minButton');
     if (buttonCollapse) {
       buttonCollapse.click();
     }
@@ -150,18 +151,43 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
 
   useEffect(() => {
     if (initial === 0) {
-      funcao()
+      minChart()
     }
   }, [datasource]);
+
+  const handleMax = async () => {
+    const buttonCollapse = document.getElementById('maxButton');
+
+    if (buttonCollapse) {
+      buttonCollapse.click();
+    }
+  }
+
+  const handleMin = async () => {
+    const buttonCollapse = document.getElementById('minButton');
+
+    if (buttonCollapse) {
+      buttonCollapse.click();
+    }
+  }
+
 
   if (!datasource) return null;
   return (
     <>
+      <div className="w-full flex justify-end pt-5 pr-5">
+        <div className="border rounded-3xl p-3 border-[#D7DFE9] bg-[#F9FAFB] mr-3 cursor-pointer" onClick={() => handleMin()}>
+          <MdOutlineCloseFullscreen size={25} color="#000" />
+        </div>
+        <div className="border rounded-3xl p-3 border-[#D7DFE9] bg-[#F9FAFB] cursor-pointer" onClick={() => handleMax()}>
+          <BsFullscreen size={25} color="#000" />
+        </div>
+      </div>
       <OrganizationChart
         datasource={datasource}
         chartClass={`chart-content zoom-${zoom}`}
         // NodeTemplate={({ nodeData }: { nodeData: RowInterface }) => (
-          NodeTemplate={({ nodeData }) => (
+        NodeTemplate={({ nodeData }) => (
           <div className="items-center gap-x-6 w-full node-container">
             <div className="card-tag">
               <span>{getAcronym(nodeData.name)}</span>
@@ -176,7 +202,7 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
                   onClick={() => {
                     setCollapsedNodes([...collapsedNodes, nodeData]);
                   }}
-                  id="teste"
+                  id="minButton"
                 >
                   <span>{countChildren(datalist, nodeData.email)}</span>
                   <AiOutlineMinus size={14} color="#444D61" />
@@ -196,6 +222,7 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
                       ),
                     ]);
                   }}
+                  id="maxButton"
                 >
                   <span>{countChildren(datalist, nodeData.email)}</span>
                   <AiOutlinePlus size={14} color="#444D61" />

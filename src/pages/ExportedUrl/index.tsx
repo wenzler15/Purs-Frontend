@@ -102,7 +102,7 @@ const ExportLink: React.FC = () => {
               )}
             </div>
             <p>Total: {dataList?.length}</p>
-            <div className="bg-[#fff] w-[91%] h-4/5 rounded-md">
+            <div className="bg-[#fff] w-[100%] h-[90%] rounded-md">
               {dataList?.length > 0 && dataList !== undefined ? (
                 <OrgChart datalist={dataList} showCollapse />
               ) : (

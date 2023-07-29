@@ -39,7 +39,7 @@ const Login: React.FC = () => {
 
     return (
         <div className='w-full flex flex-col items-center bg-gradient-purs bg-cover bg-no-repeat h-[100vh] pt-[5%]'>
-            <img src={Logo} className='w-1/5' />
+            <img src={Logo} className='w-1/5 max-w-[300px]' />
             <img src={Ellipse2} className='absolute mr-[45%] mt-[10%] z-1' />
             <img src={Ellipse3} className='absolute mr-[40%] mt-[20%] z-10' />
             <img src={Ellipse5} className='absolute mr-[35%] mt-[8%] z-1' />
@@ -51,7 +51,7 @@ const Login: React.FC = () => {
                     <input className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs' onChange={(e) => setEmail(e.target.value)} />
                     <p className='text-blue-purs text-sm mt-4'>Senha</p>
                     <div className='relative'>
-                    <input type={passwordType ? 'text' : 'password'} className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs' onChange={(e) => setPassword(e.target.value)} />
+                        <input type={passwordType ? 'text' : 'password'} className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs' onChange={(e) => setPassword(e.target.value)} />
                         <span className='cursor-pointer absolute top-[52%] right-[10px] translate-y-[-50%] mt-1' onClick={() => setPasswordType(!passwordType)}>
                             <FaEye />
                         </span>

@@ -148,7 +148,7 @@ const ChartPage: React.FC = () => {
               )}
             </div>
             <p>Total: {dataList?.length}</p>
-            <div className="bg-[#fff] w-[100%] h-[70%] rounded-md">
+            <div className="bg-[#fff] w-[100%] h-[80%] rounded-md">
               {dataList?.length > 0 && dataList !== undefined ? (
                 <OrgChart datalist={dataList} showCollapse />
               ) : (

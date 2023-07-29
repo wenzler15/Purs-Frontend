@@ -6,11 +6,11 @@ import { AiOutlineMessage } from 'react-icons/ai';
 
 const NavBar: React.FC = () => {
     return (
-        <div className='w-full h-full border-r bg-[#F9FAFB]'>
-            <div className='h-[80px] bg-[#F9FAFB] border-b border-gray-500 p-8'>
-                <p className='text-purple-purs text-lg font-bold'>Purs</p>
+        <div className='w-full h-full border-r border-[#AFBACA] bg-[#F9FAFB]'>
+            <div className='h-[80px] bg-[#F9FAFB] border-b border-[#AFBACA] p-8'>
+                <p className='text-purple-purs text-lg font-bold'>Menu</p>
             </div>
-            <div className='flex flex-col justify-center p-5 cursor-pointer border-b border-gray-500 pb-10'>
+            <div className='flex flex-col justify-center p-5 cursor-pointer border-b border-[#AFBACA] pb-10'>
                 <div className='flex justify-start mt-4'>
                     <RiOrganizationChart size={30} className='mt-2 mr-2 cursor-pointer' color={window.location.href.indexOf('/chart') > 0 ? '#7C5EB1' : ''} />
                     <p className={`text-sm mt-3 ${window.location.href.indexOf('/chart') > 0 ? 'text-purple-purs' : ''} font-bold`}>Organograma</p>
