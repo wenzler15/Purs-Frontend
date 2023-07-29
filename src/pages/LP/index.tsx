@@ -8,6 +8,9 @@ import OrgChartImage from '../../assets/orgchart.png';
 import { useNavigate } from "react-router-dom";
 import api from '../../services/api';
 import { toast } from 'react-toastify';
+import RectanglePurs from '../../assets/rectanglePurs.png';
+import Email from '../../assets/email.svg';
+import { AiOutlineWhatsApp } from 'react-icons/ai';
 
 const LP: React.FC = () => {
     const [name, setName] = useState("");
@@ -22,13 +25,10 @@ const LP: React.FC = () => {
     const navigate = useNavigate();
 
     const sendEmail = async () => {
-     const validateEmail =  /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email);
-     const validateEmail2 = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i.test(email);
-
-     if (!validateEmail && !validateEmail2) {
-        setEmailError(true)
-     } else {
+     if (email.indexOf("@") > 0 && email.indexOf(".") > 0) {
         setEmailError(false)
+    } else {
+        setEmailError(true)
      }
 
      if (name === '') {
@@ -90,39 +90,51 @@ const LP: React.FC = () => {
                     <div className='flex flex-row justify-between w-[40%]'>
                         <p className='text-[#fff] cursor-pointer'>Home</p>
                         <p className='text-[#fff] cursor-pointer'>Quem somos</p>
-                        <p className='text-[#fff] cursor-pointer'>Produtos</p>
+                        <p className='text-[#fff] cursor-pointer' onClick={() => navigate("/login")}>Organograma</p>
                         <p className='text-[#fff] cursor-pointer'>Contato</p>
                     </div>
                 </div>
                 <div className='flex justify-between pr-10'>
                     <div className='w-[35%] pl-10 mt-32'>
-                        <p className='text-[#fff] font-bold text-2xl mb-10'>Descomplicamos a gestão de pessoas unindo tecnologia e humanização</p>
-                        <p className='text-[#fff] text-2xl'>Pensando em torná-la estratégicas e simples.</p>
+                        <p className='text-[#fff] font-bold text-2xl mb-2'>Descomplicamos a gestão de pessoas unindo tecnologia e humanização</p>
+                        <p className='text-[#fff] text-2xl'>pensando em torná-la estratégica e simples.</p>
                     </div>
                     <div className='w-[25%] bg-[#fff] rounded-md p-5 text-center shadow-lg'>
-                        <p className='text-[#3E79A5] text-2xl'>Fale com um Especialista</p>
+                        <p className='text-[#3E79A5] text-2xl'>Fale com um especialista</p>
                         <div className='w-full flex flex-col items-center text-left'>
                             <div className='w-[90%] mt-4'>
                                 <p className='text-[#3E79A5]'>Nome *</p>
-                                <input placeholder='Digite seu nome' onChange={(e) => setName(e.target.value)} className='mt-3 border rounded-md p-2 w-full' />
+                                <input placeholder='Digite seu nome' onChange={(e) => {
+                                        setNameError(false); 
+                                        setName(e.target.value)
+                                    }} className='mt-3 border rounded-md p-2 w-full' />
                                 {nameError && (
                                     <p className='text-[#f00] text-sm'>*Favor preencher o nome</p>
                                 )}
 
                                 <p className='text-[#3E79A5] mt-4 '>E-mail *</p>
-                                <input placeholder='Digite ser e-mail' onChange={(e) => setEmail(e.target.value)} className='mt-3  border rounded-md p-2 w-full' />
+                                <input placeholder='Digite ser e-mail' onChange={(e) => {
+                                        setEmailError(false)
+                                        setEmail(e.target.value)
+                                    }} className='mt-3  border rounded-md p-2 w-full' />
                                 {emailError && (
                                     <p className='text-[#f00] text-sm'>*Favor preencher com um e-mail valido</p>
                                 )}
 
                                 <p className='text-[#3E79A5] mt-4'>Empresa *</p>
-                                <input placeholder='Digite o nome da sua empresa' onChange={(e) => setCompany(e.target.value)} className='mt-3 border rounded-md p-2 w-full' />
+                                <input placeholder='Digite o nome da sua empresa' onChange={(e) => {
+                                        setCompanyError(false)
+                                        setCompany(e.target.value)
+                                    }} className='mt-3 border rounded-md p-2 w-full' />
                                 {companyError && (
                                     <p className='text-[#f00] text-sm'>*Favor preencher o nome da empresa</p>
                                 )}
 
                                 <p className='text-[#3E79A5] mt-4'>Telefone *</p>
-                                <input maxLength={15} onChange={(event) => handlePhone(event)} placeholder='(00) 0000-0000' className='mt-3 border rounded-md p-2 w-full' />
+                                <input maxLength={15} onChange={(event) => {
+                                        setPhoneError(false)
+                                        handlePhone(event)
+                                    }} placeholder='(00) 0000-0000' className='mt-3 border rounded-md p-2 w-full' />
                                 {phoneError && (
                                     <p className='text-[#f00] text-sm'>*Favor preencher o telefone</p>
                                 )}
@@ -160,9 +172,9 @@ const LP: React.FC = () => {
                 </a>
             </div>
             <div className='w-full pt-10 bg-[#5B359E] flex justify-between'>
-                <div className='relative w-[50%]'>
-                    <img src={Woman} className='absolute top-[12%] left-[8%] z-10 w-[70%] max-w-[400px]' />
-                    <img src={Rectangle} className='relative w-[70%] max-w-[400px]' />
+                <div className='relative w-[50%] flex justify-center'>
+                    <img src={Woman} className='absolute top-[12%] z-10 w-[60%] max-w-[400px]' />
+                    <img src={RectangleComplete} className='relative w-[90%] h-[500px] max-w-[400px]' />
                 </div>
                 <div className='w-[50%] text-center mt-[5%]'>
                     <div className='w-[90%] text-left'>
@@ -181,19 +193,19 @@ const LP: React.FC = () => {
                         <p className='text-[#B8E6F6] text-2xl'>Por que escolher a Purs?</p>
                         <div className='flex mt-6'>
                             <p className='text-[#fff] text-4xl mr-4'>1</p>
-                            <p className='text-[#fff] text-base'> <span className='underline font-bold'> Adaptação personalizada:</span> Nossa ferramenta é flexível e se ajusta às necessidades e estrutura do seu negócio, centralizando as atividades de gestão de pessoas em um só lugar.</p>
+                            <p className='text-[#fff] text-base'> <span className='font-bold'> Adaptação personalizada:</span> Nossa ferramenta é flexível e se ajusta às necessidades e estrutura do seu negócio, centralizando as atividades de gestão de pessoas em um só lugar.</p>
                         </div>
                         <div className='flex mt-6'>
                             <p className='text-[#fff] text-4xl mr-4'>2</p>
-                            <p className='text-[#fff] text-base'> <span className='underline font-bold'> Empoderamento da liderança:</span> Acreditamos que a gestão de pessoas não deve ser responsabilidade exclusiva do RH. Por isso, nossa solução promove o envolvimento ativo e o fortalecimento das lideranças.</p>
+                            <p className='text-[#fff] text-base'> <span className='font-bold'> Empoderamento da liderança:</span> Acreditamos que a gestão de pessoas não deve ser responsabilidade exclusiva do RH. Por isso, nossa solução promove o envolvimento ativo e o fortalecimento das lideranças.</p>
                         </div>
                         <div className='flex mt-6'>
                             <p className='text-[#fff] text-4xl mr-4'>3</p>
-                            <p className='text-[#fff] text-base'> <span className='underline font-bold'> Suporte especializado:</span> Contamos com uma equipe de consultores dedicados em gestão de pessoas e liderança, prontos para fornecer atendimento e acompanhamento personalizado.</p>
+                            <p className='text-[#fff] text-base'> <span className='font-bold'> Suporte especializado:</span> Contamos com uma equipe de consultores dedicados em gestão de pessoas e liderança, prontos para fornecer atendimento e acompanhamento personalizado.</p>
                         </div>
                         <div className='flex mt-6'>
                             <p className='text-[#fff] text-4xl mr-4'>4</p>
-                            <p className='text-[#fff] text-base'> <span className='underline font-bold'> Oficinas de estratégia e conceitos:</span> Oferecemos treinamentos que exploram as metodologias por trás de cada funcionalidade, capacitando você e sua equipe a compreender e aplicar os conceitos de forma efetiva para maximizar resultados.</p>
+                            <p className='text-[#fff] text-base'> <span className='font-bold'> Oficinas de estratégia e conceitos:</span> Oferecemos treinamentos que exploram as metodologias por trás de cada funcionalidade, capacitando você e sua equipe a compreender e aplicar os conceitos de forma efetiva para maximizar resultados.</p>
                         </div>
                     </div>
                     <a href='#principal'>
@@ -201,7 +213,7 @@ const LP: React.FC = () => {
                     </a>
                 </div>
                 <div className='relative w-[50%]'>
-                    <img src={Macbook} className='absolute top-[20%] ml-[-20px] z-10 w-[70%] max-w-[400px] sm:w-[98%]' />
+                    <img src={Macbook} className='absolute top-[20%] ml-[-10px] z-10 w-[80%] h-[65%] max-w-[400px] sm:w-[98%]' />
                     <img src={RectangleComplete} className='top-[14%] relative w-[70%] max-w-[400px] sm:w-[90%]' />
                 </div>
             </div>
@@ -216,15 +228,15 @@ const LP: React.FC = () => {
             </div>
             <div className='w-full pt-10 bg-[#5B359E] pb-10 flex flex-col items-center'>
                 <p className='text-[#B8E6F6] text-4xl'>Conheça Nossos Produtos</p>
-                <div className='w-full flex justify-between'>
-                    <img src={OrgChartImage} className='w-1/2' />
-                    <div className='w-1/2 p-10 mt-36'>
+                <div className='w-full flex justify-end'>
+                    <img src={OrgChartImage} className='absolute mr-[20%]' />
+                    <div className='w-1/2 p-10 mt-24'>
                         <p className='text-[#B8E6F6] text-3xl'>Organograma</p>
                         <p className='text-[#fff] mt-10 font-bold text-2xl'>Simplifique a visualização e estrutura organizacional com nosso organograma automático!</p>
                         <p className='text-[#fff] mt-10 text-xl'>De maneira rápida, nosso organograma gera automaticamente a estrutura da sua empresa através de um modelo de planilha disponibilizado na plataforma</p>
                         <p className='text-[#fff] mt-10 font-bold text-2xl'>Teste agora o organograma gratuito!</p>
                         <div className='flex'>
-                            <button className='bg-[#fff] mr-10 text-[##5B359E] p-3 rounded-lg mt-10' onClick={() => navigate("/login")}>Fazer Organograma gratuito</button>
+                            <button className='bg-[#fff] mr-10 text-[##5B359E] p-3 rounded-lg mt-10' onClick={() => navigate("/login")}>Fazer organograma gratuito</button>
                             <a href='#principal'>
                                 <button onClick={() => sendEmail()} className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-10'>Falar com um especialista</button>
                             </a>
@@ -232,9 +244,22 @@ const LP: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div className='w-full flex flex-col items-center pt-10 pb-5'>
-                <p className='text-[#3E79A5] text-lg'>Termos de política e privacidade</p>
-                <p className='text-[#3E79A5] text-lg mt-5'>Purs Sistema SAAS | Copyright 2023</p>
+            <div className='w-full h-[100px] bg-purple-purs flex items-center place-content-evenly'>
+                <div>
+                    <img src={RectanglePurs} className='w-10' />
+                    <p className='text-[#fff] text-sm'>Copyright © 2023 Purs. All rights reserved</p>
+                </div>
+                <div className='flex w-[150px]'>
+                    <a href='mailto:contato@purs.com.br'>
+                        <img src={Email} className='cursor-pointer' />
+                    </a>
+                    <a target='_blank' href={`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}`}>
+                        <AiOutlineWhatsApp size={20} className='mt-1 ml-3' color='#fff'/>
+                    </a>
+                    {/* <img src={Twitter} className='cursor-pointer' />
+                    <img src={Facebook} className='cursor-pointer' />
+                    <img src={Instagram} className='cursor-pointer' /> */}
+                </div>
             </div>
         </div>
     );

@@ -8,10 +8,12 @@ import Ellipse8 from "../../../assets/Ellipse8.png";
 import api from "../../../services/api";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import { FaEye } from 'react-icons/fa';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordType, setPasswordType] = useState(false);
 
     const navigate = useNavigate();
 
@@ -48,8 +50,13 @@ const Login: React.FC = () => {
                     <p className='text-blue-purs text-sm mt-4'>Endereço de e-mail</p>
                     <input className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs' onChange={(e) => setEmail(e.target.value)} />
                     <p className='text-blue-purs text-sm mt-4'>Senha</p>
-                    <input className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs' type='password' onChange={(e) => setPassword(e.target.value)} />
-                    {/* <p className='text-xs mt-1.5 text-grey-purs cursor-pointer' onClick={() => navigate('/company/forgetPassword')}>Esqueceu sua senha?</p> */}
+                    <div className='relative'>
+                    <input type={passwordType ? 'text' : 'password'} className='border-blue-purs border w-full rounded-lg mt-1.5 pl-2 text-blue-purs' onChange={(e) => setPassword(e.target.value)} />
+                        <span className='cursor-pointer absolute top-[52%] right-[10px] translate-y-[-50%] mt-1' onClick={() => setPasswordType(!passwordType)}>
+                            <FaEye />
+                        </span>
+                    </div>
+                    <p className='text-xs mt-1.5 text-grey-purs cursor-pointer' onClick={() => navigate('/company/forgetPassword')}>Esqueceu sua senha?</p>
                 </div>
                 <div className='rounded-2xl bg-purple-purs mt-4 p-2 w-2/5 text-center cursor-pointer' onClick={() => handleLogin()}>
                     <p className='text-[#fff] text-sm'>Avançar</p>

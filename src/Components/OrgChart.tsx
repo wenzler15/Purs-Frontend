@@ -6,6 +6,7 @@ import {
 import OrganizationChart from "@dabeng/react-orgchart";
 
 import "./OrgChart.css";
+import { Console } from "console";
 
 type RowInterface = {
   name: string;
@@ -26,7 +27,7 @@ const structureDataList = async (
 ): Promise<RowInterface | null> => {
   let auxList: RowInterface[] = JSON.parse(JSON.stringify(datalist));
 
-  await auxList.map((row) => {
+  await auxList.map((row, index) => {
     if (collapsedNodes?.find((collapseRow) => collapseRow.email === row.father))
       return;
     if (row.father) {
@@ -34,7 +35,9 @@ const structureDataList = async (
         (fatherRow) => fatherRow.email === row.father
       );
       if (father && !father.children) father.children = [row];
-      else if (father && father.children) father.children.push(row);
+      else if (father && father.children) {
+        father.children.push(row)
+      };
     }
   });
 
@@ -87,10 +90,41 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
 
   const [initial, setInitial] = useState(0);
 
+  const colors = [
+    'bg-purple-purs',
+    'bg-[#F00]',
+    'bg-green-500',
+    'bg-yellow-500',
+    'bg-indigo-500',
+    'bg-purple-500',
+    'bg-pink-500',
+    // Adicione mais classes de cores do Tailwind CSS conforme necessário.
+  ];
+
+  const assignIdsAndLevelsToNestedArrays = (arrays) => {
+    let idCounter = 1;
+  
+    const assignIdsAndLevelsRecursively = (nestedArray, level) => {
+      for (const element of nestedArray) {
+        element.id = idCounter++;
+        element.level = level;
+  
+        if (Array.isArray(element.children)) {
+          assignIdsAndLevelsRecursively(element.children, level + 1);
+        }
+      }
+    };
+  
+    assignIdsAndLevelsRecursively(arrays, 0);
+  };
+
   useEffect(() => {
     const startStructure = async () => {
       const ds = await structureDataList(datalist);
-      if (ds) setDatasource(ds);
+      if (ds) {
+        assignIdsAndLevelsToNestedArrays([ds]);
+        setDatasource(ds)
+      };
     };
     startStructure();
   }, []);
@@ -99,7 +133,10 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
     if (!collapsedNodes) return;
     const updateStructure = async () => {
       const ds = await structureDataList(datalist, collapsedNodes);
-      if (ds) setDatasource(ds);
+      if (ds) {
+        assignIdsAndLevelsToNestedArrays([ds]);
+        setDatasource(ds)
+      };
     };
     updateStructure();
   }, [collapsedNodes.length]);
@@ -123,12 +160,13 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
       <OrganizationChart
         datasource={datasource}
         chartClass={`chart-content zoom-${zoom}`}
-        NodeTemplate={({ nodeData }: { nodeData: RowInterface }) => (
+        // NodeTemplate={({ nodeData }: { nodeData: RowInterface }) => (
+          NodeTemplate={({ nodeData }) => (
           <div className="items-center gap-x-6 w-full node-container">
             <div className="card-tag">
               <span>{getAcronym(nodeData.name)}</span>
             </div>
-            <div className="node-card">
+            <div className={`node-card ${colors[nodeData.level] ? colors[parseInt(nodeData.level) - 1] : 'bg-[#E9D8FA]'}  `}>
               <h3 className="card-title">{nodeData.name}</h3>
               <p className="card-subtitle">{nodeData.title}</p>
               {nodeData.children && showCollapse ? (

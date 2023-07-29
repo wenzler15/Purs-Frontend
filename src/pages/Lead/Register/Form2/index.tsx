@@ -13,6 +13,7 @@ import api from "../../../../services/api";
 import { FaEye } from 'react-icons/fa';
 import { BsArrowLeftShort } from 'react-icons/bs';
 import { useNavigate, useLocation } from "react-router-dom";
+import { AiOutlineWhatsApp } from 'react-icons/ai';
 
 const Form2: React.FC = () => {
     const [passwordType, setPasswordType] = useState(false);
@@ -129,7 +130,12 @@ const Form2: React.FC = () => {
                     <p className='text-[#fff] text-sm'>Copyright © 2023 Purs. All rights reserved</p>
                 </div>
                 <div className='flex w-[150px] justify-between'>
-                    <img src={Email} className='cursor-pointer' />
+                    <a href='mailto:contato@purs.com.br'>
+                        <img src={Email} className='cursor-pointer' />
+                    </a>                    
+                    <a target='_blank' href={`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}`}>
+                        <AiOutlineWhatsApp size={20} className='mt-1 ml-3' color='#fff'/>
+                    </a>
                     {/* <img src={Twitter} className='cursor-pointer' />
                     <img src={Facebook} className='cursor-pointer' />
                     <img src={Instagram} className='cursor-pointer' /> */}

@@ -20,74 +20,6 @@ type RowInterface = {
   children?: Array<RowInterface>;
 };
 
-/*
-  Load data from excel
-  Use the father field to indicate the e-mail of highest hierarchical node
- */
-// const dataList = [
-//   { name: "Tamara Santos", title: "Designer", email: "tamara.santos@purs", father: "" },
-//   {
-//     name: "João Alves",
-//     title: "UI Designer",
-//     email: "joao.alvez@purs",
-//     father: "tamara.santos@purs",
-//   },
-//   {
-//     name: "Ana Clara",
-//     title: "Estagiária",
-//     email: "ana.clara@purs",
-//     father: "joao.alvez@purs",
-//   },
-//   {
-//     name: "Patricia Silva",
-//     title: "Estagiária",
-//     email: "patricia.silva@purs",
-//     father: "ana.clara@purs",
-//   },
-//   {
-//     name: "Viviane Lucas",
-//     title: "Estagiária",
-//     email: "viviane.lucas@purs",
-//     father: "ana.clara@purs",
-//   },
-//   {
-//     name: "Aline Silva",
-//     title: "Estagiária",
-//     email: "aline.silva@purs",
-//     father: "patricia.silva@purs",
-//   },
-//   {
-//     name: "Luciana Duarte",
-//     title: "Estagiária",
-//     email: "luciana.duarte@purs",
-//     father: "aline.silva@purs",
-//   },
-//   {
-//     name: "Paulo Gustavo",
-//     title: "Estagiária",
-//     email: "pauo.gustavo@purs",
-//     father: "luciana.duarte@purs",
-//   },
-//   {
-//     name: "Maria Soares",
-//     title: "UI Designer",
-//     email: "maria.soares@purs",
-//     father: "tamara.santos@purs",
-//   },
-//   {
-//     name: "Angela Nunes",
-//     title: "ADM",
-//     email: "angela.nunes@purs",
-//     father: "tamara.santos@purs",
-//   },
-//   {
-//     name: "Micaelly",
-//     title: "Aux Adm",
-//     email: "micaely@purs",
-//     father: "angela.nunes@purs",
-//   },
-// ];
-
 const ChartPage: React.FC = () => {
   const [teamJson, setTeamJson] = useState([]);
   const [dataList, setDataList] = useState<RowInterface[]>();
@@ -125,7 +57,7 @@ const ChartPage: React.FC = () => {
         name: item.Nome,
         title: item.Cargo,
         email: item.Email,
-        father: item['Email do lider'] ? item['Email do lider'] : ''
+        father: item['Email do lider'] ? item['Email do lider'] : '',
       });
 
     });
@@ -207,7 +139,7 @@ const ChartPage: React.FC = () => {
               <p className="text-[#fff] ml-2 text-sm"> Exportar</p>
             </div>
           </div>
-          <div className="w-full h-full mt-10">
+          <div className="w-full h-full mt-10 pb-2">
             <div className="bg-[#fff] w-full h-4/5 rounded-md hidden" id="org">
               {dataList?.length > 0 && dataList !== undefined ? (
                 <OrgChart datalist={dataList} />
@@ -216,7 +148,7 @@ const ChartPage: React.FC = () => {
               )}
             </div>
             <p>Total: {dataList?.length}</p>
-            <div className="bg-[#fff] w-[91%] h-4/5 rounded-md">
+            <div className="bg-[#fff] w-[100%] h-[70%] rounded-md">
               {dataList?.length > 0 && dataList !== undefined ? (
                 <OrgChart datalist={dataList} showCollapse />
               ) : (

@@ -15,10 +15,10 @@ const NavBar: React.FC = () => {
                     <RiOrganizationChart size={30} className='mt-2 mr-2 cursor-pointer' color={window.location.href.indexOf('/chart') > 0 ? '#7C5EB1' : ''} />
                     <p className={`text-sm mt-3 ${window.location.href.indexOf('/chart') > 0 ? 'text-purple-purs' : ''} font-bold`}>Organograma</p>
                 </div>
-                <div className='flex justify-start mt-4 ml-1 cursor-pointer'>
+                {/* <div className='flex justify-start mt-4 ml-1 cursor-pointer'>
                     <BsBarChartSteps size={30} className='mt-2 mr-2 cursor-pointer' color={window.location.href.indexOf('/PDI') > 0 ? '#7C5EB1' : ''} />
                     <p className={`text-sm mt-3 font-bold ${window.location.href.indexOf('/PDI') > 0 ? 'text-purple-purs' : ''}`}>PDI</p>
-                </div>
+                </div> */}
             </div>
             <div className='p-5 flex justify-center'>
                 {/* <p className='text-sm text-grey-purs'>MINHA EMPRESA</p> */}

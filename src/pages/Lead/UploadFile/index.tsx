@@ -11,7 +11,7 @@ import Modelo from '../../../assets/files/modelo.xlsx';
 import { toast } from 'react-toastify';
 
 import { BsArrowLeftShort } from 'react-icons/bs';
-import { AiOutlineDownload } from 'react-icons/ai';
+import { AiOutlineDownload, AiOutlineWhatsApp } from 'react-icons/ai';
 import { useNavigate } from "react-router-dom";
 
 const fileTypes = ["CSV", "XLSX"]
@@ -91,7 +91,12 @@ const UploadFile: React.FC = () => {
                     <p className='text-[#fff] text-sm'>Copyright © 2023 Purs. All rights reserved</p>
                 </div>
                 <div className='flex w-[150px] justify-between'>
-                    <img src={Email} className='cursor-pointer' />
+                    <a href='mailto:contato@purs.com.br'>
+                        <img src={Email} className='cursor-pointer' />
+                    </a>                    
+                    <a target='_blank' href={`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}`}>
+                        <AiOutlineWhatsApp size={20} className='mt-1 ml-3' color='#fff'/>
+                    </a>
                     {/* <img src={Twitter} className='cursor-pointer' />
                     <img src={Facebook} className='cursor-pointer' />
                     <img src={Instagram} className='cursor-pointer' /> */}

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Logo from '../../../../assets/logo-white.png';
 import RectanglePurs from '../../../../assets/rectanglePurs.png';
-import Twitter from '../../../../assets/twitter.svg';
 import Email from '../../../../assets/email.svg';
+import Twitter from '../../../../assets/twitter.svg';
 import Facebook from '../../../../assets/facebook.svg';
 import Instagram from '../../../../assets/instagram.svg';
 import Smile from '../../../../assets/smile-white.svg';
 import { toast } from 'react-toastify';
+import { AiOutlineWhatsApp } from 'react-icons/ai';
 
 import { useNavigate } from "react-router-dom";
 
@@ -109,7 +110,12 @@ const Form1: React.FC = () => {
                     <p className='text-[#fff] text-sm'>Copyright © 2023 Purs. All rights reserved</p>
                 </div>
                 <div className='flex w-[150px] justify-between'>
-                    <img src={Email} className='cursor-pointer' />
+                    <a href='mailto:contato@purs.com.br'>
+                        <img src={Email} className='cursor-pointer' />
+                    </a>                    
+                    <a target='_blank' href={`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}`}>
+                        <AiOutlineWhatsApp size={20} className='mt-1 ml-3' color='#fff'/>
+                    </a>
                     {/* <img src={Twitter} className='cursor-pointer' />
                     <img src={Facebook} className='cursor-pointer' />
                     <img src={Instagram} className='cursor-pointer' /> */}
