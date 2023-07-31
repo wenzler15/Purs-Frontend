@@ -84,7 +84,7 @@ const LP: React.FC = () => {
 
     return (
         <div className='w-full'>
-            <div className='h-[80vh] w-full bg-woman bg-cover min-h-[760px]' id="principal">
+            <div className='h-[80vh] border w-full bg-woman bg-cover min-h-[760px] sm:h-[200%]' id="principal">
                 <div className='flex flex-row justify-between p-10'>
                     <img src={Logo} className='w-[50] ' />
                     <div className='flex flex-row justify-between w-[40%]'>
@@ -94,12 +94,12 @@ const LP: React.FC = () => {
                         <p className='text-[#fff] cursor-pointer'>Contato</p>
                     </div>
                 </div>
-                <div className='flex justify-between pr-10'>
-                    <div className='w-[35%] pl-10 mt-32'>
+                <div className='flex justify-between flex-wrap pr-10'>
+                    <div className='w-[35%] pl-10 mt-32 sm:w-full'>
                         <p className='text-[#fff] font-bold text-2xl mb-2'>Descomplicamos a gestão de pessoas unindo tecnologia e humanização</p>
                         <p className='text-[#fff] text-2xl'>pensando em torná-la estratégica e simples.</p>
                     </div>
-                    <div className='w-[25%] bg-[#fff] rounded-md p-5 text-center shadow-lg'>
+                    <div className='w-[25%] min-w-[300px] bg-[#fff] rounded-md p-5 text-center shadow-lg'>
                         <p className='text-[#3E79A5] text-2xl'>Fale com um especialista</p>
                         <div className='w-full flex flex-col items-center text-left'>
                             <div className='w-[90%] mt-4'>
