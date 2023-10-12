@@ -3,8 +3,9 @@ import {
   AiOutlineMinus,
   AiOutlinePlus,
 } from "react-icons/ai";
-import { MdOutlineCloseFullscreen } from 'react-icons/md'
+import { MdOutlineCloseFullscreen, MdOutlineOpenInFull } from 'react-icons/md'
 import { BsFullscreen } from "react-icons/bs"
+// @ts-ignore react-orgchart does not support ts
 import OrganizationChart from "@dabeng/react-orgchart";
 
 import "./OrgChart.css";
@@ -25,8 +26,10 @@ type PropsInterface = {
 const structureDataList = async (
   datalist: RowInterface[],
   collapsedNodes?: RowInterface[]
-): Promise<RowInterface | null> => {
+): Promise<[RowInterface | null, RowInterface[]]> => {
   let auxList: RowInterface[] = JSON.parse(JSON.stringify(datalist));
+
+  let fathersList: RowInterface[] = [];
 
   await auxList.map((row, index) => {
     if (collapsedNodes?.find((collapseRow) => collapseRow.email === row.father))
@@ -39,11 +42,14 @@ const structureDataList = async (
       else if (father && father.children) {
         father.children.push(row)
       };
+
+      if (father) fathersList.push(father);
     }
   });
 
-  const structure = auxList.find((row) => !row.father);
-  return structure || null;
+  const structure = auxList.find((row) => !row.father) || null;
+  if (!collapsedNodes && structure) structure.children = undefined; // start collapsed
+  return [structure, fathersList];
 };
 
 const getAcronym = (name: string) => {
@@ -87,7 +93,7 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
 
   const [datasource, setDatasource] = useState<RowInterface>();
 
-  const [collapsedNodes, setCollapsedNodes] = useState<RowInterface[]>([]);
+  const [collapsedNodes, setCollapsedNodes] = useState<RowInterface[] | null>(null);
 
   const [initial, setInitial] = useState(0);
 
@@ -102,10 +108,10 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
     // Adicione mais classes de cores do Tailwind CSS conforme necessário.
   ];
 
-  const assignIdsAndLevelsToNestedArrays = (arrays) => {
+  const assignIdsAndLevelsToNestedArrays = (arrays: any) => {
     let idCounter = 1;
 
-    const assignIdsAndLevelsRecursively = (nestedArray, level) => {
+    const assignIdsAndLevelsRecursively = (nestedArray: any, level: any) => {
       for (const element of nestedArray) {
         element.id = idCounter++;
         element.level = level;
@@ -119,56 +125,37 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
     assignIdsAndLevelsRecursively(arrays, 0);
   };
 
-  useEffect(() => {
-    const startStructure = async () => {
-      const ds = await structureDataList(datalist);
-      if (ds) {
-        assignIdsAndLevelsToNestedArrays([ds]);
-        setDatasource(ds)
-      };
+  const startStructure = async () => {
+    const [ds, fathersList] = await structureDataList(datalist);
+    if (ds) {
+      assignIdsAndLevelsToNestedArrays([ds]);
+      setDatasource(ds)
     };
+    if (fathersList) setCollapsedNodes(fathersList);
+  };
+
+  useEffect(() => {
     startStructure();
   }, []);
 
   useEffect(() => {
     if (!collapsedNodes) return;
     const updateStructure = async () => {
-      const ds = await structureDataList(datalist, collapsedNodes);
+      const [ds] = await structureDataList(datalist, collapsedNodes);
       if (ds) {
         assignIdsAndLevelsToNestedArrays([ds]);
-        setDatasource(ds)
+        setDatasource(ds);
       };
     };
     updateStructure();
-  }, [collapsedNodes.length]);
-
-  const minChart = () => {
-    const buttonCollapse = document.getElementById('minButton');
-    if (buttonCollapse) {
-      buttonCollapse.click();
-    }
-  }
-
-  useEffect(() => {
-    if (initial === 0) {
-      minChart()
-    }
-  }, [datasource]);
+  }, [collapsedNodes?.length]);
 
   const handleMax = async () => {
-    const buttonCollapse = document.getElementById('maxButton');
-
-    if (buttonCollapse) {
-      buttonCollapse.click();
-    }
+    setCollapsedNodes([]);
   }
 
   const handleMin = async () => {
-    const buttonCollapse = document.getElementById('minButton');
-
-    if (buttonCollapse) {
-      buttonCollapse.click();
-    }
+    startStructure();
   }
 
 
@@ -180,14 +167,14 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
           <MdOutlineCloseFullscreen size={25} color="#000" />
         </div>
         <div className="border rounded-3xl p-3 border-[#D7DFE9] bg-[#F9FAFB] cursor-pointer" onClick={() => handleMax()}>
-          <BsFullscreen size={25} color="#000" />
+          <MdOutlineOpenInFull size={25} color="#000" />
         </div>
       </div>
       <OrganizationChart
         datasource={datasource}
         chartClass={`chart-content zoom-${zoom}`}
         // NodeTemplate={({ nodeData }: { nodeData: RowInterface }) => (
-        NodeTemplate={({ nodeData }) => (
+        NodeTemplate={({ nodeData }: any) => (
           <div className="items-center gap-x-6 w-full node-container">
             <div className="card-tag">
               <span>{getAcronym(nodeData.name)}</span>
@@ -200,7 +187,7 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
                   type="button"
                   className="collapse-button"
                   onClick={() => {
-                    setCollapsedNodes([...collapsedNodes, nodeData]);
+                    setCollapsedNodes([...collapsedNodes || [], nodeData]);
                   }}
                   id="minButton"
                 >
