@@ -40,7 +40,7 @@
 }
 
 .oc-node.selected .node-card {
-  background-color: #E9D8FA;
+  background-color: #5B359E80;
 }
 
 .node-container {
@@ -110,8 +110,8 @@
 .zoom-panel {
   position: absolute;
   height: 50px;
-  bottom: 60px;
-  left: 54%;
+  top: 35%;
+  left: 17%;
   display: flex;
   align-items: center;
   background: #CCD9EB;

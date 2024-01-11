@@ -60,6 +60,25 @@ const getAcronym = (name: string) => {
   );
 };
 
+const getAcronymFullname = (name: string) => {
+  const arrName = name.toString().split(" ");
+  console.log(name);
+
+  let convertedName = name;
+
+  if (arrName.length > 2) {
+    convertedName = arrName[0];    
+
+    arrName.map((item: string, index) => {      
+      if(index !== 0 && index < arrName.length - 1) convertedName += " " + item.charAt(0).toUpperCase();
+    });
+
+    convertedName += " " + arrName[arrName.length - 1];
+  }
+  
+  return convertedName
+}
+
 const zoomOut = (zoom: number): number => {
   if (zoom > 50) return (zoom - 25);
   else return zoom;
@@ -98,13 +117,19 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
   const [initial, setInitial] = useState(0);
 
   const colors = [
-    'bg-purple-purs',
-    'bg-[#F00]',
-    'bg-green-500',
-    'bg-yellow-500',
-    'bg-indigo-500',
-    'bg-purple-500',
-    'bg-pink-500',
+    'bg-[#8962C480]',
+    'bg-[#AF87E180]',
+    'bg-[#D2B4F5B2]',
+    'bg-[#0B234F66]',
+    'bg-[#2D5F8D80]',
+    'bg-[#3E79A580]',
+    'bg-[#6AA6C980]',
+    'bg-[#B8E6F6B2]',
+    'bg-[#035C6C66]',
+    'bg-[#0EC1A780]',
+    'bg-[#14E1B080]',
+    'bg-[#4BECB680]',
+    'bg-[#A0FCCB80]',
     // Adicione mais classes de cores do Tailwind CSS conforme necessário.
   ];
 
@@ -179,8 +204,8 @@ const OrgChart: React.FC<PropsInterface> = (props) => {
             <div className="card-tag">
               <span>{getAcronym(nodeData.name)}</span>
             </div>
-            <div className={`node-card ${colors[nodeData.level] ? colors[parseInt(nodeData.level) - 1] : 'bg-[#E9D8FA]'}  `}>
-              <h3 className="card-title">{nodeData.name}</h3>
+            <div className={`node-card ${colors[nodeData.level] ? colors[parseInt(nodeData.level) - 1] : 'bg-[#23105B66]'}  `}>
+              <h3 className="card-title">{getAcronymFullname(nodeData.name)}</h3>
               <p className="card-subtitle">{nodeData.title}</p>
               {nodeData.children && showCollapse ? (
                 <button
