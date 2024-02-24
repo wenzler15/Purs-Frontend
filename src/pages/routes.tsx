@@ -10,6 +10,7 @@ import UploadFile from "./Lead/UploadFile";
 import ChartPage from "./ChartPage";
 import LP from "./LP";
 import ExportLink from "./ExportedUrl";
+import Research from "./Research";
 
 export function AppRoutes() {
     return (
@@ -25,6 +26,7 @@ export function AppRoutes() {
                 <Route path='/lead/uploadFile' element={<UploadFile />} />
                 <Route path='/chart' element={<ChartPage />} />
                 <Route path='/chartExport' element={<ExportLink />} />
+                <Route path='/research' element={<Research />} />
             </Routes>
         </Router>
     )

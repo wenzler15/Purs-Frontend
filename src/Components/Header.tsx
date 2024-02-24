@@ -9,7 +9,7 @@ const Header: React.FC = () => {
 
     return (
         <div className='w-full flex justify-between pl-5 pr-10 pt-5 h-[80px] border-b border-[#AFBACA] pb-5'>
-            <div className='flex'>
+            <div className='flex' onClick={() => navigate("/chart")}>
                 <img src={RectanglePurs} className='w-[40px] h-[40px] mr-10' />
                 {/* <HiOutlineMagnifyingGlass size={20} className='mt-2 mr-3 cursor-pointer' />
                 <p className='mt-[5px] mr-3'>|</p>

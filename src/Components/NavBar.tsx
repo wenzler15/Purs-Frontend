@@ -1,19 +1,26 @@
 import React from 'react';
 
 import { RiOrganizationChart } from 'react-icons/ri';
-import { BsBarChartSteps } from 'react-icons/bs';
+import { HiOutlineDocumentMagnifyingGlass } from "react-icons/hi2";
 import { AiOutlineMessage } from 'react-icons/ai';
+import { useNavigate } from "react-router-dom";
 
 const NavBar: React.FC = () => {
+    const navigate = useNavigate();
+
     return (
         <div className='w-full h-full border-r border-[#AFBACA] bg-[#F9FAFB]'>
             <div className='h-[80px] bg-[#F9FAFB] border-b border-[#AFBACA] p-8'>
                 <p className='text-purple-purs text-lg font-bold'>Menu</p>
             </div>
             <div className='flex flex-col justify-center p-5 cursor-pointer border-b border-[#AFBACA] pb-10'>
-                <div className='flex justify-start mt-4'>
+                <div className='flex justify-start mt-4' onClick={() => navigate("/chart")}>
                     <RiOrganizationChart size={30} className='mt-2 mr-2 cursor-pointer' color={window.location.href.indexOf('/chart') > 0 ? '#7C5EB1' : ''} />
                     <p className={`text-sm mt-3 ${window.location.href.indexOf('/chart') > 0 ? 'text-purple-purs' : ''} font-bold`}>Organograma</p>
+                </div>
+                <div className='flex justify-start mt-4' onClick={() => navigate("/research")}>
+                    <HiOutlineDocumentMagnifyingGlass size={30} className='mt-2 mr-2 cursor-pointer' color={window.location.href.indexOf('/research') > 0 ? '#7C5EB1' : ''} />
+                    <p className={`text-sm mt-3 ${window.location.href.indexOf('/research') > 0 ? 'text-purple-purs' : ''} font-bold`}>Pesquisa</p>
                 </div>
                 {/* <div className='flex justify-start mt-4 ml-1 cursor-pointer'>
                     <BsBarChartSteps size={30} className='mt-2 mr-2 cursor-pointer' color={window.location.href.indexOf('/PDI') > 0 ? '#7C5EB1' : ''} />
