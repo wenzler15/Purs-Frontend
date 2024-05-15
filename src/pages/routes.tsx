@@ -11,12 +11,13 @@ import ChartPage from "./ChartPage";
 import LP from "./LP";
 import ExportLink from "./ExportedUrl";
 import Research from "./Research";
+import NewLp from "./NewLP";
 
 export function AppRoutes() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<LP />} />
+                <Route path="/" element={<NewLp />} />
                 <Route path='/login' element={< Login />} />
                 {/* <Route path='/company/register' element={< RegisterCompany />} /> */}
                 <Route path='/company/forgetPassword' element={< ForgetPasswordCompany />} />

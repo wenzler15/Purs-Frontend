@@ -12,6 +12,9 @@ module.exports = {
         'gradient-purs': "url('/background-gradient.png')",
         'woman': "url('/woman.png')"
       },
+      clipPath: {
+        'inset-30': 'inset(0 100px 0 0)',
+      },
     },
     textColor: {
       'purple-purs': '#7C5EB1',
