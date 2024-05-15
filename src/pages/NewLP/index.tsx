@@ -7,6 +7,7 @@ import Group1975 from "../../assets/Group1975.png";
 import Group1976 from "../../assets/Group1976.png";
 import Group1977 from "../../assets/Group1977.png";
 import Group1978 from "../../assets/Group1978.png";
+import WomanIcon from "../../assets/Group197.png";
 import PDI from "../../assets/PDI.svg";
 import Org from "../../assets/Organograma.svg";
 import AVD from "../../assets/AVD.svg";
@@ -28,20 +29,34 @@ const NewLp: React.FC = () => {
 
     return (
         <div className='w-full'>  
-            <img src={Layer} className='w-full' />
-            <button onClick={() => window.open(`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20Purs`, '_blank')} className='bg-[#331A71] text-[#fff] p-2 mt-[-80px] text-xs ml-10 lg:mt-[-280px] lg:text-xl lg:ml-[12%] lg:p-3 rounded-lg absolute sm:mt-[-80px] sm:ml-16 sm:width-[80px] sm:p-2'>Falar com um especialista</button>
-            <div className='w-full flex flex-row justify-center h-[500px]'>
-                <div className='w-[80%] min-w-[400px] flex flex-row items-center justify-between flex-wrap'>
-                    <img src={Group1975} className='w-[24%] min-w-[200px] h-[370px]' />
-                    <img src={Group1976} className='w-[24%] min-w-[200px] h-[370px]' />
-                    <img src={Group1978} className='w-[24%] min-w-[200px] h-[370px]' />
-                    <img src={Group1977} className='w-[24%] min-w-[200px] h-[370px]' />
+            <div className='w-full bg-frame bg-cover h-[600px]'>
+                <div className='flex flex-row items-center justify-around md:justify-center lg:justify-center flex-wrap-reverse'>
+                    <div className='w-[30%]'>
+                        <p className='text-[#eee] mt-5 md:text-2xl lg:text-3xl]'>
+                            Descomplicamos a <span className='text-[#fff] font-bold'> gestão de pessoas </span> de seu negócio unindo <span className='text-[#fff] font-bold'> tecnologia </span> e <span className='text-[#fff] font-bold'> humanização </span>
+                        </p>
+                        <button onClick={() => window.open(`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20Purs`, '_blank')} className='bg-[#331A71] text-[#fff] text-xs mt-5 p-3 lg:text-xl rounded-lg'>Falar com um especialista</button>
+                    </div>
+                    <div className='flex justify-center'>
+                        <img src={WomanIcon} className='w-[60%] md:w-[60%] md:h-[20%] lg:w-[80%] lg:h-[20%]'/>
+                    </div>
                 </div>
             </div>
-            <div className='w-full flex items-center justify-center'>
-                <button onClick={() => window.open(`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20Purs`, '_blank')} className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-10'>Falar com um especialista</button>
+
+
+            <div className='w-full flex flex-row justify-center'>
+                <div className='w-[80%] min-w-[400px] flex flex-row items-center justify-center md:justify-between lg:justify-between flex-wrap'>
+                    <img src={Group1975} className='md:w-[24%] lg:w-[24%] min-w-[250px] h-[370px]' />
+                    <img src={Group1976} className='md:w-[24%] lg:w-[24%] min-w-[250px] h-[370px]' />
+                    <img src={Group1978} className='md:w-[24%] lg:w-[24%] min-w-[250px] h-[370px]' />
+                    <img src={Group1977} className='md:w-[24%] lg:w-[24%] min-w-[250px] h-[370px]' />
+                </div>
             </div>
 
+            <div className='w-full flex items-center justify-center'>
+                <button onClick={() => window.open(`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20Purs`, '_blank')} className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-5'>Falar com um especialista</button>
+            </div>
+            
             <div className='w-full overflow-hidden'>
                 <SlideShow images={images} />
             </div>

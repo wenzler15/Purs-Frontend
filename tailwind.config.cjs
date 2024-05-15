@@ -10,7 +10,9 @@ module.exports = {
     extend: {
       backgroundImage: {
         'gradient-purs': "url('/background-gradient.png')",
-        'woman': "url('/woman.png')"
+        'woman': "url('/woman.png')",
+        'frame': "url('/Frame7.png')",
+        'org-bg': "url('/orgBg.svg')"
       },
       clipPath: {
         'inset-30': 'inset(0 100px 0 0)',
