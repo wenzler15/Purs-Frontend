@@ -37,7 +37,7 @@ const NewLp: React.FC = () => {
                         <p className='text-[#eee] mt-5 md:text-2xl lg:text-3xl]'>
                             Descomplicamos a <span className='text-[#fff] font-bold'> gestão de pessoas </span> de seu negócio unindo <span className='text-[#fff] font-bold'> tecnologia </span> e <span className='text-[#fff] font-bold'> humanização </span>
                         </p>
-                <button onClick={() => window.open(`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20Purs`, '_blank')} className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-5'>Falar com um especialista</button>
+                        <button onClick={() => window.open(`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20Purs`, '_blank')} className='bg-[#331A71] text-[#fff] p-2 md:p-3 lg:p-3 text-sm rounded-lg mt-5'>Falar com um especialista</button>
                     </div>
                     <div className='flex justify-center'>
                         <img src={WomanIcon} className='w-[60%] md:w-[60%] md:h-[20%] lg:w-[80%] lg:h-[20%]'/>
@@ -56,7 +56,7 @@ const NewLp: React.FC = () => {
             </div>
 
             <div className='w-full flex items-center justify-center'>
-                <button onClick={() => window.open(`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20Purs`, '_blank')} className='bg-[#331A71] text-[#fff] p-3 rounded-lg mt-5'>Falar com um especialista</button>
+                <button onClick={() => window.open(`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20Purs`, '_blank')} className='bg-[#331A71] text-[#fff] p-2 md:p-3 lg:p-3 text-sm rounded-lg mt-5'>Falar com um especialista</button>
             </div>
             
             <div className='w-full overflow-hidden'>
