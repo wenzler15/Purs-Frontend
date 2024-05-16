@@ -33,7 +33,7 @@ const SlideShow = ({ images }) => {
       </button>
 
       <div className='w-full flex justify-center'>
-      <button onClick={() => window.open(`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20Purs`, '_blank')} className='bg-[#331A71] text-[#fff] p-2 md:p-3 lg:p-3 rounded-lg absolute mt-[-40px] text-sm'>Falar com um especialista</button>
+      <button onClick={() => window.open(`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20Purs`, '_blank')} className='bg-[#331A71] text-[#fff] p-2 md:p-3 lg:p-3 rounded-lg absolute mt-[-40px] text-sm md:mt-[-60px] lg:mt-[-60px]'>Falar com um especialista</button>
       </div>
 
     </div>

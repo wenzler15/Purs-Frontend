@@ -8,6 +8,7 @@ import Group1976 from "../../assets/Group1976.png";
 import Group1977 from "../../assets/Group1977.png";
 import Group1978 from "../../assets/Group1978.png";
 import WomanIcon from "../../assets/Group197.png";
+import Logo from "../../assets/logoSimples.png";
 import PDI from "../../assets/PDI.svg";
 import Org from "../../assets/Organograma.svg";
 import AVD from "../../assets/AVD.svg";
@@ -23,13 +24,33 @@ const NewLp: React.FC = () => {
         Pesquisa,
         AVD,
         PDI,
-      ];
+    ];
 
     const navigate = useNavigate();
 
     return (
-        <div className='w-full'>  
+        <div className='w-full'>
 
+            <div className='w-full flex flex-row p-2 justify-evenly' id="principal">
+                <img src={Logo} className='' />
+                <div className='flex flex-row w-[55%] justify-center'>
+                    <a href='#principal'>
+                        <p className='text-base m-3 cursor-pointer'>
+                            Inicio
+                        </p>
+                    </a>
+                    <a href='#produtos'>
+                        <p className='text-base m-3 cursor-pointer'>
+                            Produtos
+                        </p>
+                    </a>
+                    <a href='#contatos'>
+                        <p className='text-base m-3 cursor-pointer'>
+                            Contato
+                        </p>
+                    </a>
+                </div>
+            </div>
 
             <div className='w-full bg-frame bg-cover h-[600px]'>
                 <div className='flex flex-row items-center justify-around md:justify-center lg:justify-center flex-wrap-reverse'>
@@ -40,7 +61,7 @@ const NewLp: React.FC = () => {
                         <button onClick={() => window.open(`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20Purs`, '_blank')} className='bg-[#331A71] text-[#fff] p-2 md:p-3 lg:p-3 text-sm rounded-lg mt-5'>Falar com um especialista</button>
                     </div>
                     <div className='flex justify-center'>
-                        <img src={WomanIcon} className='w-[60%] md:w-[60%] md:h-[20%] lg:w-[80%] lg:h-[20%]'/>
+                        <img src={WomanIcon} className='w-[60%] md:w-[60%] md:h-[20%] lg:w-[80%] lg:h-[20%]' />
                     </div>
                 </div>
             </div>
@@ -58,11 +79,11 @@ const NewLp: React.FC = () => {
             <div className='w-full flex items-center justify-center'>
                 <button onClick={() => window.open(`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20a%20Purs`, '_blank')} className='bg-[#331A71] text-[#fff] p-2 md:p-3 lg:p-3 text-sm rounded-lg mt-5'>Falar com um especialista</button>
             </div>
-            
-            <div className='w-full overflow-hidden'>
+
+            <div className='w-full overflow-hidden' id="produtos">
                 <SlideShow images={images} />
             </div>
-            <div className='w-full h-[120px] bg-purple-purs flex items-center place-content-evenly'>
+            <div className='w-full h-[120px] bg-purple-purs flex items-center place-content-evenly' id="contatos">
                 <div>
                     <img src={RectanglePurs} className='w-10' />
                     <p className='text-[#fff] text-sm'>Copyright © 2023 Purs. All rights reserved</p>
