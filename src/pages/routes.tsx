@@ -11,6 +11,7 @@ import ChartPage from "./ChartPage";
 import LP from "./LP";
 import ExportLink from "./ExportedUrl";
 import Research from "./Research";
+import NewResearch from "./NewResearch";
 
 export function AppRoutes() {
     return (
@@ -27,6 +28,7 @@ export function AppRoutes() {
                 <Route path='/chart' element={<ChartPage />} />
                 <Route path='/chartExport' element={<ExportLink />} />
                 <Route path='/research' element={<Research />} />
+                <Route path='/research/newResearch' element={<NewResearch />} />
             </Routes>
         </Router>
     )
