@@ -1,6 +1,7 @@
 import './index.css'
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import 'react-tooltip/dist/react-tooltip.css'
 import { AppRoutes } from './pages/routes';
 
 function App() {

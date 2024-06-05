@@ -20,8 +20,10 @@ module.exports = {
     },
     textColor: {
       'purple-purs': '#7C5EB1',
+      'dark-purple-purs': "#5B359E",
       'blue-purs': '#3E79A5',
-      'grey-purs': "#999999"
+      'grey-purs': "#999999",
+      'black-purs': '#5E718D'
     },
     borderColor: {
       'green-purs': '#14e1b0',
@@ -29,6 +31,8 @@ module.exports = {
     },
     backgroundColor: {
       'purple-purs': '#7C5EB1',
+      'dark-purple-purs': "#5B359E",
+      'gray-purs': '#CCC'
     }
   },
   plugins: [],
