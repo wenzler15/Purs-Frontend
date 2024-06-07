@@ -6,13 +6,18 @@ import { useNavigate } from "react-router-dom";
 import TextButton from '../../../../Components/Button';
 import TextInput from '../../../../Components/TextInput';
 import { toast } from 'react-toastify';
+import { FileUploader } from 'react-drag-drop-files';
+import api from '../../../../services/api';
+
+const fileTypes = ["JPG", "JPEG", "PNG", "SVG"]
 
 const RegisterCompanyStep1: React.FC = () => {
     const [fantasyName, setFantasyName] = useState("");
     const [cnpj, setCnpj] = useState("");
     const [companyEmail, setCompanyEmail] = useState("");
     const [phone, setPhone] = useState("");
-    const [arrayResponsible, setArrayResponsible] = useState([{ email: '' }]);
+    const [arrayResponsible, setArrayResponsible] = useState([{ email: '', cpf: '' }]);
+    const [fileSelected, setFileSelected] = useState<File>();
 
     const navigate = useNavigate();
 
@@ -30,12 +35,38 @@ const RegisterCompanyStep1: React.FC = () => {
         setArrayResponsible(newResponsibles);
     };
 
+    const handleChangeCpf = (cpf: string, index: number) => {
+        cpf = cpf.replace(/\D/g, '');
+    
+        cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    
+        const newResponsibles = arrayResponsible.map((responsible, i) => {
+            if (index === i) {
+                return { ...responsible, cpf };
+            }
+            return responsible;
+        });
+    
+        setArrayResponsible(newResponsibles);
+    };
+
     const validateEmails = () => {
         const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
         for (let i = 0; i < arrayResponsible.length; i++) {
             const email = arrayResponsible[i].email;
             if (!regexEmail.test(email)) {
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    const validateCpf = () => {
+        for (let i = 0; i < arrayResponsible.length; i++) {
+            const cpf = arrayResponsible[i].cpf;
+            if (cpf.length > 14) {
                 return false;
             }
         }
@@ -55,12 +86,18 @@ const RegisterCompanyStep1: React.FC = () => {
         setPhone(formattedTelefone);
       };
 
-    const handleClick = () => {
+      const handleChange = (file: File) => {
+        setFileSelected(file)
+    };
+
+    const handleClick = async () => {
+        console.log(arrayResponsible)
         const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
         const companyEmailTest = regexEmail.test(companyEmail);
 
         const valideEmails = validateEmails();
+        const valideCpf = validateCpf();
 
         if(!companyEmailTest) {
             toast.error("Favor verificar e-mail da empresa");
@@ -72,17 +109,51 @@ const RegisterCompanyStep1: React.FC = () => {
             return false;
         }
 
+        if(!valideCpf) {
+            toast.error("Favor verificar o(s) cpf(s) para responsáveis");
+            return false;
+        }
+
         const CompanyData = {
             fantasyName,
             cnpj,
             companyEmail,
             phone,
-            arrayResponsible
+            arrayResponsible,
         }
 
-        localStorage.setItem("registerUser", JSON.stringify(CompanyData))
+        try {
+            await api.post('/companies', CompanyData);            
+        } catch (err) {
+            if (err.response.status === 409) {
+                toast.error("Empresa já cadastrada")
+                return false;
+            } else {
+                toast.error("Não foi possível cadastrar a sua empresa");
+                return false;
+            }
+        }
 
-        navigate('/company/register/step2')
+        if (fileSelected) {
+            try {
+                let formData = new FormData();
+                formData.append('imagelogo', fileSelected);
+
+                await api.post('/uploads', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'company': `${cnpj}`
+                    }
+                });
+            } catch (err) {
+                toast.error("Não foi possível fazer o upload a imagem, tento novamente mais tarde!")
+                return false;
+            }
+        }
+
+        toast.success("Empresa cadastrada com sucesso");
+
+        //navigate('/login')
     };
 
     const handleCnpjChange = (event) => {
@@ -106,7 +177,6 @@ const RegisterCompanyStep1: React.FC = () => {
         <div className='p-6 pl-16'>
             <img src={Logo} className='w-20' />
             <div className='w-full flex flex-col items-center justify-center'>
-                <img src={Step1} className='w-1/4' />
                 <p className='mt-8 text-[#5E718D] w-[50%] text-center text-xl'>Para iniciar, vamos preencher cuidadosamente os dados iniciais da sua empresa.  </p>
                 <div className='w-1/2 mt-10'>
                     <TextInput text="Nome fantasia*" onChange={(e) => setFantasyName(e.target.value)} value={fantasyName} />
@@ -115,12 +185,21 @@ const RegisterCompanyStep1: React.FC = () => {
                     <TextInput text="Telefone da empresa*" value={phone}
                         onChange={handlePhoneChange}
                         maxLength={15} />
+                    <p className='mt-5 text-black-purs mb-5'>Adicione aqui o logo da sua empresa em alta qualidade</p>
+                    <FileUploader label='Arraste e solte seu arquivo aqui' handleChange={handleChange} name="file" types={fileTypes} />
+                    <hr className='mt-7 border-blue-purs' />
+
                     {arrayResponsible.map((responsible, index) => (
                         <div key={index}>
                             <TextInput
                                 text={index === 0 ? `E-mail do responsável da conta*` : `E-mail do responsável ${index + 1}`}
                                 value={responsible.email}
                                 onChange={(e) => handleChangeEmail(e.target.value, index)}
+                            />
+                            <TextInput text={index === 0 ? `CPF do responsável da conta*` : `CPF do responsável ${index + 1}`} 
+                                value={responsible.cpf}
+                                maxLength={14}
+                                onChange={(e) => handleChangeCpf(e.target.value, index)}
                             />
                         </div>
                     ))}
@@ -129,7 +208,7 @@ const RegisterCompanyStep1: React.FC = () => {
                         <p className='ml-2 underline'>Adicionar responsável</p>
                     </button>
                 </div>
-                <TextButton disabled={fantasyName && cnpj && companyEmail && phone && arrayResponsible[0].email.length > 0 ? false : true} text="Próxima página" onClick={handleClick} style={{ marginTop: "40px" }} />
+                <TextButton disabled={fantasyName && cnpj && companyEmail && phone && arrayResponsible[0].email.length > 0 && arrayResponsible[0].cpf.length > 0 ? false : true} text="Próxima página" onClick={handleClick} style={{ marginTop: "40px" }} />
             </div>
         </div>
     );
