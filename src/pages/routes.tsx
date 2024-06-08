@@ -15,6 +15,7 @@ import NewLp from "./NewLP";
 import NewResearch from "./NewResearch";
 import RegisterCompanyStep1 from "./Company/Register/Page1";
 import RegisterCompanyStep2 from "./Company/Register/Page2";
+import CreateResearch from "./NewResearch";
 
 export function AppRoutes() {
     return (
@@ -33,7 +34,7 @@ export function AppRoutes() {
                 <Route path='/chart' element={<ChartPage />} />
                 <Route path='/chartExport' element={<ExportLink />} />
                 <Route path='/research' element={<Research />} />
-                <Route path='/research/newResearch' element={<NewResearch />} />
+                <Route path='/research/newResearch' element={<CreateResearch />} />
             </Routes>
         </Router>
     )

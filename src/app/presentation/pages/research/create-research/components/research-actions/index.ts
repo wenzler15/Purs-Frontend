@@ -1,0 +1,1 @@
+export { default as ResearchActionsTag } from './research-actions';

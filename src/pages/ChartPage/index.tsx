@@ -11,6 +11,8 @@ import html2canvas from "html2canvas";
 import api from '../../services/api';
 import OrgChart from "../../Components/OrgChart";
 import { toast } from 'react-toastify';
+import {makeCookieAdapter} from "~/app/main/factories/cache";
+import {TOKEN_NAME} from "~/config/vars";
 
 type RowInterface = {
   name: string;
@@ -26,6 +28,8 @@ const ChartPage: React.FC = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  const cookieAdapter = makeCookieAdapter();
 
   const handleComponentDownload = () => {
     const componentId = 'org';
@@ -109,7 +113,7 @@ const ChartPage: React.FC = () => {
       let formData = new FormData();
       formData.append('orgfile', location.state.fileSelected);
 
-      const token = localStorage.getItem("pursToken")
+      const token = cookieAdapter.get(TOKEN_NAME);
 
       const resp = await api.post('/usersCreateURLOrg', formData, {
         headers: {

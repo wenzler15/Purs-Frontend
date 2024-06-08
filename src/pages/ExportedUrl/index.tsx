@@ -6,6 +6,8 @@ import api from '../../services/api';
 
 import OrgChart from "../../Components/OrgChart";
 import { toast } from "react-toastify";
+import {makeCookieAdapter} from "~/app/main/factories/cache";
+import {TOKEN_NAME} from "~/config/vars";
 
 type RowInterface = {
   name: string;
@@ -18,6 +20,8 @@ type RowInterface = {
 const ExportLink: React.FC = () => {
   const [teamJson, setTeamJson] = useState([]);
   const [dataList, setDataList] = useState<RowInterface[]>();
+
+  const cookieAdapter = makeCookieAdapter();
 
   const formatTeamArray = async () => {
     const finalArray: RowInterface[] = [];
@@ -42,7 +46,7 @@ const ExportLink: React.FC = () => {
   const getFile = async () => {
     try {
       const fileId = window.location.href.split('file=')[1];
-      const token = localStorage.getItem("pursToken")
+      const token = cookieAdapter.get(TOKEN_NAME);
 
       const resp = await api.get(`/export-url/${fileId}`, {
         headers: {

@@ -1,0 +1,1 @@
+export { default as MainPanelTag } from './main-panel';
