@@ -1,27 +1,24 @@
-import {MenuDropdownTag} from "~/app/presentation/layouts/create-research/components";
+import {MenuDropdownTag, ResearchConfigTag} from "~/app/presentation/layouts/create-research/components";
 import {FaRegEye, FaEllipsisV} from "react-icons/fa";
 import {SendIcon} from "~/app/presentation/components/icons";
 import React from "react";
+import {useCreateResearchContext} from "~/app/presentation/hooks/pages";
+import {MainInputTag} from "~/app/presentation/pages/research/create-research/components";
+
 
 function ResearchHeaderComponent() {
+    const { control } = useCreateResearchContext();
+
     return (
         <div className="flex justify-center items-center h-20 border-b border-[#AFBACA]">
             <div className="flex justify-between items-center w-full max-w-7xl">
                 <div className="flex items-center gap-4">
-                    <div className="flex flex-col">
-                        <input
-                            type="text"
-                            className="text-[#5E718D] font-semibold w-[227px] h-[29px] text-2xl mb-2 border-none outline-none bg-transparent"
-                            placeholder="Pesquisa sem título"
-                        />
-                        <input
-                            type="text"
-                            className="text-[#5E718D] text-md border-none outline-none bg-transparent w-[227px] h-[17px]"
-                            placeholder="Descrição da Pesquisa"
-                        />
+                    <div className="flex flex-col gap-1 w-[227px] ">
+                        <MainInputTag control={control} name='title' height='h-[29px]' placeholder="Pesquisa sem título" />
+                        <MainInputTag control={control} name='description' height='h-[17px]' placeholder="Descrição da Pesquisa" />
                     </div>
 
-                    <FaEllipsisV fill="#5E718D" />
+                    <ResearchConfigTag />
                 </div>
 
 

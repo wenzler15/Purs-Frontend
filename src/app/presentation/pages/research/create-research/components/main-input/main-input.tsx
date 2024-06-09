@@ -5,9 +5,10 @@ type MainInputProps = InputHTMLAttributes<HTMLInputElement> & {
     name: string;
     control: any;
     textCenter?: boolean;
+    height?: string;
 }
 
-function MainInputComponent({name, control, textCenter, type = 'text', ...props}: MainInputProps) {
+function MainInputComponent({name, control, textCenter, height, type = 'text', ...props}: MainInputProps) {
     const fontClassName = name === 'title' ? 'font-semibold text-2xl' : 'text-md';
     const alignClassName = textCenter ? 'text-center' : '';
 
@@ -20,7 +21,7 @@ function MainInputComponent({name, control, textCenter, type = 'text', ...props}
             render={({field, fieldState: { invalid}}) => (
                 <input
                     {...field}
-                    className={`w-full text-[#5E718D]  mb-2 border-none outline-none bg-transparent ${fontClassName} ${alignClassName}`}
+                    className={`w-full text-[#5E718D] border-none outline-none bg-transparent ${height ?? ''} ${fontClassName} ${alignClassName}`}
                     type={type}
                     {...props}
                 />)

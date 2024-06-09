@@ -3,7 +3,9 @@ import {useEffect, useState} from "react";
 import {CreateResearchLayoutTag} from "~/app/presentation/layouts";
 import {CreateResearchProps} from "~/app/domain/protocols";
 import {CreateResearchProvider} from "~/app/presentation/providers";
-import {HeadingTag, MainPanelTag, ResearchActionsTag} from "./components";
+import {HeadingTag, MainPanelTag, ModalsTag, ResearchActionsTag} from "./components";
+import {DialogTag} from "~/app/presentation/components/common";
+import {CopyIcon, TrashIcon} from "~/app/presentation/components/icons";
 
 function CreateResearchComponent(props: CreateResearchProps) {
     const [title, setTitle] = useState("");
@@ -30,6 +32,7 @@ function CreateResearchComponent(props: CreateResearchProps) {
                     <HeadingTag/>
                     <MainPanelTag/>
                     <ResearchActionsTag/>
+                    <ModalsTag />
                 </div>
             </CreateResearchLayoutTag>
         </CreateResearchProvider>

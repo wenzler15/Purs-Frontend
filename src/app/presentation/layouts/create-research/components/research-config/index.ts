@@ -1,0 +1,1 @@
+export { default as ResearchConfigTag } from './research-config';
