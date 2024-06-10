@@ -1,0 +1,1 @@
+export { default as MainInputTag } from './main-input';

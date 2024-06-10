@@ -1,0 +1,1 @@
+export { default as HeaderInputsTag } from './header-inputs';
