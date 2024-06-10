@@ -23,7 +23,7 @@ function ResearchConfigComponent() {
                 type="button"
                 data-dropdown-toggle="dropdownDots"
                 onClick={handleDropDown}
-                className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-2 focus:outline-none dark:text-white focus:ring-[#5B359E]"
+                className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring focus:outline-none"
             >
                 <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                      viewBox="0 0 4 15">
@@ -42,7 +42,7 @@ function ResearchConfigComponent() {
                         <label className="inline-flex items-center cursor-pointer">
                             <input type="checkbox" value="" className="sr-only peer"/>
                             <div
-                                className="relative w-11 h-6 bg-[#E5E7EB] peer-checked:bg-[#5B359E] rounded-full peer peer-focus:ring-2 peer-focus:ring-[#5B359E] peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-[#FFFFFF] after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-[#FFFFFF] after:border-[#d1d5db] after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                                className="relative w-11 h-6 bg-[#E5E7EB] peer-checked:bg-[#5B359E] rounded-full peer peer-focus:ring-2 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-[#FFFFFF] after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-[#FFFFFF] after:border-[#d1d5db] after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
                         </label>
                         Salvar automaticamente
                     </li>

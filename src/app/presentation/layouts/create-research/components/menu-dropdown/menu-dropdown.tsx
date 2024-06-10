@@ -17,7 +17,7 @@ function MenuDropdownComponent() {
                 id="dropdownAvatarNameButton"
                 data-dropdown-toggle="dropdownAvatarName"
                 onClick={toggleDropdown}
-                className="flex items-center text-sm p-2 font-medium text-[#0D062D] rounded-full md:me-0 focus:ring focus:ring-[#5B359E]"
+                className="flex items-center text-sm p-2 font-medium text-[#0D062D] rounded-full md:me-0 focus:ring"
                 type="button"
             >
                 Leslie Alexander

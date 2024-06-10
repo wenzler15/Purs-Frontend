@@ -29,7 +29,7 @@ function ModalsComponent() {
         }
     ]
 
-    return <>{modalsCollection.map((modal) => <DialogTag {...modal} />)}</>;
+    return <>{modalsCollection.map((modal, key) => <DialogTag key={`modal-${key}`} {...modal} />)}</>;
 }
 
 export default ModalsComponent;

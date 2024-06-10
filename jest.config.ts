@@ -12,7 +12,7 @@ const config: Config = {
     '<rootDir>/src/**/*.{ts,tsx}',
     '!<rootDir>/src/**/index.ts.{ts,tsx}',
     '!<rootDir>/src/**/main/**/*.{ts,tsx}',
-    '!<rootDir>/src/**/*{.interface,.enum,.styles,.type}.ts',
+    '!<rootDir>/src/**/*{.interface,.enum,.styles,.types}.ts',
     '!<rootDir>/**/{mui,icons,emotion}/**/*.{ts,tsx}',
     '!./pages/**',
     '!**/*.d.ts',
