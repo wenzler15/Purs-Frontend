@@ -15,6 +15,10 @@ import NewLp from "./NewLP";
 import NewResearch from "./NewResearch";
 import RegisterCompanyStep1 from "./Company/Register/Page1";
 import RegisterCompanyStep2 from "./Company/Register/Page2";
+import Home from "./Home";
+import Profile from "./Profiles/User";
+import ProfileCompany from "./Profiles/Company";
+import Employees from "./User/List";
 
 export function AppRoutes() {
     return (
@@ -29,11 +33,15 @@ export function AppRoutes() {
                 <Route path='/company/resetPassword' element={< ResetCompanyPassword />} />
                 {/* <Route path='/lead/register' element={<Form1 />} />
                 <Route path='/lead/register2' element={<Form2 />} /> */}
+                <Route path='/employees' element={<Employees />} />
                 <Route path='/lead/uploadFile' element={<UploadFile />} />
                 <Route path='/chart' element={<ChartPage />} />
                 <Route path='/chartExport' element={<ExportLink />} />
                 <Route path='/research' element={<Research />} />
                 <Route path='/research/newResearch' element={<NewResearch />} />
+                <Route path='/home' element={<Home />}/>
+                <Route path="/profile"  element={<Profile />} />
+                <Route path="/profileCompany"  element={<ProfileCompany />} />
             </Routes>
         </Router>
     )

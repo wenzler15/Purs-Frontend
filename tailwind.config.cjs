@@ -28,11 +28,13 @@ module.exports = {
     borderColor: {
       'green-purs': '#14e1b0',
       'blue-purs': '#3E79A5',
+      'grey-purs': '#999999'
     },
     backgroundColor: {
       'purple-purs': '#7C5EB1',
       'dark-purple-purs': "#5B359E",
-      'gray-purs': '#CCC'
+      'gray-purs': '#CCC',
+      'red-purs': '#C51918'
     }
   },
   plugins: [],

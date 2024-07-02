@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from '../../../assets/logo.png';
 import Ellipse2 from "../../../assets/Ellipse2.png";
 import Ellipse3 from "../../../assets/Ellipse3.png";
@@ -17,6 +17,16 @@ const Login: React.FC = () => {
 
     const navigate = useNavigate();
 
+    const verifyLogged = async () => {
+        const token = await localStorage.getItem("pursToken");
+
+        if(token) navigate("/home")
+    }
+
+    useEffect(() => {
+        verifyLogged();
+    }, []);
+
     const handleLogin = async () => {
         if (email === '' || password === '') {
             toast.error("Favor preencher email e senha");
@@ -27,10 +37,10 @@ const Login: React.FC = () => {
                     password
                 }
 
-                const response = await api.post("/leadAuth", body);
+                const response = await api.post("/usersAuth", body);
 
                 localStorage.setItem('pursToken', response.data.token);
-                navigate("/lead/uploadFile")
+                navigate("/home")
             } catch (err: any) {
                 toast.error(err.response.data.message)
             }

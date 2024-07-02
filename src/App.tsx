@@ -3,6 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import 'react-tooltip/dist/react-tooltip.css'
 import { AppRoutes } from './pages/routes';
+import { UserProvider } from './contexts/UserContext';
 
 function App() {
   return (
@@ -18,7 +19,9 @@ function App() {
         draggable
         pauseOnHover
       />
-      <AppRoutes />
+      <UserProvider>
+        <AppRoutes />
+      </UserProvider>
     </div>
   )
 }

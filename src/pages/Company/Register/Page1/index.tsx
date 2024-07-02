@@ -75,13 +75,13 @@ const RegisterCompanyStep1: React.FC = () => {
     };
 
     const handlePhoneChange = (event) => {
-        let formattedTelefone = event.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+        let formattedTelefone = event.target.value.replace(/\D/g, ''); 
         if (formattedTelefone.length <= 10) {
-          formattedTelefone = formattedTelefone.replace(/^(\d{2})(\d)/, '($1) $2'); // Adiciona parênteses e espaço após os primeiros dois dígitos
-          formattedTelefone = formattedTelefone.replace(/(\d{4})(\d)/, '$1-$2'); // Adiciona hífen após os próximos quatro dígitos
+          formattedTelefone = formattedTelefone.replace(/^(\d{2})(\d)/, '($1) $2'); 
+          formattedTelefone = formattedTelefone.replace(/(\d{4})(\d)/, '$1-$2');
         } else {
-          formattedTelefone = formattedTelefone.replace(/^(\d{2})(\d)/, '($1) $2 '); // Adiciona espaço após o segundo dígito
-          formattedTelefone = formattedTelefone.replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona hífen após os próximos cinco dígitos
+          formattedTelefone = formattedTelefone.replace(/^(\d{2})(\d)/, '($1) $2 '); 
+          formattedTelefone = formattedTelefone.replace(/(\d{4})(\d)/, '$1-$2');
         }
         setPhone(formattedTelefone);
       };
@@ -123,10 +123,13 @@ const RegisterCompanyStep1: React.FC = () => {
         }
 
         try {
-            await api.post('/companies', CompanyData);            
+            await api.post('/companies', CompanyData);  
         } catch (err) {
             if (err.response.status === 409) {
                 toast.error("Empresa já cadastrada")
+                return false;
+            } else if (err.response.status === 300) {
+                toast.error("Responsável já cadastrado na Purs")
                 return false;
             } else {
                 toast.error("Não foi possível cadastrar a sua empresa");
@@ -153,7 +156,7 @@ const RegisterCompanyStep1: React.FC = () => {
 
         toast.success("Empresa cadastrada com sucesso");
 
-        //navigate('/login')
+        navigate('/login')
     };
 
     const handleCnpjChange = (event) => {
