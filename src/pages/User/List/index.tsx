@@ -10,6 +10,7 @@ import TextButton from "../../../Components/Button";
 
 const Employees: React.FC = () => {
     const [employees, setEmplooyees] = useState([]);
+    const [filteredEmployees, setFilteredEmployees] = useState([]);
     const [filterName, setFilterName] = useState("");
 
     const getEmployees = async () => {
@@ -22,15 +23,33 @@ const Employees: React.FC = () => {
             });
 
             setEmplooyees(resp.data)
+            setFilteredEmployees(resp.data)
         } catch (err) {
             toast.error("Não foi possível listar os funcionários")
         }
     }
 
-    const filterNames = () => {
-        console.log("teste", filterName)
-    }
+    const applyFilter = () => {
+        const filtered = employees.filter(employee =>
+          employee.name.toLowerCase().includes(filterName.toLowerCase())
+        );
+    
+        setFilteredEmployees(filtered);
+      };
 
+      const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFilterName(event.target.value);
+      };
+    
+      const handleFilterButtonClick = () => {
+        applyFilter();
+      };
+    
+      const handleResetFilterButtonClick = () => {
+        setFilterName('');
+        setFilteredEmployees(employees);
+      };
+    
     useEffect(() => {
         getEmployees();
     }, []);
@@ -45,15 +64,22 @@ const Employees: React.FC = () => {
                 <div className="w-full bg-gradient-to-b from-[#8B95CE] to-[#DBF4FA] h-full pt-10 box-border px-4 pb-5">
                     <div className="w-full rounded-lg bg-[#fff] p-5 px-8">
 
-                        <div className="flex">
+                        <div className="flex w-full">
 
                         <TextInput text="Nome"
                             value={filterName}
-                            style={{width:'70%'}}
-                            onChange={(e) => setFilterName(e.target.value)} />
+                            style={{width:'80%'}}
+                            onChange={handleInputChange}
+                            />
 
-                        <TextButton text="Filtrar" style={{marginTop: 45}} onClick={filterNames}/>
+                        <TextButton text="Filtrar" style={{marginTop: 45, width: 150}} onClick={handleFilterButtonClick}/>
+                        <TextButton text="Limpar" style={{marginTop: 45, width: 150, marginLeft: 10, background: "#fff", color: "#000", border: '1px solid '}} onClick={handleResetFilterButtonClick}/>
 
+                        <div className="w-1/2 flex items-end justify-end cursor-pointer">
+                            <CiCirclePlus size={25} />
+                            <p className="underline ml-2">Adicionar usuário</p>
+                        </div>
+                            
                         </div>
 
                         <div className="w-full flex justify-center mt-5">
@@ -72,9 +98,9 @@ const Employees: React.FC = () => {
                                         <p className="text-[#fff]">Líder</p>
                                     </div>
                                 </div>
-                                {employees.map((item) => (
+                                {filteredEmployees.map((item) => (
                                     <div className="flex rounded-lg w-full justify-between p-2">
-                                        <div className="flex items-center justify-center w-1/4">
+                                        <div className="flex items-center justify-center w-1/4 cursor-pointer">
                                             <p>{item.name}</p>
                                         </div>
                                         <div className="flex items-center justify-center w-1/4">
