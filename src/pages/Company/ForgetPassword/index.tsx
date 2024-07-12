@@ -19,7 +19,7 @@ const ForgetPasswordCompany: React.FC = () => {
             toast.error("Favor preencher o e-mail");
         } else {
             try {
-                await api.post("/leadForgotPassword", { email });
+                await api.post("/usersForgotPassword", { email });
 
                 toast.success("Token enviado para o e-mail!");
 

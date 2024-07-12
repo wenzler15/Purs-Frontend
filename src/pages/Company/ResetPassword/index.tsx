@@ -27,7 +27,7 @@ const ResetCompanyPassword: React.FC = () => {
                     password
                 }
 
-                await api.post("/leadResetPassword", body);
+                await api.post("/usersResetPassword", body);
 
                 toast.success("Senha alterada com sucesso!");
 
