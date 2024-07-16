@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { RiOrganizationChart } from 'react-icons/ri';
 import { HiOutlineDocumentMagnifyingGlass, HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { AiOutlineMessage } from 'react-icons/ai';
-import { FaAngleDoubleLeft } from "react-icons/fa";
+import { FaAngleDoubleLeft, FaSuitcase } from "react-icons/fa";
 import { GoHome } from "react-icons/go";
 import { ImProfile } from "react-icons/im"; import RectanglePurs from '../assets/rectanglePurs.png';
 import { useUserContext } from '../contexts/UserContext';
 import { PiUsersThreeBold } from "react-icons/pi";
+import { CiUser } from "react-icons/ci";
+import { VscTypeHierarchySub } from "react-icons/vsc";
 
 const NavBar: React.FC<{ path: string }> = ({ path }) => {
   const { userData } = useUserContext();
@@ -56,8 +58,23 @@ const NavBar: React.FC<{ path: string }> = ({ path }) => {
             </div>
 
             <div className='flex justify-start mt-4' onClick={() => navigate("/employees")}>
-              <PiUsersThreeBold size={30} className='mt-2 mr-2 cursor-pointer' color={path === "employees" ? '#7C5EB1' : ''} />
+              <CiUser size={30} className='mt-2 mr-2 cursor-pointer' color={path === "employees" ? '#7C5EB1' : ''} />
               <p className={`text-sm mt-3 ${path === "employees" ? 'text-purple-purs' : ''} font-bold`}>Colaboradores</p>
+            </div>
+
+            <div className='flex justify-start mt-4' onClick={() => navigate("/groups")}>
+              <PiUsersThreeBold size={30} className='mt-2 mr-2 cursor-pointer' color={path === "groups" ? '#7C5EB1' : ''} />
+              <p className={`text-sm mt-3 ${path === "groups" ? 'text-purple-purs' : ''} font-bold`}>Grupos</p>
+            </div>
+
+            <div className='flex justify-start mt-4' onClick={() => navigate("/departments")}>
+              <VscTypeHierarchySub size={30} className='mt-2 mr-2 cursor-pointer' color={path === "departments" ? '#7C5EB1' : ''} />
+              <p className={`text-sm mt-3 ${path === "departments" ? 'text-purple-purs' : ''} font-bold`}>Departamentos</p>
+            </div>
+
+            <div className='flex justify-start mt-4' onClick={() => navigate("/roles")}>
+              <FaSuitcase size={30} className='mt-2 mr-2 cursor-pointer' color={path === "roles" ? '#7C5EB1' : ''} />
+              <p className={`text-sm mt-3 ${path === "roles" ? 'text-purple-purs' : ''} font-bold`}>Cargos</p>
             </div>
           </div>
         )}

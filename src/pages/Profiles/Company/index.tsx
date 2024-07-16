@@ -104,18 +104,18 @@ const ProfileCompany: React.FC = () => {
   };
 
   const handleCnpjChange = (event) => {
-    let formattedCnpj = event.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    let formattedCnpj = event.target.value.replace(/\D/g, ''); 
     if (formattedCnpj.length > 2) {
-      formattedCnpj = formattedCnpj.replace(/^(\d{2})(\d)/, '$1.$2'); // Adiciona ponto após os primeiros dois dígitos
+      formattedCnpj = formattedCnpj.replace(/^(\d{2})(\d)/, '$1.$2'); 
     }
     if (formattedCnpj.length > 5) {
-      formattedCnpj = formattedCnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3'); // Adiciona ponto após os próximos três dígitos
+      formattedCnpj = formattedCnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3'); 
     }
     if (formattedCnpj.length > 8) {
-      formattedCnpj = formattedCnpj.replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4'); // Adiciona barra após os próximos três dígitos
+      formattedCnpj = formattedCnpj.replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4'); 
     }
     if (formattedCnpj.length > 12) {
-      formattedCnpj = formattedCnpj.replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5'); // Adiciona hífen após os próximos quatro dígitos
+      formattedCnpj = formattedCnpj.replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5'); 
     }
     setCnpj(formattedCnpj);
   };
@@ -434,7 +434,7 @@ const ProfileCompany: React.FC = () => {
                         </div>
                         <div>
                           <p> Nome: {item.name} </p>
-                          <p> Cargo: {item.name} </p>
+                          <p> Cargo: {item.roleName ? item.roleName : "Cargo não informado"} </p>
                           <p> E-mail: {item.email} </p>
                         </div>
                       </div>
