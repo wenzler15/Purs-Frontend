@@ -27,6 +27,8 @@ import AddUpdateRole from "./Roles/AddUpdate";
 import ShowUpdateDepartment from "./Department/ShowUpdate";
 import ShowUpdateRole from "./Roles/ShowUpdate";
 import AddUpdateGroups from "./Group/AddUpdate";
+import AddUpdateUser from "./User/AddUpdate";
+import ShowUpdateUser from "./User/ShowUpdate";
 
 export function AppRoutes() {
     return (
@@ -43,6 +45,8 @@ export function AppRoutes() {
                 {/* User routes */}
                 <Route path='/employees' element={<Employees />} />
                 <Route path="/profile"  element={<Profile />} />
+                <Route path="/employee/add" element={<AddUpdateUser />}/>
+                <Route path="/employee/show" element={<ShowUpdateUser />}/>
 
                 {/* Group routes */}
                 <Route path='/groups' element={<Groups />} />

@@ -12,6 +12,8 @@ const Employees: React.FC = () => {
     const [employees, setEmplooyees] = useState([]);
     const [filteredEmployees, setFilteredEmployees] = useState([]);
     const [filterName, setFilterName] = useState("");
+    
+    const navigate = useNavigate();
 
     const getEmployees = async () => {
         try {
@@ -75,7 +77,7 @@ const Employees: React.FC = () => {
                         <TextButton text="Filtrar" style={{marginTop: 45, width: 150}} onClick={handleFilterButtonClick}/>
                         <TextButton text="Limpar" style={{marginTop: 45, width: 150, marginLeft: 10, background: "#fff", color: "#000", border: '1px solid '}} onClick={handleResetFilterButtonClick}/>
 
-                        <div className="w-1/2 flex items-end justify-end cursor-pointer">
+                        <div className="w-1/2 flex items-end justify-end cursor-pointer" onClick={() => navigate('/employee/add')}>
                             <CiCirclePlus size={25} />
                             <p className="underline ml-2">Adicionar usuário</p>
                         </div>
@@ -100,11 +102,11 @@ const Employees: React.FC = () => {
                                 </div>
                                 {filteredEmployees.map((item) => (
                                     <div className="flex rounded-lg w-full justify-between p-2">
-                                        <div className="flex items-center justify-center w-1/4 cursor-pointer">
+                                        <div className="flex items-center justify-center w-1/4 cursor-pointer underline" onClick={() => navigate('/employee/show', { state: { id: item.id } })}>
                                             <p>{item.name}</p>
                                         </div>
                                         <div className="flex items-center justify-center w-1/4">
-                                            <p>{item.name}</p>
+                                            <p>{item.roleName}</p>
                                         </div>
                                         <div className="flex items-center justify-center w-1/4">
                                             <p>{item.email}</p>
