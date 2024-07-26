@@ -169,7 +169,7 @@ const ShowUpdateUser: React.FC = () => {
                 },
             });
 
-            const {name, cpf, idRole, idLeader, email, phone, street, city, state, zipCode, neighborhood, houseNumber, complement, roleName, leaderName } = resp.data
+            const { name, cpf, idRole, idLeader, email, phone, street, city, state, zipCode, neighborhood, houseNumber, complement, roleName, leaderName } = resp.data
 
             setName(name);
             setCpf(cpf);
@@ -182,15 +182,15 @@ const ShowUpdateUser: React.FC = () => {
             setNeighborhood(neighborhood);
             setHouseNumber(houseNumber);
             setComplement(complement)
-                
-            if(idRole) {
+
+            if (idRole) {
                 setIdRole(idRole)
-                setSmo({value: idRole, label: roleName})
+                setSmo({ value: idRole, label: roleName })
             }
 
-            if(idLeader) {
+            if (idLeader) {
                 setIdLeader(idLeader)
-                setSmoL({value: idLeader, label: leaderName})
+                setSmoL({ value: idLeader, label: leaderName })
             }
         } catch (err) {
             toast.error("Erro ao tentar listar as informações do usuário")
@@ -227,13 +227,17 @@ const ShowUpdateUser: React.FC = () => {
                         <div className="flex w-full justify-between mt-5">
                             <div className="w-[50%]">
                                 <div className="w-[90%]">
-                                    <Dropdown value={smo} text="Selecione um cargo" options={roles} onSelect={handleSelectRole} />
+                                    {smo && (
+                                        <Dropdown value={smo} text="Selecione um cargo" options={roles} onSelect={handleSelectRole} />
+                                    )}
                                 </div>
                             </div>
 
                             <div className="w-[50%]">
                                 <div className="w-[90%]">
-                                    <Dropdown value={smoL} text="Selecione um líder" options={employees} onSelect={handleSelectLeader} />
+                                    {smo && (
+                                        <Dropdown value={smoL} text="Selecione um líder" options={employees} onSelect={handleSelectLeader} />
+                                    )}
                                 </div>
                             </div>
                         </div>

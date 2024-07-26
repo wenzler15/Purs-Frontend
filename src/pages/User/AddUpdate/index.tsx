@@ -128,6 +128,11 @@ const AddUpdateUser: React.FC = () => {
         try {
             const token = localStorage.getItem('pursToken');
 
+            if(name === "" || cpf === "" || idRole === null || email === "") {
+                toast.error("Favor preencher os seguintes dados: Nome, CPF, Cargo e email");
+                return null;
+            }
+
             const toSend = {
                 name,
                 cpf,
