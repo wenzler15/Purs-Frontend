@@ -63,7 +63,6 @@ const LP: React.FC = () => {
                 toast.success("Seu e-mail foi enviado ao nosso consultor")
                 window.open(`https://wa.me//${import.meta.env.VITE_WHATSAPP_NUMBR}`, '_blank')
             } catch (err) {
-                console.log(err)
                 toast.error("Não foi possível enviar e-mail, favor tente mais tarde");
             }
         }

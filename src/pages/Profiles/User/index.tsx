@@ -78,7 +78,6 @@ const Profile: React.FC = () => {
         setState(uf);
         setNeighborhood(bairro);
       } catch (error) {
-        console.error('Erro ao buscar CEP:', error);
         toast.error('Erro ao buscar CEP. Verifique e tente novamente.');
       }
     }
@@ -90,7 +89,6 @@ const Profile: React.FC = () => {
       setEditing(false);
       toast.success("Informações atualizadas com sucesso!");
     } catch (error) {
-      console.error('Erro ao salvar informações:', error.message);
       toast.error("Erro ao salvar informações. Tente novamente.");
     }
   };

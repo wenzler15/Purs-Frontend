@@ -118,7 +118,6 @@ const AddUpdateUser: React.FC = () => {
                 setState(uf);
                 setNeighborhood(bairro);
             } catch (error) {
-                console.error('Erro ao buscar CEP:', error);
                 toast.error('Erro ao buscar CEP. Verifique e tente novamente.');
             }
         }

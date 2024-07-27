@@ -205,7 +205,6 @@ const ShowUpdateRole: React.FC = () => {
 
             navigate("/roles")
         } catch (err) {
-            console.log(err)
             toast.error("Não foi possível atualizar o cargo!")
         }
     };

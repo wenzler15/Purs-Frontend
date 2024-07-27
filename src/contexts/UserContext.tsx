@@ -41,7 +41,6 @@ export const UserProvider: React.FC = ({ children }) => {
         });
         setUserData(resp.data);
       } catch (error) {
-        console.error('Erro ao buscar dados do usuário:', error);
       }
     };
 
@@ -66,7 +65,6 @@ export const UserProvider: React.FC = ({ children }) => {
 
       setUserData(resp.data);
     } catch (error) {
-      console.error('Erro ao atualizar dados do usuário:', error);
       throw new Error('Erro ao atualizar dados do usuário. Tente novamente.');
     }
   };

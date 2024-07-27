@@ -62,7 +62,6 @@ const getAcronym = (name: string) => {
 
 const getAcronymFullname = (name: string) => {
   const arrName = name.toString().split(" ");
-  console.log(name);
 
   let convertedName = name;
 

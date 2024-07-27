@@ -91,7 +91,6 @@ const RegisterCompanyStep1: React.FC = () => {
     };
 
     const handleClick = async () => {
-        console.log(arrayResponsible)
         const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
         const companyEmailTest = regexEmail.test(companyEmail);

@@ -96,7 +96,7 @@ const Groups: React.FC = () => {
                                 </div>
                                 {filteredGroups.map((item) => (
                                     <div className="flex rounded-lg w-full justify-between p-2">
-                                        <div className="flex items-center justify-center w-1/4 cursor-pointer">
+                                        <div className="flex items-center justify-center w-1/4 cursor-pointer underline" onClick={() => navigate('/group/show', { state: { id: item.id } })}>
                                             <p>{item.name}</p>
                                         </div>
                                         <div className="flex items-center justify-center w-3/4">

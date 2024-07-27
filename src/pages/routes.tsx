@@ -29,6 +29,7 @@ import ShowUpdateRole from "./Roles/ShowUpdate";
 import AddUpdateGroups from "./Group/AddUpdate";
 import AddUpdateUser from "./User/AddUpdate";
 import ShowUpdateUser from "./User/ShowUpdate";
+import ShowUpdateGroups from "./Group/ShowUpdate";
 
 export function AppRoutes() {
     return (
@@ -51,6 +52,7 @@ export function AppRoutes() {
                 {/* Group routes */}
                 <Route path='/groups' element={<Groups />} />
                 <Route path='/group/add' element={<AddUpdateGroups />}/>
+                <Route path='/group/show' element={<ShowUpdateGroups />} />
 
                 {/* Department routes */}
                 <Route path='/departments' element={<Departments />} />
