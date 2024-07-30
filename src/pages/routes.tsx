@@ -63,13 +63,14 @@ export function AppRoutes() {
                 <Route path='/role/add' element={<AddUpdateRole />} />
                 <Route path='/role/show' element={<ShowUpdateRole />} />
 
+                {/* Research routes */}
+                <Route path='/research' element={<Research />} />
+                <Route path='/research/newResearch' element={<NewResearch />} />
 
                 {/* Other routes */}
                 <Route path='/lead/uploadFile' element={<UploadFile />} />
                 <Route path='/chart' element={<ChartPage />} />
                 <Route path='/chartExport' element={<ExportLink />} />
-                <Route path='/research' element={<Research />} />
-                <Route path='/research/newResearch' element={<NewResearch />} />
                 <Route path='/home' element={<Home />}/>
                 <Route path="/" element={<NewLp />} />
                 <Route path='/login' element={< Login />} />
