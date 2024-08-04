@@ -1,0 +1,1 @@
+export { default as DragIndicatorIcon } from './drag-indicator';

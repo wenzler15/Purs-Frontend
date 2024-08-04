@@ -17,6 +17,15 @@ module.exports = {
       clipPath: {
         'inset-30': 'inset(0 100px 0 0)',
       },
+      keyframes: {
+        zoom: {
+          '0%': { transform: 'scale(0)'},
+          '100%': { transform: 'scale(100%)'},
+        }
+      },
+      animation: {
+        zoom: 'zoom 225ms'
+      }
     },
     textColor: {
       'purple-purs': '#7C5EB1',

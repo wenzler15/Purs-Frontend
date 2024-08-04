@@ -1,7 +1,7 @@
 import {CreateResearchLayoutTag} from "~/app/presentation/layouts";
 import {CreateResearchProps} from "~/app/domain/protocols";
 import {CreateResearchProvider} from "~/app/presentation/providers";
-import {HeadingTag, MainPanelTag, ModalsTag, QuestionPanelTag, ResearchActionsTag} from "./components";
+import {HeadingTag, ModalsTag, ResearchActionsTag, SectionGroupTag} from "./components";
 
 function CreateResearchComponent(props: CreateResearchProps) {
     return (
@@ -9,10 +9,9 @@ function CreateResearchComponent(props: CreateResearchProps) {
             <CreateResearchLayoutTag>
                 <div className="flex flex-col items-center w-full h-full box-border">
                     <HeadingTag/>
-                    <MainPanelTag/>
-                    <QuestionPanelTag />
+                    <SectionGroupTag/>
                     <ResearchActionsTag/>
-                    <ModalsTag />
+                    <ModalsTag/>
                 </div>
             </CreateResearchLayoutTag>
         </CreateResearchProvider>

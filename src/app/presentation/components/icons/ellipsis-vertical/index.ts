@@ -1,0 +1,1 @@
+export { default as EllipsisVerticalIcon } from './ellipsis-vertical';

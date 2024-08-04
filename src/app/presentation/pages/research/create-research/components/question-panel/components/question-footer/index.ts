@@ -1,0 +1,1 @@
+export { default as QuestionFooterTag } from './question-footer';

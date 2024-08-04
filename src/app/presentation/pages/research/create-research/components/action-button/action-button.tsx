@@ -6,18 +6,14 @@ type ActionButtonProps = {
 }
 
 function ActionButtonComponent({isOpen, onClick}: ActionButtonProps) {
-    const key = isOpen ? 'close' : 'open';
-    const icons = {
-        open: <MdAdd size={24} color="#FFF" className="mt-[2px]"/>,
-        close: <MdClose size={24} color="#FFF" className="mt-[2px]"/>
-    }
+    const rotateClassName = isOpen ? 'rotate-45' : 'rotate-0';
 
     return (
         <div
             className="flex items-center justify-center w-[64px] h-[64px] bg-[#5B359E] rounded-full cursor-pointer"
             onClick={onClick}
         >
-            {icons[key]}
+            <MdAdd size={24} color="#FFF" className={`mt-[2px] transition ${rotateClassName}`}/>
         </div>
     )
 }

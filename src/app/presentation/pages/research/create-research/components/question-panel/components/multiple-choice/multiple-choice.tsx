@@ -1,9 +1,15 @@
-function MultipleChoiceComponent() {
- return (
-     <div>
+import { MultipleChoiceTag, OptionTag } from "./components";
 
-     </div>
- )
+function MultipleChoiceComponent() {
+    return (
+        <div>
+            <div className="flex flex-col">
+                <OptionTag/>
+
+                <MultipleChoiceTag/>
+            </div>
+        </div>
+    )
 }
 
 export default MultipleChoiceComponent;
