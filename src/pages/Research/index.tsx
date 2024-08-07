@@ -75,6 +75,26 @@ const Research: React.FC = () => {
     setResearchs(resp);
   }
 
+  const renderStatus = (status: string) => {
+    switch(status) {
+      case "finish":
+        return <p>Finish</p>;
+      case  "reproved":
+        return <p>Reprovado</p>;
+      case "approved":
+        return <p> Aprovado</p>;
+      case "draft":
+        return <p> Rascunho</p>;
+      case "pending":
+        return <p> Pendente</p>;
+      case "ongoing":
+        return <p> Em curso</p>;
+      default:
+        return <p>DSla</p>;
+
+    }
+  } 
+
   useEffect(() => {
     getResearchs();
   }, []);
@@ -143,30 +163,56 @@ const Research: React.FC = () => {
 
               <div className="w-full mt-4">
                 {researchs.length > 0 ? (
-                  <div className="w-full bg-[#E4ECF5] p-4 flex justify-between">
-                    <div className="w-[4%] items-center">
-                      <Checkbox
-                        label=""
-                        isChecked={isChecked}
-                        onChange={handleCheckboxChange}
-                      />
+                  <div className="overflow-y-auto">
+                    <div className="w-full bg-[#E4ECF5] p-4 flex justify-between">
+                      <div className="w-[4%] items-center">
+                        <Checkbox
+                          label=""
+                          isChecked={isChecked}
+                          onChange={handleCheckboxChange}
+                        />
+                      </div>
+                      <div className="flex cursor-pointer w-[24%] justify-center">
+                        <p>Pesquisa</p>
+                        <RiArrowUpDownLine style={{ marginTop: 5, marginLeft: 5 }} />
+                      </div>
+                      <div className="flex cursor-pointer w-[24%] justify-center">
+                        <p>Criado por</p>
+                        <RiArrowUpDownLine style={{ marginTop: 5, marginLeft: 5 }} />
+                      </div>
+                      <div className="flex cursor-pointer w-[24%] justify-center">
+                        <p>Criado em</p>
+                        <RiArrowUpDownLine style={{ marginTop: 5, marginLeft: 5 }} />
+                      </div>
+                      <div className="flex cursor-pointer w-[24%] justify-center">
+                        <p>Situação</p>
+                        <RiArrowUpDownLine style={{ marginTop: 5, marginLeft: 5 }} />
+                      </div>
                     </div>
-                    <div className="flex cursor-pointer w-[24%] justify-center">
-                      <p>Pesquisa</p>
-                      <RiArrowUpDownLine style={{ marginTop: 5, marginLeft: 5 }} />
-                    </div>
-                    <div className="flex cursor-pointer w-[24%] justify-center">
-                      <p>Criado por</p>
-                      <RiArrowUpDownLine style={{ marginTop: 5, marginLeft: 5 }} />
-                    </div>
-                    <div className="flex cursor-pointer w-[24%] justify-center">
-                      <p>Criado em</p>
-                      <RiArrowUpDownLine style={{ marginTop: 5, marginLeft: 5 }} />
-                    </div>
-                    <div className="flex cursor-pointer w-[24%] justify-center">
-                      <p>Situação</p>
-                      <RiArrowUpDownLine style={{ marginTop: 5, marginLeft: 5 }} />
-                    </div>
+                    {researchs.map((item) => (
+                      <div className="w-full p-4 flex justify-between">
+                        <div className="w-[4%] items-center mt-2">
+                          <Checkbox
+                            label=""
+                            isChecked={isChecked}
+                            onChange={handleCheckboxChange}
+                          />
+                        </div>
+                        <div className="cursor-pointer w-[24%] justify-center">
+                          <p className="text-black-purs font-bold">{item.name}</p>
+                          <p className="text-black-purs">{item.desc}</p>
+                        </div>
+                        <div className="flex cursor-pointer w-[24%] justify-center">
+                          <p className="text-black-purs">{item.owner}</p>
+                        </div>
+                        <div className="flex cursor-pointer w-[24%] justify-center">
+                          <p className="text-black-purs">{item.created}</p>
+                        </div>
+                        <div className="flex cursor-pointer w-[24%] justify-center">
+                          {renderStatus(item.status)}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 ) : (
                   <p>Você ainda não tem pesquisas...</p>
