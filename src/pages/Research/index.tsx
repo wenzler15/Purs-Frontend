@@ -4,14 +4,22 @@ import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { RiArrowUpDownLine } from "react-icons/ri";
 import { HiOutlineMagnifyingGlass } from 'react-icons/hi2';
 import { useNavigate, useLocation } from "react-router-dom";
+import { PiDotsThreeVerticalBold } from "react-icons/pi";
+import { CiCircleCheck } from "react-icons/ci";
 import { Tooltip } from 'react-tooltip';
 import NavBar from "../../Components/NavBar";
 import TextButton from "../../Components/Button";
 import Checkbox from "../../Components/Checkbox";
+import { FaCopy, FaTrash, FaPen } from 'react-icons/fa';
+import { IoCloseCircleOutline } from "react-icons/io5";
+import { VscDebugStart } from "react-icons/vsc";
+import { CiClock1 } from "react-icons/ci";
 
 const Research: React.FC = () => {
   const [researchs, setResearchs] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [showMenu, setShowMenu] = useState<number | null>(null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -75,32 +83,151 @@ const Research: React.FC = () => {
     setResearchs(resp);
   }
 
-  const renderStatus = (status: string) => {
-    switch(status) {
-      case "finish":
-        return <p>Finish</p>;
-      case  "reproved":
-        return <p>Reprovado</p>;
-      case "approved":
-        return <p> Aprovado</p>;
+  const handleMenuClick = (rowId) => {
+    setShowMenu(showMenu === rowId ? null : rowId);
+  };
+
+  const handleDuplicate = (rowId: number) => {
+    console.log('Duplicar linha', rowId);
+    setShowMenu(null);
+  };
+
+  const handleDelete = (rowId: number) => {
+    console.log('Excluir linha', rowId);
+    setShowMenu(null);
+  };
+
+  const renderOptions = (id: number, status: string) => {
+    switch (status) {
       case "draft":
-        return <p> Rascunho</p>;
+        return (
+          <div className="absolute w-[150px] right-0 top-full mt-1 bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
+            <button onClick={() => handleDuplicate(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <FaPen style={{ marginRight: 10 }} /> Edição
+            </button>
+            <button onClick={() => handleDuplicate(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <FaCopy style={{ marginRight: 10 }} /> Duplicar
+            </button>
+            <button onClick={() => handleDelete(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <FaTrash style={{ marginRight: 10 }} /> Excluir
+            </button>
+          </div>
+        )
+      case "finish":
+        return (
+          <div className="absolute w-[150px] right-0 top-full mt-1 bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
+            <button onClick={() => handleDuplicate(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <FaCopy style={{ marginRight: 10 }} /> Duplicar
+            </button>
+            <button onClick={() => handleDelete(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <FaTrash style={{ marginRight: 10 }} /> Excluir
+            </button>
+          </div>
+        )
       case "pending":
-        return <p> Pendente</p>;
+        return (
+          <div className="absolute w-[150px] right-0 top-full mt-1 bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
+            <button onClick={() => handleDuplicate(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <CiCircleCheck style={{ marginRight: 10, marginTop: 5, fontWeight: "bold" }} /> Aprovar
+            </button>
+            <button onClick={() => handleDuplicate(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <IoCloseCircleOutline style={{ marginRight: 10, marginTop: 5 }} /> Reprovar
+            </button>
+            <button onClick={() => handleDuplicate(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <FaPen style={{ marginRight: 10 }} /> Edição
+            </button>
+            <button onClick={() => handleDuplicate(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <FaCopy style={{ marginRight: 10 }} /> Duplicar
+            </button>
+            <button onClick={() => handleDelete(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <FaTrash style={{ marginRight: 10 }} /> Excluir
+            </button>
+          </div>
+        )
+      case "reproved":
+        return (
+          <div className="absolute w-[150px] right-0 top-full mt-1 bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
+            <button onClick={() => handleDuplicate(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <FaPen style={{ marginRight: 10 }} /> Edição
+            </button>
+            <button onClick={() => handleDelete(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <FaTrash style={{ marginRight: 10 }} /> Excluir
+            </button>
+          </div>
+        )
+      case "approved":
+        return (
+          <div className="absolute w-[150px] right-0 top-full mt-1 bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
+            <button onClick={() => handleDuplicate(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <VscDebugStart style={{ marginRight: 10 }} /> Iniciar
+            </button>
+            <button onClick={() => handleDuplicate(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <FaCopy style={{ marginRight: 10 }} /> Duplicar
+            </button>
+            <button onClick={() => handleDelete(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <FaTrash style={{ marginRight: 10 }} /> Excluir
+            </button>
+          </div>
+        )
       case "ongoing":
-        return <p> Em curso</p>;
+        return (
+          <div className="absolute w-[150px] right-0 top-full mt-1 bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
+            <button onClick={() => handleDelete(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <CiClock1 style={{ marginRight: 10 }} /> Encerrar
+            </button>
+            <button onClick={() => handleDuplicate(id)}
+              className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
+              <FaCopy style={{ marginRight: 10 }} /> Duplicar
+            </button>
+          </div>
+        )
+
+      default:
+        return <> </>
+    }
+  }
+
+  const renderStatus = (status: string) => {
+    switch (status) {
+      case "finish":
+        return <div className="w-[120px] flex rounded-3xl p-2 bg-[#E9D8FA] items-center justify-around h-[40px]"> <div className="bg-[#5B359E] w-3 h-3 rounded-full" />  <p className="text-[#5B359E]">Concluída</p> </div>;
+      case "reproved":
+        return <div className="w-[120px] flex rounded-3xl p-2 bg-[#C54B68] items-center justify-around h-[40px]"> <div className="bg-[#fff] w-3 h-3 rounded-full" />  <p className="text-[#fff]">Reprovada</p> </div>;
+      case "approved":
+        return <div className="w-[120px] flex rounded-3xl p-2 bg-[#11A75C] items-center justify-around h-[40px]"> <div className="bg-[#fff] w-3 h-3 rounded-full" />  <p className="text-[#fff]">Aprovada</p> </div>;
+      case "draft":
+        return <div className="w-[120px] flex rounded-3xl p-2 bg-[#F0F3F9] items-center justify-around h-[40px]"> <div className="bg-[#5E718D] w-3 h-3 rounded-full" />  <p className="text-[#5E718D]">Rascunho</p> </div>;
+      case "pending":
+        return <div className="w-[120px] flex rounded-3xl p-2 bg-[#FBEECA] items-center justify-around h-[40px]"> <div className="bg-[#AF6505] w-3 h-3 rounded-full" />  <p className="text-[#AF6505]">Pendente</p> </div>;
+      case "ongoing":
+        return <div className="w-[120px] flex rounded-3xl p-2 bg-[#3E79A5] items-center justify-around h-[40px]"> <div className="bg-[#fff] w-3 h-3 rounded-full" />  <p className="text-[#fff]">Em curso</p> </div>;
       default:
         return <p>DSla</p>;
-
     }
-  } 
+  }
 
   useEffect(() => {
     getResearchs();
   }, []);
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen">
       <div className="w-1/6">
         <NavBar path="research" />
       </div>
@@ -163,7 +290,7 @@ const Research: React.FC = () => {
 
               <div className="w-full mt-4">
                 {researchs.length > 0 ? (
-                  <div className="overflow-y-auto">
+                  <div>
                     <div className="w-full bg-[#E4ECF5] p-4 flex justify-between">
                       <div className="w-[4%] items-center">
                         <Checkbox
@@ -190,7 +317,7 @@ const Research: React.FC = () => {
                       </div>
                     </div>
                     {researchs.map((item) => (
-                      <div className="w-full p-4 flex justify-between">
+                      <div className="w-full p-4 flex justify-between border-b border-b-[#E4ECF5]">
                         <div className="w-[4%] items-center mt-2">
                           <Checkbox
                             label=""
@@ -202,14 +329,22 @@ const Research: React.FC = () => {
                           <p className="text-black-purs font-bold">{item.name}</p>
                           <p className="text-black-purs">{item.desc}</p>
                         </div>
-                        <div className="flex cursor-pointer w-[24%] justify-center">
+                        <div className="flex w-[24%] justify-center items-center">
                           <p className="text-black-purs">{item.owner}</p>
                         </div>
-                        <div className="flex cursor-pointer w-[24%] justify-center">
+                        <div className="flex w-[24%] justify-center items-center">
                           <p className="text-black-purs">{item.created}</p>
                         </div>
-                        <div className="flex cursor-pointer w-[24%] justify-center">
+                        <div className="flex w-[24%] justify-center pl-10">
                           {renderStatus(item.status)}
+                          <div style={{ position: 'relative' }}>
+                            <PiDotsThreeVerticalBold onClick={() => handleMenuClick(item.id)} style={{ cursor: "pointer", marginLeft: 30, marginTop: 5 }} size={30} />
+                            {showMenu === item.id && (
+                              <>
+                                {renderOptions(item.id, item.status)}
+                              </>
+                            )}
+                          </div>
                         </div>
                       </div>
                     ))}
