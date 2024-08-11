@@ -14,6 +14,8 @@ import { FaCopy, FaTrash, FaPen } from 'react-icons/fa';
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { VscDebugStart } from "react-icons/vsc";
 import { CiClock1 } from "react-icons/ci";
+import { toast } from 'react-toastify';
+import api from '../../services/api';
 
 const Research: React.FC = () => {
   const [researchs, setResearchs] = useState([]);
@@ -71,7 +73,7 @@ const Research: React.FC = () => {
         'status': "pending"
       },
       {
-        'id': 5,
+        'id': 6,
         'name': "Pesquisa teste 2",
         'desc': "Apenas uma pesquisa para testes 2",
         'owner': "Douglas Wenzler",
@@ -92,17 +94,45 @@ const Research: React.FC = () => {
     setShowMenu(null);
   };
 
-  const handleDelete = (rowId: number) => {
-    console.log('Excluir linha', rowId);
-    setShowMenu(null);
+  const handleChangeStatus = async (rowId: number, status: string) => {
+    try {
+      const toSend = {
+        status
+      }
+
+      await api.patch(`/research/${rowId}`, toSend);
+
+      toast.success("Status da pesquisa atualizado com sucesso");
+      window.location.reload();
+    } catch (err) {
+      toast.error("Não foi possível trocar o status da pesquisa");
+      setShowMenu(null);
+    }
+  }
+
+  const handleDelete = async (rowId: number) => {
+    try {
+      await api.delete(`/research/${rowId}`);
+
+      toast.success("Pesquisa deletada");
+      window.location.reload();
+    } catch (err) {
+      toast.error("Não foi possível apagar a pesquisa");
+      setShowMenu(null);
+    }
   };
+
+  const handleEdit = (rowId: number) => {
+    console.log("Editado", rowId)
+    setShowMenu(null);
+  }
 
   const renderOptions = (id: number, status: string) => {
     switch (status) {
       case "draft":
         return (
-          <div className="absolute w-[150px] right-0 top-full mt-1 bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
-            <button onClick={() => handleDuplicate(id)}
+          <div className="absolute w-[150px] right-0 top-full bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
+            <button onClick={() => handleEdit(id)}
               className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
               <FaPen style={{ marginRight: 10 }} /> Edição
             </button>
@@ -118,7 +148,7 @@ const Research: React.FC = () => {
         )
       case "finish":
         return (
-          <div className="absolute w-[150px] right-0 top-full mt-1 bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
+          <div className="absolute w-[150px] right-0 top-full bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
             <button onClick={() => handleDuplicate(id)}
               className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
               <FaCopy style={{ marginRight: 10 }} /> Duplicar
@@ -131,16 +161,16 @@ const Research: React.FC = () => {
         )
       case "pending":
         return (
-          <div className="absolute w-[150px] right-0 top-full mt-1 bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
-            <button onClick={() => handleDuplicate(id)}
+          <div className="absolute w-[150px] right-0 top-full bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
+            <button onClick={() => handleChangeStatus(id, "approved")}
               className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
               <CiCircleCheck style={{ marginRight: 10, marginTop: 5, fontWeight: "bold" }} /> Aprovar
             </button>
-            <button onClick={() => handleDuplicate(id)}
+            <button onClick={() => handleChangeStatus(id, "reproved")}
               className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
               <IoCloseCircleOutline style={{ marginRight: 10, marginTop: 5 }} /> Reprovar
             </button>
-            <button onClick={() => handleDuplicate(id)}
+            <button onClick={() => handleEdit(id)}
               className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
               <FaPen style={{ marginRight: 10 }} /> Edição
             </button>
@@ -156,8 +186,8 @@ const Research: React.FC = () => {
         )
       case "reproved":
         return (
-          <div className="absolute w-[150px] right-0 top-full mt-1 bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
-            <button onClick={() => handleDuplicate(id)}
+          <div className="absolute w-[150px] right-0 top-full bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
+            <button onClick={() => handleEdit(id)}
               className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
               <FaPen style={{ marginRight: 10 }} /> Edição
             </button>
@@ -169,8 +199,8 @@ const Research: React.FC = () => {
         )
       case "approved":
         return (
-          <div className="absolute w-[150px] right-0 top-full mt-1 bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
-            <button onClick={() => handleDuplicate(id)}
+          <div className="absolute w-[150px] right-0 top-full bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
+            <button onClick={() => handleChangeStatus(id, "ongoing")}
               className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
               <VscDebugStart style={{ marginRight: 10 }} /> Iniciar
             </button>
@@ -186,8 +216,8 @@ const Research: React.FC = () => {
         )
       case "ongoing":
         return (
-          <div className="absolute w-[150px] right-0 top-full mt-1 bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
-            <button onClick={() => handleDelete(id)}
+          <div className="absolute w-[150px] right-0 top-full bg-[#fff] border border-gray-300 rounded shadow-lg z-20">
+            <button onClick={() => handleChangeStatus(id, "finish")}
               className="flex p-2 border-0 text-left w-full hover:bg-[#ccc]">
               <CiClock1 style={{ marginRight: 10 }} /> Encerrar
             </button>
@@ -197,7 +227,6 @@ const Research: React.FC = () => {
             </button>
           </div>
         )
-
       default:
         return <> </>
     }
