@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import Logo from "~/assets/logo.png";
@@ -8,13 +8,25 @@ import Ellipse5 from "~/assets/Ellipse5.png";
 import Ellipse8 from "~/assets/Ellipse8.png";
 import {FaEye} from "react-icons/fa";
 import {LoginComponentProps} from "~/app/domain/protocols";
+import {TOKEN_NAME} from "~/config/vars";
 
-function LoginComponent({ authentication }: LoginComponentProps) {
+function LoginComponent({ cookieAdapter, authentication }: LoginComponentProps) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordType, setPasswordType] = useState(false);
 
     const navigate = useNavigate();
+
+    const verifyLogged = async () => {
+        const token = await cookieAdapter.get(TOKEN_NAME);
+
+        if(token) navigate("/home")
+    }
+
+    useEffect(() => {
+        verifyLogged();
+    }, []);
+
 
     const handleLogin = async () => {
         if (email === '' || password === '') return toast.error("Favor preencher email e senha");

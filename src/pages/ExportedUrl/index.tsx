@@ -75,7 +75,6 @@ const ExportLink: React.FC = () => {
           }
         });
     } catch (err) {
-      console.log("err", err)
     }
   }
 

@@ -15,33 +15,53 @@ const fileTypes = ["JPG", "JPEG", "PNG", "SVG"]
 const RegisterCompanyStep2: React.FC = () => {
     const [mission, setMission] = useState("");
     const [vision, setVision] = useState("");
-    const [values, setValues] = useState([{text: ""}]);
+    const [values, setValues] = useState([{ text: "" }]);
     const [fileSelected, setFileSelected] = useState<File>();
 
     const navigate = useNavigate();
 
     const handleClick = async () => {
-       let companyData = localStorage.getItem("registerUser");
+        let companyData = localStorage.getItem("registerUser");
 
-       if(companyData) {
-            companyData = {mission, vision, values, fileSelected, ...JSON.parse(companyData)}
+        if (companyData) {
+            const parsedValues = JSON.stringify(values)
 
-           if(fileSelected) {
-            let formData = new FormData();
-            formData.append('imagelogo', fileSelected);
+            companyData = { mission, vision, values: parsedValues, fileSelected, ...JSON.parse(companyData) }
 
-            const resp = await api.post('/uploads', formData, {
-                headers: {
-                'Content-Type': 'multipart/form-data',
-                'company': `${companyData.cnpj}`
+            if (fileSelected) {
+                try {
+                    let formData = new FormData();
+                    formData.append('imagelogo', fileSelected);
+
+                    await api.post('/uploads', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            'company': `${companyData.cnpj}`
+                        }
+                    });
+                } catch (err) {
+                    toast.error("Não foi possível fazer o upload a imagem, tento novamente mais tarde!")
                 }
-            });
+            }
+            try {
+                await api.post('/companies', companyData);
 
-            console.log(resp.data);
-           }           
-       } else {
-        toast.error("Não foi possível resgatar os dados. Favor voltar para o passo anterior")
-       } 
+                toast.success("Empresa cadastrada com sucesso");
+
+                localStorage.removeItem("registerUser");
+
+                navigate("/login");
+                
+            } catch (err) {
+                if (err.response.status === 409) {
+                    toast.error("Empresa já cadastrada")
+                } else {
+                    toast.error("Não foi possível cadastrar a sua empresa")
+                }
+            }
+        } else {
+            toast.error("Não foi possível resgatar os dados. Favor voltar para o passo anterior")
+        }
     };
 
     const handleChange = (file: File) => {
@@ -74,7 +94,7 @@ const RegisterCompanyStep2: React.FC = () => {
                     {values.map((value, index) => (
                         <div key={index}>
                             <TextInput
-                                text={`Valor nº ${index+1} da empresa`}
+                                text={`Valor nº ${index + 1} da empresa`}
                                 value={value.text}
                                 onChange={(e) => handleChangeValues(e.target.value, index)}
                             />
@@ -84,14 +104,14 @@ const RegisterCompanyStep2: React.FC = () => {
                         <p className='mt-[-2px]'>+</p>
                         <p className='ml-2 underline'>Adicionar valor</p>
                     </button>
-                    <hr className='mt-5 border-blue-purs'/>
+                    <hr className='mt-5 border-blue-purs' />
                     <p className='mt-5 text-black-purs mb-5'>Adicione aqui o logo da sua empresa em alta qualidade</p>
                     <FileUploader label='Arraste e solte seu arquivo aqui' handleChange={handleChange} name="file" types={fileTypes} />
 
                 </div>
                 <div className='flex flex-row mt-6'>
-                    <BackButton text="Voltar"/>
-                    <TextButton text="Concluir" onClick={handleClick} style={{marginLeft: 20}}/>
+                    <BackButton text="Voltar" />
+                    <TextButton text="Concluir" onClick={handleClick} style={{ marginLeft: 20 }} />
                 </div>
             </div>
         </div>

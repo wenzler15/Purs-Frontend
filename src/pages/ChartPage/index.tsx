@@ -132,7 +132,7 @@ const ChartPage: React.FC = () => {
   return (
     <div className="flex h-screen overflow-hidden">
       <div className="w-1/6">
-        <NavBar />
+        <NavBar path="orgchart"/>
       </div>
       <div className="w-full">
         <Header />
