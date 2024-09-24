@@ -1,6 +1,6 @@
 import {v4 as uuidv4} from 'uuid';
 import {CreateResearchContext} from "~/app/presentation/context";
-import {ChangeEvent, PropsWithChildren, useReducer, useState} from "react";
+import {ChangeEvent, PropsWithChildren, useEffect, useReducer, useState} from "react";
 import {
     CreateResearchProps,
     CreateResearchQuestion,
@@ -9,21 +9,45 @@ import {
 } from "~/app/domain/protocols";
 import {useForm} from "react-hook-form";
 import {CreateResearchModalsAction, createResearchModalsReducer} from "./reducer";
+import {CheckboxIcon, RadioButtonIcon, TextIcon} from "~/app/presentation/components/icons";
+import {LoadQuestionType} from "~/app/domain/usecases/research";
+import {OptionLabelTag} from "~/app/presentation/pages/research/create-research/components/question-panel/components";
 
 type CreateResearchProviderProps = PropsWithChildren & CreateResearchProps & {}
 
-export const CreateResearchProvider = ({validation, children}: CreateResearchProviderProps) => {
+export const CreateResearchProvider = ({loadQuestionsType, validation, children}: CreateResearchProviderProps) => {
+    const [questionOptions, setQuestionOptions] = useState<LoadQuestionType.Response[]>([])
     const [modals, modalsDispatch] = useReducer(createResearchModalsReducer, {open: false});
     const {control, watch} = useForm<ResearchValidation>({
         ...validation,
         mode: 'onTouched'
     });
 
+    const selectIcons: Record<LoadQuestionType.ValueType, JSX.Element> = {
+        text: <TextIcon/>,
+        paragraph: <TextIcon/>,
+        radio: <RadioButtonIcon/>,
+        checkbox: <CheckboxIcon/>
+    }
+
+    const setupScreen = async () => {
+        try {
+            const response = await loadQuestionsType.load();
+
+            setQuestionOptions(() => response.map(question => ({
+                    ...question,
+                    label: <OptionLabelTag icon={selectIcons[question.value]}>{question.label}</OptionLabelTag>
+            })))
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     const generateNewQuestion = (optionNumber: number = 1): CreateResearchQuestion => ({
         title: '',
         type: 'radio',
         required: false,
-        options: [{ value: `Opção ${optionNumber}`}]
+        options: [{value: `Opção ${optionNumber}`}]
     })
 
     const [sections, setSections] = useState<CreateResearchSection[]>([{
@@ -51,7 +75,6 @@ export const CreateResearchProvider = ({validation, children}: CreateResearchPro
         if (!sectionSelected) return sections
 
         return [...sections, sectionSelected]
-
     })
 
     const createQuestion = () => {
@@ -81,9 +104,14 @@ export const CreateResearchProvider = ({validation, children}: CreateResearchPro
 
     const handleModal = (type: CreateResearchModalsAction) => modalsDispatch(type)
 
+    useEffect(() => {
+        setupScreen();
+    }, [])
+
     return <CreateResearchContext.Provider value={{
         control,
         modals,
+        questionOptions,
         handleModal,
         sections,
         createSection,

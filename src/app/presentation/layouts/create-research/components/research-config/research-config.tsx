@@ -30,7 +30,7 @@ function ResearchConfigComponent() {
 
             <div
                 id="dropdownDots"
-                className={`z-10 absolute bg-[#FFFFFF]  rounded-lg border border-[#D7DFE9] py-3.5 w-[265px] shadow m-0 translate-x-0 translate-y-10 ${isOpen ? 'block' : 'hidden'}`}
+                className={`z-10 absolute bg-[#FFFFFF] rounded-lg border border-[#D7DFE9] py-3.5 w-[275px] shadow m-0 translate-x-0 translate-y-10 ${isOpen ? 'block' : 'hidden'}`}
                 style={{inset: '0px auto auto 0px'}}
             >
                 <ul className="text-sm text-gray-700 " aria-labelledby="dropdownMenuIconButton">

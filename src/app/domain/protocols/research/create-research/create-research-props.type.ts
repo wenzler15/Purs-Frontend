@@ -1,4 +1,5 @@
 import {UseFormProps} from "react-hook-form";
+import {LoadQuestionType} from "~/app/domain/usecases/research";
 
 export type ResearchValidation = {
     title: string;
@@ -27,5 +28,6 @@ export type CreateResearchSection = {
 }
 
 export type CreateResearchProps = {
+    loadQuestionsType: LoadQuestionType;
     validation: UseFormProps<ResearchValidation>
 }

@@ -1,1 +1,1 @@
-export * from './create-research'
+export * from './create-research';
