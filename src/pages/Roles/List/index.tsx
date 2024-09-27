@@ -19,7 +19,7 @@ const Roles: React.FC = () => {
 
     const getRoles = async () => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
             const resp = await api.get('/roles', {
                 headers: {
                     Authorization: token,

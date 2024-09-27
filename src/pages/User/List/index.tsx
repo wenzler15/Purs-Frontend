@@ -19,7 +19,7 @@ const Employees: React.FC = () => {
 
     const getEmployees = async () => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
             const resp = await api.get('/users/dashEmployees', {
                 headers: {
                     Authorization: token,

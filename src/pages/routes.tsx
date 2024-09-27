@@ -65,6 +65,7 @@ export function AppRoutes() {
 
                 {/* Research routes */}
                 <Route path='/research' element={<Research />} />
+                <Route path='/research/:researchId' element={<CreateResearch />} />
                 <Route path='/research/newResearch' element={<CreateResearch />} />
 
                 {/* Other routes */}

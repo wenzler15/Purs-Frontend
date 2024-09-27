@@ -35,7 +35,7 @@ const ShowUpdateUser: React.FC = () => {
 
     const getEmployees = async () => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
             const resp = await api.get('/users/listEmployees', {
                 headers: {
                     Authorization: token,
@@ -57,7 +57,7 @@ const ShowUpdateUser: React.FC = () => {
 
     const getRoles = async () => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
             const resp = await api.get('/roles', {
                 headers: {
                     Authorization: token,
@@ -130,7 +130,7 @@ const ShowUpdateUser: React.FC = () => {
 
     const handleSave = async () => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
 
             const toSend = {
                 name,
@@ -163,7 +163,7 @@ const ShowUpdateUser: React.FC = () => {
 
     const getUserInfo = async (id: number) => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
             const resp = await api.get(`/users/${id}`, {
                 headers: {
                     Authorization: token,

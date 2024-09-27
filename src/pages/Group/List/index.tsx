@@ -19,7 +19,7 @@ const Groups: React.FC = () => {
 
     const getGroups = async () => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
             const resp = await api.get('/groups', {
                 headers: {
                     Authorization: token,

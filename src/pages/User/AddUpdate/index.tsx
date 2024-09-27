@@ -32,7 +32,7 @@ const AddUpdateUser: React.FC = () => {
 
     const getEmployees = async () => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
             const resp = await api.get('/users/listEmployees', {
                 headers: {
                     Authorization: token,
@@ -54,7 +54,7 @@ const AddUpdateUser: React.FC = () => {
 
     const getRoles = async () => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
             const resp = await api.get('/roles', {
                 headers: {
                     Authorization: token,
@@ -127,7 +127,7 @@ const AddUpdateUser: React.FC = () => {
 
     const handleSave = async () => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
 
             if(name === "" || cpf === "" || idRole === null || email === "") {
                 toast.error("Favor preencher os seguintes dados: Nome, CPF, Cargo e email");

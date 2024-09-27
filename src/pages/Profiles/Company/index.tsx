@@ -84,7 +84,7 @@ const ProfileCompany: React.FC = () => {
         }
       }
 
-      const token = makeCookieAdapter().get(TOKEN_NAME);
+      const { token } = makeCookieAdapter().get(TOKEN_NAME);
 
       await api.patch(`/companies`, toSend, {
         headers: {
@@ -124,7 +124,7 @@ const ProfileCompany: React.FC = () => {
 
   const getCompanyData = async () => {
     try {
-      const token = makeCookieAdapter().get(TOKEN_NAME);
+      const { token } = makeCookieAdapter().get(TOKEN_NAME);
       const resp = await api.get('/companies/getOne', {
         headers: {
           Authorization: token,
@@ -159,7 +159,7 @@ const ProfileCompany: React.FC = () => {
 
   const getResponsibles = async () => {
     try {
-      const token = makeCookieAdapter().get(TOKEN_NAME);
+      const { token } = makeCookieAdapter().get(TOKEN_NAME);
       const resp = await api.get('/companies/responsibles', {
         headers: {
           Authorization: token,
@@ -186,7 +186,7 @@ const ProfileCompany: React.FC = () => {
 
   const addResponsibe = async (data) => {
     try {
-      const token = makeCookieAdapter().get(TOKEN_NAME);
+      const { token } = makeCookieAdapter().get(TOKEN_NAME);
 
       const toSend = {
         responsible: 1
@@ -208,7 +208,7 @@ const ProfileCompany: React.FC = () => {
 
   const deleteResp = async () => {
     try {
-      const token = makeCookieAdapter().get(TOKEN_NAME);
+      const { token } = makeCookieAdapter().get(TOKEN_NAME);
 
       const toSend = {
         responsible: 0
@@ -238,7 +238,7 @@ const ProfileCompany: React.FC = () => {
 
   const getEmployees = async () => {
     try {
-      const token = makeCookieAdapter().get(TOKEN_NAME);
+      const { token } = makeCookieAdapter().get(TOKEN_NAME);
       const resp = await api.get('/users/listEmployees', {
         headers: {
           Authorization: token,

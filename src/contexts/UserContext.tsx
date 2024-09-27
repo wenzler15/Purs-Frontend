@@ -35,7 +35,7 @@ export const UserProvider: React.FC = ({ children }) => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const token = makeCookieAdapter().get(TOKEN_NAME);
+        const { token } = makeCookieAdapter().get(TOKEN_NAME);
         const resp = await api.get('/users/getOne', {
           headers: {
             Authorization: token,
@@ -51,7 +51,7 @@ export const UserProvider: React.FC = ({ children }) => {
 
   const updateUser = async (newUserData: UserData) => {
     try {
-      const token = makeCookieAdapter().get(TOKEN_NAME);
+      const { token } = makeCookieAdapter().get(TOKEN_NAME);
 
       if(newUserData.password  === "") {
         delete newUserData.password;

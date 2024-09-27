@@ -8,3 +8,8 @@ export const IS_DEVELOPMENT = process.env.VITE_ENVIRONMENT === 'development' || 
 // COOKIES
 // --------------------------------------------------------------------
 export const TOKEN_NAME = process.env.VITE_TOKEN_NAME || '@';
+
+// --------------------------------------------------------------------
+// FEATURES TAGS
+// --------------------------------------------------------------------
+export const MOCKED_MODE = process.env.VITE_MOCKED_MODE || false;

@@ -38,7 +38,7 @@ const ShowUpdateRole: React.FC = () => {
 
     const getDepartments = async () => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
             const resp = await api.get('/departments', {
                 headers: {
                     Authorization: token,
@@ -129,7 +129,7 @@ const ShowUpdateRole: React.FC = () => {
 
       const getRoleInfo = async (id: number) => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
             const resp = await api.get(`/roles/${id}`, {
                 headers: {
                     Authorization: token,
@@ -184,7 +184,7 @@ const ShowUpdateRole: React.FC = () => {
                 return null;
             }
 
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
 
             const toSend = {
                 roleDesc,

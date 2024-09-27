@@ -6,7 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import {makeCookieAdapter} from "~/app/main/factories/cache";
 import {TOKEN_NAME} from "~/config/vars";
 
-const Header: React.FC = ({ text }) => {
+interface HeaderProps {
+    text: string;
+}
+
+const Header = ({ text }: HeaderProps) => {
     const navigate = useNavigate();
     const cookieAdapter = makeCookieAdapter();
 

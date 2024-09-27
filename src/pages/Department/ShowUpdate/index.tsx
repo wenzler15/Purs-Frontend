@@ -28,7 +28,7 @@ const ShowUpdateDepartment: React.FC = () => {
 
     const getEmployees = async () => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
             const resp = await api.get('/users/listEmployees', {
                 headers: {
                     Authorization: token,
@@ -66,7 +66,7 @@ const ShowUpdateDepartment: React.FC = () => {
 
     const getDepartmentInfo = async (id: number) => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
             const resp = await api.get(`/departments/${id}`, {
                 headers: {
                     Authorization: token,
@@ -92,7 +92,7 @@ const ShowUpdateDepartment: React.FC = () => {
 
     const handleSave = async () => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
 
             if (name === "" || desc === "" || !selectedOption || responsibilities[0] === "") {
                 toast.error("Favor preencha todos os campos")

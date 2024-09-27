@@ -1,0 +1,1 @@
+export { default as TableHeaderTag } from './table-header';

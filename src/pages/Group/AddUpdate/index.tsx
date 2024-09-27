@@ -50,7 +50,7 @@ const AddUpdateGroups: React.FC = () => {
 
     const getEmployees = async () => {
         try {
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
             const resp = await api.get('/users/listEmployees', {
                 headers: {
                     Authorization: token,
@@ -76,7 +76,7 @@ const AddUpdateGroups: React.FC = () => {
                 arrUsers.push(item.id)
             });
 
-            const token = makeCookieAdapter().get(TOKEN_NAME);
+            const { token } = makeCookieAdapter().get(TOKEN_NAME);
 
             const toSend = {
                 name,

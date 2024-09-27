@@ -1,0 +1,1 @@
+export { default as ActionModalTag } from './action-modal';

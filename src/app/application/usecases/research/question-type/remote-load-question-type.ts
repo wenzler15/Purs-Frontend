@@ -1,4 +1,4 @@
-import {LoadQuestionType} from "~/app/domain/usecases/research";
+import {LoadQuestionType} from "~/app/domain/usecases";
 import {HttpClient, HttpStatusCodeEnum} from "~/app/application/protocols";
 import {AccessDeniedError, UnexpectedError} from "~/app/domain/errors";
 

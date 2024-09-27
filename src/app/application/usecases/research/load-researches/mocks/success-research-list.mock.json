@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Pesquisa teste",
+    "desc": "Apenas uma pesquisa para testes",
+    "owner": "Douglas Wenzler",
+    "created": "12/07/2024",
+    "status": "finish",
+    "checked": false
+  },
+  {
+    "id": 2,
+    "name": "Pesquisa teste 2",
+    "desc": "Apenas uma pesquisa para testes 2",
+    "owner": "Douglas Wenzler",
+    "created": "13/07/2024",
+    "status": "reproved",
+    "checked": false
+  },
+  {
+    "id": 3,
+    "name": "Pesquisa teste 2",
+    "desc": "Apenas uma pesquisa para testes 2",
+    "owner": "Douglas Wenzler",
+    "created": "13/07/2024",
+    "status": "approved",
+    "checked": false
+  },
+  {
+    "id": 4,
+    "name": "Pesquisa teste 2",
+    "desc": "Apenas uma pesquisa para testes 2",
+    "owner": "Douglas Wenzler",
+    "created": "13/07/2024",
+    "status": "draft",
+    "checked": false
+  },
+  {
+    "id": 5,
+    "name": "Pesquisa teste 2",
+    "desc": "Apenas uma pesquisa para testes 2",
+    "owner": "Douglas Wenzler",
+    "created": "13/07/2024",
+    "status": "pending",
+    "checked": false
+  },
+  {
+    "id": 6,
+    "name": "Pesquisa teste 2",
+    "desc": "Apenas uma pesquisa para testes 2",
+    "owner": "Douglas Wenzler",
+    "created": "13/07/2024",
+    "status": "ongoing",
+    "checked": false
+  }
+]
