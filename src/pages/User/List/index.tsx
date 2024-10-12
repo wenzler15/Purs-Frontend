@@ -4,6 +4,7 @@ import NavBar from "../../../Components/NavBar";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { CiCirclePlus } from "react-icons/ci";
+import { LuArrowUpDown } from "react-icons/lu";
 import api from '../../../services/api';
 import TextInput from "../../../Components/TextInput";
 import TextButton from "../../../Components/Button";
@@ -12,7 +13,8 @@ const Employees: React.FC = () => {
     const [employees, setEmplooyees] = useState([]);
     const [filteredEmployees, setFilteredEmployees] = useState([]);
     const [filterName, setFilterName] = useState("");
-    
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+
     const navigate = useNavigate();
 
     const getEmployees = async () => {
@@ -33,25 +35,42 @@ const Employees: React.FC = () => {
 
     const applyFilter = () => {
         const filtered = employees.filter(employee =>
-          employee.name.toLowerCase().includes(filterName.toLowerCase())
+            employee.name.toLowerCase().includes(filterName.toLowerCase())
         );
-    
-        setFilteredEmployees(filtered);
-      };
 
-      const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFilteredEmployees(filtered);
+    };
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFilterName(event.target.value);
-      };
-    
-      const handleFilterButtonClick = () => {
+    };
+
+    const handleFilterButtonClick = () => {
         applyFilter();
-      };
-    
-      const handleResetFilterButtonClick = () => {
+    };
+
+    const handleResetFilterButtonClick = () => {
         setFilterName('');
         setFilteredEmployees(employees);
-      };
+    };
+
+    const handleSort = (field: string) => {
+        const sortedData = [...filteredEmployees].sort((a, b) => {
+            let aValue = a[field] || ''; 
+            let bValue = b[field] || ''; 
     
+            if (aValue === '' && bValue !== '') return sortOrder === 'asc' ? -1 : 1;
+            if (bValue === '' && aValue !== '') return sortOrder === 'asc' ? 1 : -1;
+    
+            if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+            if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+            return 0;
+        });
+    
+        setFilteredEmployees(sortedData);
+        setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    };
+
     useEffect(() => {
         getEmployees();
     }, []);
@@ -68,38 +87,44 @@ const Employees: React.FC = () => {
 
                         <div className="flex w-full">
 
-                        <TextInput text="Nome"
-                            value={filterName}
-                            style={{width:'80%'}}
-                            onChange={handleInputChange}
+                            <TextInput text="Nome"
+                                value={filterName}
+                                style={{ width: '80%' }}
+                                onChange={handleInputChange}
                             />
 
-                        <TextButton text="Filtrar" style={{marginTop: 45, width: 150}} onClick={handleFilterButtonClick}/>
-                        <TextButton text="Limpar" style={{marginTop: 45, width: 150, marginLeft: 10, background: "#fff", color: "#000", border: '1px solid '}} onClick={handleResetFilterButtonClick}/>
 
-                        <div className="w-1/2 flex items-end justify-end cursor-pointer" onClick={() => navigate('/employee/add')}>
-                            <CiCirclePlus size={25} />
-                            <p className="underline ml-2">Adicionar usuário</p>
-                        </div>
-                            
+                            <TextButton text="Filtrar" style={{ marginTop: 45, width: 150 }} onClick={handleFilterButtonClick} />
+                            <TextButton text="Limpar" style={{ marginTop: 45, width: 150, marginLeft: 10, background: "#fff", color: "#000", border: '1px solid ' }} onClick={handleResetFilterButtonClick} />
+
+                            <div className="w-1/2 flex items-end justify-end cursor-pointer" onClick={() => navigate('/employee/add')}>
+                                <CiCirclePlus size={25} />
+                                <p className="underline ml-2">Adicionar usuário</p>
+                            </div>
+
                         </div>
 
                         <div className="w-full flex justify-center mt-5">
                             <div className="w-4/5 border rounded-lg border-grey-purs">
                                 <div className="flex rounded-t-lg bg-purple-purs w-full justify-between p-2">
-                                    <div className="flex items-center justify-center w-1/4">
-                                        <p className="text-[#fff]">Nome</p>
+                                    <div className="flex items-center justify-center w-1/4 cursor-pointer" onClick={() => handleSort('name')}>
+                                        <p className="text-[#fff] mr-2">Nome</p>
+                                        <LuArrowUpDown color="#fff" size={20} />
                                     </div>
-                                    <div className="flex items-center justify-center w-1/4">
-                                        <p className="text-[#fff]">Cargo</p>
+                                    <div className="flex items-center justify-center w-1/4 cursor-pointer" onClick={() => handleSort('roleName')}>
+                                        <p className="text-[#fff] mr-2">Cargo</p>
+                                        <LuArrowUpDown color="#fff" size={20} />
                                     </div>
-                                    <div className="flex items-center justify-center w-1/4">
-                                        <p className="text-[#fff]">E-mail</p>
+                                    <div className="flex items-center justify-center w-1/4 cursor-pointer" onClick={() => handleSort('email')}>
+                                        <p className="text-[#fff] mr-2">E-mail</p>
+                                        <LuArrowUpDown color="#fff" size={20} />
                                     </div>
-                                    <div className="flex items-center justify-center w-1/4">
-                                        <p className="text-[#fff]">Líder</p>
+                                    <div className="flex items-center justify-center w-1/4 cursor-pointer" onClick={() => handleSort('leaderName')}>
+                                        <p className="text-[#fff] mr-2">Líder</p>
+                                        <LuArrowUpDown color="#fff" size={20} />
                                     </div>
                                 </div>
+
                                 {filteredEmployees.map((item) => (
                                     <div className="flex rounded-lg w-full justify-between p-2">
                                         <div className="flex items-center justify-center w-1/4 cursor-pointer underline" onClick={() => navigate('/employee/show', { state: { id: item.id } })}>

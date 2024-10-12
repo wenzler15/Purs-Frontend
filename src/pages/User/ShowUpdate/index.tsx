@@ -7,10 +7,37 @@ import api from '../../../services/api';
 import TextInput from "../../../Components/TextInput";
 import TextButton from "../../../Components/Button";
 import Dropdown from "../../../Components/Dropdown";
+import Modal from 'react-modal';
+
+const customModalStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        maxWidth: '600px',
+        padding: '20px',
+        textAlign: 'center',
+        borderRadius: 15
+    }
+};
 
 const ShowUpdateUser: React.FC = () => {
     const [employees, setEmployees] = useState([]);
     const [roles, setRoles] = useState([]);
+    const statusList = 
+    [
+        {
+            'value': 1,
+            'label': "Ativo"
+        },
+        {
+            'value': 0,
+            'label': "Inativo"
+        }
+    ]
 
     const [name, setName] = useState('');
     const [cpf, setCpf] = useState('');
@@ -27,6 +54,9 @@ const ShowUpdateUser: React.FC = () => {
     const [complement, setComplement] = useState('');
     const [smo, setSmo] = useState<any>(null);
     const [smoL, setSmoL] = useState<any>(null);
+    const [status, setStatus] = useState();
+    const [smoS, setSmoS] = useState<any>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -40,7 +70,9 @@ const ShowUpdateUser: React.FC = () => {
                 },
             });
 
-            const newArr: any = [];
+            const newArr: any = [{
+                value: null, label: "Nenhum"
+            }];
 
             resp.data.map((item) => {
                 newArr.push({ value: item.id, label: item.name })
@@ -52,6 +84,10 @@ const ShowUpdateUser: React.FC = () => {
         }
 
     }
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     const getRoles = async () => {
         try {
@@ -102,6 +138,10 @@ const ShowUpdateUser: React.FC = () => {
         setIdLeader(option.value);
     };
 
+    const handleSelectStatus = (option) => {
+        setStatus(option.value);
+    };
+
     const handleCepChange = async (event) => {
         let cep = event.target.value.replace(/\D/g, '');
         if (cep.length > 5) {
@@ -130,6 +170,47 @@ const ShowUpdateUser: React.FC = () => {
         try {
             const token = localStorage.getItem('pursToken');
 
+            if (name === "" || cpf === "" || idRole === null || email === "") {
+                toast.error("Favor preencher os seguintes dados: Nome, CPF, Cargo e email");
+                return null;
+            }
+
+            const hasCEO = roles.find((item) => item.label.toUpperCase() === "CEO");
+
+            if (!idLeader && !hasCEO) {
+                setIsModalOpen(true);
+                return null;
+            }
+
+            const roleName = roles.find((item) => item.value == idRole);
+
+            if (!idLeader && roleName?.label !== "CEO") {
+                toast.error("Apenas colaborador com o cargo: 'CEO', pode ser cadastrado sem líder")
+                return null;
+            }
+
+            if (roleName?.label === "CEO" && idLeader) {
+                toast.error("Colaborador com cargo CEO não pode ter líder direto, favor remover o líder")
+                return null;
+            }
+
+            if(roleName?.label === "CEO"){
+                try {
+                    const hasCEO = await api.get(`/users/hasCEO/verify`, {
+                        headers: {
+                            Authorization: token,
+                        },
+                    });
+
+                    if (hasCEO.data && hasCEO.data != location.state.id) {
+                        toast.error("Já existe outra pessoa com o cargo de CEO na sua empresa");
+                        return null;
+                    }
+                } catch (err) {
+                    console.log("oi")
+                }
+            }
+
             const toSend = {
                 name,
                 cpf,
@@ -143,7 +224,8 @@ const ShowUpdateUser: React.FC = () => {
                 zipCode,
                 neighborhood,
                 houseNumber,
-                complement
+                complement,
+                status
             }
 
             await api.patch(`/users/${location.state.id}`, toSend, {
@@ -168,7 +250,7 @@ const ShowUpdateUser: React.FC = () => {
                 },
             });
 
-            const { name, cpf, idRole, idLeader, email, phone, street, city, state, zipCode, neighborhood, houseNumber, complement, roleName, leaderName } = resp.data
+            const { name, cpf, idRole, idLeader, email, phone, street, city, state, zipCode, neighborhood, houseNumber, complement, roleName, leaderName, status } = resp.data
 
             setName(name);
             setCpf(cpf);
@@ -191,6 +273,9 @@ const ShowUpdateUser: React.FC = () => {
                 setIdLeader(idLeader)
                 setSmoL({ value: idLeader, label: leaderName })
             }
+
+            setStatus(status)
+            setSmoS({ value: status, label: status === 1 ? "Ativo" : "Inativo" })
         } catch (err) {
             toast.error("Erro ao tentar listar as informações do usuário")
         }
@@ -260,9 +345,34 @@ const ShowUpdateUser: React.FC = () => {
                         </div>
 
                         <div className="flex w-full justify-between">
-                            <TextInput text="Complemento" style={{ width: "45%" }} value={complement} onChange={(e) => setComplement(e.target.value)} />
+                            <TextInput text="Complemento" style={{ width: "90%" }} value={complement} onChange={(e) => setComplement(e.target.value)} />
+                            
+                            
+                            <div className="w-[91%] mt-9 mr-10">
+                                {smoS && (
+                                    <Dropdown value={smoS} text="Status" options={statusList} onSelect={handleSelectStatus} />
+                                )}
+                            </div>
                         </div>
                     </div>
+
+                    <Modal
+                        isOpen={isModalOpen}
+                        onRequestClose={closeModal}
+                        style={customModalStyles}
+                        contentLabel="CEO"
+                    >
+                        <>
+                            <div>
+                                <p className="text-blue-purs font-bold text-lg">Para adicionar um colaborador sem líder ele precisa ser CEO, porém você ainda não cadastrou o cargo "CEO", gostaria de cadastrar agora?</p>
+                            </div>
+                            <div className="flex justify-around">
+                                <TextButton text="Cancelar" onClick={() => setIsModalOpen(false)}
+                                    style={{ marginTop: "40px", background: "#fff", border: "1px solid #000", color: "#000" }} />
+                                <TextButton text="Cadastrar" onClick={() => navigate('/role/add')} style={{ marginTop: "40px" }} />
+                            </div>
+                        </>
+                    </Modal>
 
                     <div className="w-full flex justify-end mt-5 mb-20">
                         <TextButton text="Salvar" onClick={handleSave} />

@@ -2,23 +2,23 @@ import React, { useEffect, useState } from "react";
 import Header from "../../Components/Header";
 import NavBar from "../../Components/NavBar";
 import { useNavigate } from "react-router-dom";
-import { useUserContext } from '../../contexts/UserContext';
-import Modal from 'react-modal';
+import { useUserContext } from "../../contexts/UserContext";
+import Modal from "react-modal";
 import TextButton from "../../Components/Button";
 
 const customModalStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    maxWidth: '400px',
-    padding: '20px',
-    textAlign: 'center',
-    borderRadius: 15
-  }
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    maxWidth: "400px",
+    padding: "20px",
+    textAlign: "center",
+    borderRadius: 15,
+  },
 };
 
 const Home: React.FC = () => {
@@ -43,7 +43,7 @@ const Home: React.FC = () => {
   };
 
   const redirectToProfile = () => {
-    navigate("/profile")
+    navigate("/profile");
     closeModal();
   };
 
@@ -62,7 +62,11 @@ const Home: React.FC = () => {
             contentLabel="Alterar senha"
           >
             <p>Sua senha é temporária. Por favor, atualize ela no perfil.</p>
-            <TextButton text="Ir para perfil" onClick={redirectToProfile} style={{marginTop: "40px"}}/>
+            <TextButton
+              text="Ir para perfil"
+              onClick={redirectToProfile}
+              style={{ marginTop: "40px" }}
+            />
           </Modal>
         </div>
       </div>

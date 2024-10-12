@@ -8,6 +8,7 @@ import TextInput from '../../../../Components/TextInput';
 import { toast } from 'react-toastify';
 import { FileUploader } from 'react-drag-drop-files';
 import api from '../../../../services/api';
+import axios from "axios";
 
 const fileTypes = ["JPG", "JPEG", "PNG", "SVG"]
 
@@ -158,8 +159,22 @@ const RegisterCompanyStep1: React.FC = () => {
         navigate('/login')
     };
 
-    const handleCnpjChange = (event) => {
+    const handleCnpjChange = async (event) => {
         let formattedCnpj = event.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+
+        if(formattedCnpj.length === 14) {
+            try {
+                const resp = await axios.get(`https://publica.cnpj.ws/cnpj/${formattedCnpj}`);
+
+               if(resp.data.estabelecimento.nome_fantasia && resp.data.estabelecimento.nome_fantasia !== '') {
+                   setFantasyName(resp.data.estabelecimento.nome_fantasia)
+                   setCompanyEmail(resp.data.estabelecimento.email)
+               }
+            } catch (err) {
+                console.log("erro", err)
+            }
+        }
+
         if (formattedCnpj.length > 2) {
             formattedCnpj = formattedCnpj.replace(/^(\d{2})(\d)/, '$1.$2'); // Adiciona ponto após os primeiros dois dígitos
         }
@@ -172,6 +187,7 @@ const RegisterCompanyStep1: React.FC = () => {
         if (formattedCnpj.length > 12) {
             formattedCnpj = formattedCnpj.replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5'); // Adiciona hífen após os próximos quatro dígitos
         }
+
         setCnpj(formattedCnpj);
     };
 
@@ -181,9 +197,9 @@ const RegisterCompanyStep1: React.FC = () => {
             <div className='w-full flex flex-col items-center justify-center'>
                 <p className='mt-8 text-[#5E718D] w-[50%] text-center text-xl'>Para iniciar, vamos preencher cuidadosamente os dados iniciais da sua empresa.  </p>
                 <div className='w-1/2 mt-10'>
-                    <TextInput text="Nome fantasia*" onChange={(e) => setFantasyName(e.target.value)} value={fantasyName} />
                     <TextInput text="CNPJ*" maxLength={18} onChange={handleCnpjChange} value={cnpj} />
-                    <TextInput text="E-mail da empresa*" onChange={(e) => setCompanyEmail(e.target.value)} />
+                    <TextInput text="Nome fantasia*" onChange={(e) => setFantasyName(e.target.value)} value={fantasyName} />
+                    <TextInput text="E-mail da empresa*" onChange={(e) => setCompanyEmail(e.target.value)} value={companyEmail}/>
                     <TextInput text="Telefone da empresa*" value={phone}
                         onChange={handlePhoneChange}
                         maxLength={15} />

@@ -30,6 +30,7 @@ import AddUpdateGroups from "./Group/AddUpdate";
 import AddUpdateUser from "./User/AddUpdate";
 import ShowUpdateUser from "./User/ShowUpdate";
 import ShowUpdateGroups from "./Group/ShowUpdate";
+import Graphs from "./Graphs";
 
 export function AppRoutes() {
     return (
@@ -70,6 +71,7 @@ export function AppRoutes() {
                 {/* Other routes */}
                 <Route path='/lead/uploadFile' element={<UploadFile />} />
                 <Route path='/chart' element={<ChartPage />} />
+                <Route path='/graphs' element={<Graphs />}/>
                 <Route path='/chartExport' element={<ExportLink />} />
                 <Route path='/home' element={<Home />}/>
                 <Route path="/" element={<NewLp />} />

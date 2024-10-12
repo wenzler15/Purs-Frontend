@@ -5,8 +5,10 @@ import { useUserContext } from '../../../contexts/UserContext';
 import { toast } from 'react-toastify';
 import TextInput from "../../../Components/TextInput";
 import { FaPen } from 'react-icons/fa';
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 import TextInputPass from "../../../Components/TextInputPass";
 import TextButton from "../../../Components/Button";
+import { Tooltip } from 'react-tooltip';
 
 const Profile: React.FC = () => {
   const { userData, updateUser } = useUserContext();
@@ -129,13 +131,27 @@ const Profile: React.FC = () => {
 
             </div>
 
-            <div className="w-[45%]">
+            <div className="w-[48%] flex">
               <TextInputPass text="Senha"
                 value={password}
                 maxLength={14}
                 disabled={!editing}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <AiOutlineExclamationCircle size={25} className="ml-1 mt-14" data-tooltip-id="informationTooltip" />
+              <Tooltip
+                  id="informationTooltip"
+                  place="bottom"
+                  style={{
+                    backgroundColor: '#2D3643',
+                    width: 234,
+                    borderRadius: 10,
+                  }}
+                >
+                  <span>
+                    • <strong style={{ fontWeight: 'bold', color: '#F0F3F9' }}>Campo de Senha:</strong> Por motivos de segurança, o campo de senha está vazio. Não se preocupe, sua senha está salva. Para alterá-la, basta digitar a nova senha e clicar em "Salvar".
+                  </span>
+                </Tooltip>
             </div>
           </div>
 

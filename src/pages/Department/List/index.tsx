@@ -4,6 +4,7 @@ import NavBar from "../../../Components/NavBar";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { CiCirclePlus } from "react-icons/ci";
+import { LuArrowUpDown } from "react-icons/lu";
 import api from '../../../services/api';
 import TextInput from "../../../Components/TextInput";
 import TextButton from "../../../Components/Button";
@@ -12,6 +13,7 @@ const Departments: React.FC = () => {
     const [departments, setDepartments] = useState([]);
     const [filteredDepartments, setFilteredDepartments] = useState([]);
     const [filterName, setFilterName] = useState("");
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
     const navigate = useNavigate();
 
@@ -30,6 +32,23 @@ const Departments: React.FC = () => {
             toast.error("Não foi possível listar os grupos")
         }
     }
+
+    const handleSort = (field: string) => {
+        const sortedData = [...filteredDepartments].sort((a, b) => {
+            let aValue = a[field] || ''; 
+            let bValue = b[field] || ''; 
+    
+            if (aValue === '' && bValue !== '') return sortOrder === 'asc' ? -1 : 1;
+            if (bValue === '' && aValue !== '') return sortOrder === 'asc' ? 1 : -1;
+    
+            if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+            if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+            return 0;
+        });
+    
+        setFilteredDepartments(sortedData);
+        setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    };
 
     const applyFilter = () => {
         const filtered = departments.filter(department =>
@@ -87,14 +106,17 @@ const Departments: React.FC = () => {
                         <div className="w-full flex justify-center mt-5">
                             <div className="w-4/5 border rounded-lg border-grey-purs">
                                 <div className="flex rounded-t-lg bg-purple-purs w-full justify-between p-2">
-                                    <div className="flex items-center justify-center w-1/5">
-                                        <p className="text-[#fff]">Nome</p>
+                                    <div className="flex items-center justify-center cursor-pointer w-1/5" onClick={() => handleSort('name')}>
+                                        <p className="text-[#fff] mr-2">Nome</p>
+                                        <LuArrowUpDown color="#fff" size={20} />
                                     </div>
-                                    <div className="flex items-center justify-center w-3/5">
-                                        <p className="text-[#fff]">Descrição</p>
+                                    <div className="flex items-center justify-center cursor-pointer w-3/5" onClick={() => handleSort('desc')}>
+                                        <p className="text-[#fff] mr-2">Descrição</p>
+                                        <LuArrowUpDown color="#fff" size={20} />
                                     </div>
-                                    <div className="flex items-center justify-center w-1/5">
-                                        <p className="text-[#fff]">Líder</p>
+                                    <div className="flex items-center justify-center cursor-pointer w-1/5" onClick={() => handleSort('leaderName')}>
+                                        <p className="text-[#fff] mr-2">Líder</p>
+                                        <LuArrowUpDown color="#fff" size={20} />
                                     </div>
                                 </div>
                                 {filteredDepartments.map((item: any) => (

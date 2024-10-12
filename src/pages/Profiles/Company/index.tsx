@@ -394,7 +394,7 @@ const ProfileCompany: React.FC = () => {
 
               {values.map((item, index) => (
                 <>
-                  <TextInput text={`Valor ${index + 1}`}
+                  <TextInput text={`Valor`}
                     value={item.value}
                     disabled={!editingCompanyInfo}
                     onChange={(e) => handleChangeValue(e.target.value, index)} />

@@ -15,9 +15,15 @@ const ShowUpdateRole: React.FC = () => {
     const [roleDesc, setRoleDesc] = useState('');
     const [departments, setDepartments] = useState([]);
     const [selectedOption, setSelectedOption] = useState(null);
-    const [responsibilities, setResponsibilities] = useState<string[]>([]);
-    const [skills, setSkills] = useState<string[]>([]);
-    const [qualifications, setQualifications] = useState<string[]>([]);
+    const [responsibilities, setResponsibilities] = useState<{ response: string; desc: string }[]>([
+        { response: '', desc: '' }
+    ]);
+    const [skills, setSkills] = useState<{ response: string; desc: string }[]>([
+        { response: '', desc: '' }
+    ]);
+    const [qualifications, setQualifications] = useState<{ response: string; desc: string }[]>([
+        { response: '', desc: '' }
+    ]);
     const [isChecked, setIsChecked] = useState(false);
     const [minSalary, setMinSalary] = useState("");
     const [maxSalary, setMaxSalary] = useState("");
@@ -57,75 +63,70 @@ const ShowUpdateRole: React.FC = () => {
     }
 
     const addResp = (arr: string) => {
-        switch(arr){
+        switch (arr) {
             case "resp":
-                setResponsibilities([...responsibilities, '']);
+                setResponsibilities([...responsibilities, { response: '', desc: '' }]);
                 break;
             case "skill":
-                setSkills([...skills, '']);
+                setSkills([...skills, { response: '', desc: '' }]);
                 break;
             case "qualification":
-                setQualifications([...qualifications, '']);
+                setQualifications([...qualifications, { response: '', desc: '' }]);
                 break;
         }
     };
 
     const removeResp = (indexMain: number, arr: string) => {
-        let newValues
-        switch(arr){
+        switch (arr) {
             case "resp":
-                newValues = responsibilities.filter((item, index) => indexMain !== index);
-                setResponsibilities(newValues);
+                setResponsibilities(responsibilities.filter((_, index) => index !== indexMain));
                 break;
             case "skill":
-                newValues = skills.filter((item, index) => indexMain !== index);
-                setSkills(newValues);
+                setSkills(skills.filter((_, index) => index !== indexMain));
                 break;
             case "qualification":
-                newValues = qualifications.filter((item, index) => indexMain !== index);
-                setQualifications(newValues);                
+                setQualifications(qualifications.filter((_, index) => index !== indexMain));
                 break;
         }
-    }
+    };
 
-    const handleChangeResp = (value: string, index: number, arr: string) => {
-        let newValues = [];
-        switch(arr){
+    const handleChangeResp = (value: string, index: number, field: 'response' | 'desc', arr: string) => {
+        const updateItem = (items: any[], field: 'response' | 'desc') => {
+            const updatedItems = [...items];
+            updatedItems[index] = { ...updatedItems[index], [field]: value };
+            return updatedItems;
+        };
+
+        switch (arr) {
             case "resp":
-                newValues = [...responsibilities];
-                newValues[index] = value;
-                setResponsibilities(newValues);
+                setResponsibilities(updateItem(responsibilities, field));
                 break;
             case "skill":
-                newValues = [...skills];
-                newValues[index] = value;
-                setSkills(newValues);
+                setSkills(updateItem(skills, field));
                 break;
             case "qualification":
-                newValues = [...qualifications];
-                newValues[index] = value;
-                setQualifications(newValues);               
+                setQualifications(updateItem(qualifications, field));
                 break;
         }
     };
 
     const handleChange = (event, type: string) => {
         let inputValue = event.target.value.replace(/\D/g, '');
-    
+
         if (inputValue !== '') {
-          inputValue = (parseFloat(inputValue) / 100).toFixed(2);
-          inputValue = 'R$ ' + inputValue.toString().replace('.', ',');
-          inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            inputValue = (parseFloat(inputValue) / 100).toFixed(2);
+            inputValue = 'R$ ' + inputValue.toString().replace('.', ',');
+            inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         }
-    
-        if(type === "min") {
+
+        if (type === "min") {
             setMinSalary(inputValue);
         } else {
             setMaxSalary(inputValue);
         }
-      };
+    };
 
-      const getRoleInfo = async (id: number) => {
+    const getRoleInfo = async (id: number) => {
         try {
             const token = localStorage.getItem('pursToken');
             const resp = await api.get(`/roles/${id}`, {
@@ -134,7 +135,7 @@ const ShowUpdateRole: React.FC = () => {
                 },
             });
 
-            const {roleName, roleDesc, maxSalary, minSalary, qualifications, responsibilities, skills, idDepartment, departmentName} = resp.data
+            const { roleName, roleDesc, maxSalary, minSalary, qualifications, responsibilities, skills, idDepartment, departmentName } = resp.data
 
             let maxSalaryConverted = (parseFloat(maxSalary)).toFixed(2);
             maxSalaryConverted = 'R$ ' + maxSalaryConverted.toString().replace('.', ',');
@@ -152,10 +153,10 @@ const ShowUpdateRole: React.FC = () => {
             setMaxSalary(maxSalaryConverted);
             setMinSalary(minSalaryConverted);
 
-            if(idDepartment) {
+            if (idDepartment) {
                 handleCheckboxChange(true)
                 setSelectedOption(idDepartment)
-                setSmo({value: idDepartment, label: departmentName})
+                setSmo({ value: idDepartment, label: departmentName })
             }
         } catch (err) {
             toast.error("Erro ao tentar listar as informações do departamento")
@@ -169,15 +170,15 @@ const ShowUpdateRole: React.FC = () => {
 
     const handleSave = async () => {
         try {
-            if(roleName === "" || roleDesc === "") {
+            if (roleName === "" || roleDesc === "") {
                 toast.error("Favor preencher nome e descrição do cargo");
                 return null;
             }
 
-            const mins = parseFloat(minSalary.split('$')[1].replace('.','').replace(',','.'));
-            const maxs = parseFloat(maxSalary.split('$')[1].replace('.','').replace(',','.'));
+            const mins = parseFloat(minSalary.split('$')[1].replace('.', '').replace(',', '.'));
+            const maxs = parseFloat(maxSalary.split('$')[1].replace('.', '').replace(',', '.'));
 
-            if(maxs < mins) {
+            if (maxs < mins) {
                 toast.error("O valor máximo de salario precisa ser igual ou maior que o mínimo");
                 return null;
             }
@@ -229,13 +230,13 @@ const ShowUpdateRole: React.FC = () => {
 
                         <div className="mt-5">
 
-                        {roleName && (
-                            <Checkbox
-                                label="Esse cargo exlusivo de um deparmento?"
-                                isChecked={isChecked}
-                                onChange={handleCheckboxChange}
-                            />
-                        )}
+                            {roleName && (
+                                <Checkbox
+                                    label="Esse cargo exlusivo de um deparmento?"
+                                    isChecked={isChecked}
+                                    onChange={handleCheckboxChange}
+                                />
+                            )}
 
                         </div>
 
@@ -255,16 +256,25 @@ const ShowUpdateRole: React.FC = () => {
                             </div>
 
                             {responsibilities.map((item, index) => (
-                                <div>
-                                    <TextInput value={item} text={`Responsabilidade ${index + 1}`} onChange={(e) => handleChangeResp(e.target.value, index, "resp")} />
+                                <div key={index} className="mb-3">
+                                    <TextInput
+                                        value={item.response}
+                                        text={`Responsabilidade ${index + 1}`}
+                                        onChange={(e) => handleChangeResp(e.target.value, index, 'response', 'resp')}
+                                    />
+                                    <TextInput
+                                        value={item.desc}
+                                        text={`Descrição`}
+                                        onChange={(e) => handleChangeResp(e.target.value, index, 'desc', 'resp')}
+                                    />
                                     <div className="flex justify-end text-blue-purs">
-                                        <p className="underline cursor-pointer" onClick={() => removeResp(index, "resp")}>remover</p>
+                                        <p className="underline cursor-pointer" onClick={() => removeResp(index, "resp")}>Remover</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
 
-                        <hr className="mt-5 border border-blue-purs"/>
+                        <hr className="mt-5 border border-blue-purs" />
 
                         <div className="w-full mt-5">
                             <div className="flex justify-between w-full">
@@ -276,16 +286,25 @@ const ShowUpdateRole: React.FC = () => {
                             </div>
 
                             {skills.map((item, index) => (
-                                <div>
-                                    <TextInput value={item} text={`Habilidade ${index + 1}`} onChange={(e) => handleChangeResp(e.target.value, index, "skill")} />
-                                    <div className="w-full flex justify-end text-blue-purs">
-                                        <p className="underline cursor-pointer" onClick={() => removeResp(index, "skill")}>remover</p>
+                                <div key={index} className="mb-3">
+                                    <TextInput
+                                        value={item.response}
+                                        text={`Skill ${index + 1}`}
+                                        onChange={(e) => handleChangeResp(e.target.value, index, 'response', 'skill')}
+                                    />
+                                    <TextInput
+                                        value={item.desc}
+                                        text={`Descrição`}
+                                        onChange={(e) => handleChangeResp(e.target.value, index, 'desc', 'skill')}
+                                    />
+                                    <div className="flex justify-end text-blue-purs">
+                                        <p className="underline cursor-pointer" onClick={() => removeResp(index, "skill")}>Remover</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
 
-                        <hr className="mt-5 border border-blue-purs"/>
+                        <hr className="mt-5 border border-blue-purs" />
 
                         <div className="w-full mt-5">
                             <div className="flex justify-between w-full">
@@ -297,10 +316,19 @@ const ShowUpdateRole: React.FC = () => {
                             </div>
 
                             {qualifications.map((item, index) => (
-                                <div>
-                                    <TextInput value={item} text={`Qualificação ${index + 1}`} onChange={(e) => handleChangeResp(e.target.value, index, "qualification")} />
-                                    <div className="w-full flex justify-end text-blue-purs">
-                                        <p className="underline cursor-pointer" onClick={() => removeResp(index, "qualification")}>remover</p>
+                                <div key={index} className="mb-3">
+                                    <TextInput
+                                        value={item.response}
+                                        text={`Qualificação ${index + 1}`}
+                                        onChange={(e) => handleChangeResp(e.target.value, index, 'response', 'qualification')}
+                                    />
+                                    <TextInput
+                                        value={item.desc}
+                                        text={`Descrição`}
+                                        onChange={(e) => handleChangeResp(e.target.value, index, 'desc', 'qualification')}
+                                    />
+                                    <div className="flex justify-end text-blue-purs">
+                                        <p className="underline cursor-pointer" onClick={() => removeResp(index, "qualification")}>Remover</p>
                                     </div>
                                 </div>
                             ))}
@@ -312,10 +340,10 @@ const ShowUpdateRole: React.FC = () => {
                             </div>
 
                             <div className="flex w-full justify-between">
-                            <TextInput text="Valor mínimo" onChange={(e) => handleChange(e, "min")} placeholder="R$ 0,00" style={{ width: "90%" }} value={minSalary} />
+                                <TextInput text="Valor mínimo" onChange={(e) => handleChange(e, "min")} placeholder="R$ 0,00" style={{ width: "90%" }} value={minSalary} />
 
-                            <TextInput text="Valor máximo" style={{ width: "90%" }} onChange={(e) => handleChange(e, "max")} placeholder="R$ 0,00" value={maxSalary} />
-                        </div>
+                                <TextInput text="Valor máximo" style={{ width: "90%" }} onChange={(e) => handleChange(e, "max")} placeholder="R$ 0,00" value={maxSalary} />
+                            </div>
                         </div>
                     </div>
 

@@ -7,6 +7,22 @@ import api from '../../../services/api';
 import TextInput from "../../../Components/TextInput";
 import TextButton from "../../../Components/Button";
 import Dropdown from "../../../Components/Dropdown";
+import Modal from 'react-modal';
+
+const customModalStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        maxWidth: '600px',
+        padding: '20px',
+        textAlign: 'center',
+        borderRadius: 15
+    }
+};
 
 const AddUpdateUser: React.FC = () => {
     const [employees, setEmployees] = useState([]);
@@ -25,6 +41,7 @@ const AddUpdateUser: React.FC = () => {
     const [neighborhood, setNeighborhood] = useState('');
     const [houseNumber, setHouseNumber] = useState('');
     const [complement, setComplement] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const navigate = useNavigate();
 
@@ -37,7 +54,9 @@ const AddUpdateUser: React.FC = () => {
                 },
             });
 
-            const newArr: any = [];
+            const newArr: any = [{
+                value: null, label: "Nenhum"
+            }];
 
             resp.data.map((item) => {
                 newArr.push({ value: item.id, label: item.name })
@@ -123,13 +142,53 @@ const AddUpdateUser: React.FC = () => {
         }
     };
 
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     const handleSave = async () => {
         try {
             const token = localStorage.getItem('pursToken');
 
-            if(name === "" || cpf === "" || idRole === null || email === "") {
+            if (name === "" || cpf === "" || idRole === null || email === "") {
                 toast.error("Favor preencher os seguintes dados: Nome, CPF, Cargo e email");
                 return null;
+            }
+
+            const hasCEO = roles.find((item) => item.label.toUpperCase() === "CEO");
+
+            if (!idLeader && !hasCEO) {
+                setIsModalOpen(true);
+                return null;
+            }
+
+            const roleName = roles.find((item) => item.value == idRole);
+
+            if (!idLeader && roleName?.label !== "CEO") {
+                toast.error("Apenas colaborador com o cargo: 'CEO', pode ser cadastrado sem líder")
+                return null;
+            }
+
+            if (roleName?.label === "CEO" && idLeader) {
+                toast.error("Colaborador com cargo CEO não pode ter líder direto, favor remover o líder")
+                return null;
+            }
+
+            if(roleName?.label === "CEO"){
+                try {
+                    const hasCEO = await api.get(`/users/hasCEO/verify`, {
+                        headers: {
+                            Authorization: token,
+                        },
+                    });
+
+                    if (hasCEO) {
+                        toast.error("Já existe outra pessoa com o cargo de CEO na sua empresa");
+                        return null;
+                    }
+                } catch (err) {
+                    console.log("oi")
+                }
             }
 
             const toSend = {
@@ -223,6 +282,24 @@ const AddUpdateUser: React.FC = () => {
                             <TextInput text="Complemento" style={{ width: "45%" }} value={complement} onChange={(e) => setComplement(e.target.value)} />
                         </div>
                     </div>
+
+                    <Modal
+                        isOpen={isModalOpen}
+                        onRequestClose={closeModal}
+                        style={customModalStyles}
+                        contentLabel="CEO"
+                    >
+                        <>
+                            <div>
+                                <p className="text-blue-purs font-bold text-lg">Para adicionar um colaborador sem líder ele precisa ser CEO, porém você ainda não cadastrou o cargo "CEO", gostaria de cadastrar agora?</p>
+                            </div>
+                            <div className="flex justify-around">
+                                <TextButton text="Cancelar" onClick={() => setIsModalOpen(false)}
+                                    style={{ marginTop: "40px", background: "#fff", border: "1px solid #000", color: "#000" }} />
+                                <TextButton text="Cadastrar" onClick={() => navigate('/role/add')} style={{ marginTop: "40px" }} />
+                            </div>
+                        </>
+                    </Modal>
 
                     <div className="w-full flex justify-end mt-5 mb-20">
                         <TextButton text="Salvar" onClick={handleSave} />

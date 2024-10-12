@@ -100,21 +100,34 @@ const ChartPage: React.FC = () => {
     }
   };
 
+  const getChart = async () => {
+    try {
+      const token = localStorage.getItem("pursToken")
+
+      const resp = await api.get('/users/chartpage/create', {
+        headers: {
+          'Authorization': token
+        }
+      });    
+    
+      setDataList(resp.data);
+    } catch (err) {
+      toast.error("Não foi possível exibir o organograma da sua empresa")
+    }
+  }
+
   useEffect(() => {
-    formatFile();
+    //formatFile();
+    getChart();
   }, []);
 
   const handleUrl = async () => {
     try {
-      let formData = new FormData();
-      formData.append('orgfile', location.state.fileSelected);
-
       const token = localStorage.getItem("pursToken")
 
-      const resp = await api.post('/usersCreateURLOrg', formData, {
+      const resp = await api.get('/usersCreateURLOrg', {
         headers: {
-          'Authorization': token,
-          'Content-Type': 'multipart/form-data',
+          'Authorization': token
         }
       });
 

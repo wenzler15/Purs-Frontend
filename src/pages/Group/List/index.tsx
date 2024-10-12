@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { CiCirclePlus } from "react-icons/ci";
 import api from '../../../services/api';
+import { LuArrowUpDown } from "react-icons/lu";
 import TextInput from "../../../Components/TextInput";
 import TextButton from "../../../Components/Button";
 
@@ -12,6 +13,7 @@ const Groups: React.FC = () => {
     const [groups, setGroups] = useState([]);
     const [filteredGroups, setFilteredGroups] = useState([]);
     const [filterName, setFilterName] = useState("");
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
     const navigate = useNavigate();
 
@@ -30,6 +32,23 @@ const Groups: React.FC = () => {
             toast.error("Não foi possível listar os grupos")
         }
     }
+
+    const handleSort = (field: string) => {
+        const sortedData = [...filteredGroups].sort((a, b) => {
+            let aValue = a[field] || ''; 
+            let bValue = b[field] || ''; 
+    
+            if (aValue === '' && bValue !== '') return sortOrder === 'asc' ? -1 : 1;
+            if (bValue === '' && aValue !== '') return sortOrder === 'asc' ? 1 : -1;
+    
+            if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+            if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+            return 0;
+        });
+    
+        setFilteredGroups(sortedData);
+        setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    };
 
     const applyFilter = () => {
         const filtered = groups.filter(group =>
@@ -87,11 +106,13 @@ const Groups: React.FC = () => {
                         <div className="w-full flex justify-center mt-5">
                             <div className="w-4/5 border rounded-lg border-grey-purs">
                                 <div className="flex rounded-t-lg bg-purple-purs w-full justify-between p-2">
-                                    <div className="flex items-center justify-center w-1/4">
-                                        <p className="text-[#fff]">Nome</p>
+                                    <div className="flex items-center justify-center cursor-pointer w-1/4" onClick={() => handleSort('name')}>
+                                        <p className="text-[#fff] mr-2">Nome</p>
+                                        <LuArrowUpDown color="#fff" size={20} />
                                     </div>
-                                    <div className="flex items-center justify-center w-3/4">
-                                        <p className="text-[#fff]">Descrição</p>
+                                    <div className="flex items-center justify-center cursor-pointer w-3/4" onClick={() => handleSort('desc')}>
+                                        <p className="text-[#fff] mr-2">Descrição</p>
+                                        <LuArrowUpDown color="#fff" size={20} />
                                     </div>
                                 </div>
                                 {filteredGroups.map((item) => (
